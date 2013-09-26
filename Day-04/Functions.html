@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title></title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+
+
+
+
+</head>
+
+<body>
+<p>CountsOdd&lt;-function(x){
+Remainder&lt;- vector(length=length(x))
+Remainder &lt;- x%%2
+count &lt;- sum(Remainder)
+return(count)}
+Counts(c(3,4,2,4))</p>
+
+<p>CountEvens&lt;- function(x){
+ TotalCount&lt;- length(x)
+ Remainder&lt;- vector(length=length(x))
+ Remainder &lt;- x%%2
+ Oddcount &lt;- sum(Remainder)
+ Evencount&lt;- TotalCount-Oddcount
+ return(Evencount)}</p>
+
+<p>CountEvens&lt;- function(x){
+  x &lt;- x+1
+  Remainder&lt;- vector(length=length(x))
+Remainder &lt;- x%%2
+Evencount &lt;- sum(Remainder)
+return(Evencount)}</p>
+
+<p>hypotenuseLength&lt;- function(a,b) {
+asquared &lt;- a<sup>2</sup>
+bsquared &lt;- b<sup>2</sup>
+hypotenusesquared &lt;- asquared + bsquared
+hypotenuse&lt;- (hypotenusesquared)<sup>&frac12;</sup>
+return(hypotenuse)
+}</p>
+
+<p>LawofCosines&lt;- function(a,b,theta){
+asquared &lt;- a<sup>2</sup>
+bsquared &lt;- b<sup>2</sup>
+sum &lt;- asquared + bsquared
+Cosine &lt;- cos(theta)
+abCosine &lt;- a %<em>% b %</em>% Cosine
+TwoCosine &lt;- 2 %*% abCosine
+csquared &lt;- sum - TwoCosine
+c &lt;- (csquared)<sup>&frac12;</sup>
+return&copy;
+}</p>
+
+<p>ThetaFromLengths&lt;-function(a,b,c){
+asqred &lt;- a<sup>2</sup>
+bsqred &lt;- b<sup>2</sup>
+csqred &lt;- c<sup>2</sup>
+Sum &lt;- asqred + bsqred - csqred
+Divisor&lt;- 2%<em>%a%</em>%b
+quotient &lt;- Sum/Divisor
+angles &lt;- acos(quotient)
+return(angles)}</p>
+
+</body>
+
+</html>
+

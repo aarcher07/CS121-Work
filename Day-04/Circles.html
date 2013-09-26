@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title>Biography of Andre Archer</title>
+<title></title>
 
 <style type="text/css">
 body, td {
@@ -141,29 +141,24 @@ hr {
 </head>
 
 <body>
-<h1>Biography of Andre Archer</h1>
+<p>plot(1:20, xlim=c(0,100), ylim=c(0,100), type=&ldquo;n&rdquo;)
+DrawCircle&lt;- function(x,y,r,&hellip;){
+  angles&lt;- seq(from=0, to=2*pi, length= 1000)
+  xpts &lt;- x + r*cos(angles)
+  ypts &lt;- y + r*sin(angles)
+  polygon(xpts, ypts, asp=1, &hellip;)
+}</p>
 
-<p><img src="http://jablogz.com/wp-content/uploads/2013/05/picture-of-jamaica.jpg" alt="just some text"/></p>
+<p>DrawCircle(17,47,10, border=&ldquo;blue&rdquo;) 
+DrawCircle(30,38,10, border=&ldquo;yellow&rdquo;) </p>
 
-<h2>Life</h2>
+<p>plot(1:20, xlim=c(0,100), ylim=c(0,100), type=&ldquo;n&rdquo;)</p>
 
-<p>I was raised in Kingston, Jamaica. In 1995, I was born the second child to both my parents. Before attending Macalester, I completed high school and elementary school in Jamaica. Now at college in the United States, this will then be my first time living outside of my island.</p>
-
-<h2>Interests</h2>
-
-<p>During my tenure at high school, I developed a strong passion for mathematics and the sciences. To some extent, I also like the humanities which include but are not limited to:</p>
-
-<ul>
-<li>Anthropology</li>
-<li>Art History</li>
-<li>Gender Studies</li>
-</ul>
-
-<p>However, my interests extend beyond academics. I also like visiting various environmental attractions and art museums, practicing photography and reading fictional books.</p>
-
-<h2>Intended Major</h2>
-
-<p>As previously stated, I am interested in Mathematics and the sciences, specificaly Physics. I am also thinking about possibly majoring in Economics. </p>
+<p>DrawCircle(17,47,10, border=&ldquo;blue&rdquo; lwd=7) 
+DrawCircle(30,38,10, border=&ldquo;yellow&rdquo;, lwd=7)<br/>
+DrawCircle(44,47,10, border=&ldquo;black&rdquo;, lwd=7)
+DrawCircle(58,38,10, border=&ldquo;green&rdquo;, lwd=7) 
+DrawCircle(72,47,10, border=&ldquo;red&rdquo;, lwd=7)</p>
 
 </body>
 
