@@ -1,9 +1,16 @@
-```r
+What's wrong?
+
+```{r}
 circle <- function(x,y,r){
- angles<- seq(0,(2*pi), length=1000)
- xpts <- x + r*cos(angles)
+  angles<- seq(0,(2*pi), length=1000)
+  xpts <- x + r*cos(angles)
   ypts <- y + r*sin(angles)
-  plot(xpts, ypts, xlim=c(0,40), ylim=c(0,40), type="l", col= "#ee82ee",asp=1)}
+  polygon(xpts, ypts, xlim=c(0,40), ylim=c(0,40), type="l", col= "#ee82ee",asp=1)
+ }
+canvas <- function(min=0,max=100){
+  plot(1:2, type='n', xlim=c(min,max), ylim=c(min,max),asp=1)
+}
+ canvas()
  circle(26,20, 10)
  polygon(c(14,25,25,14), c(20,20,31,31))
  polygon(c(13,26,26,13), c(19,19,32,32))
