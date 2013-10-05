@@ -1,0 +1,33 @@
+findScrabble<- function(letters){
+for (k in 1:length(letters)){
+words<-words[grep(letters[k],words)]
+if (length(words)=]<10) break 
+#If is a conditional statement
+#the break stops the loop 
+}
+return(words)
+}
+#Way 1 for Fibacci Numbers
+FibacciSeq<- function(n){
+ current <- 1
+ beforeIt<- 0
+ for (k in 1:n){
+ tmp <- current+beforeIt
+ beforeIt<- current
+ current <- tmp
+ }
+ return(current)
+ }
+ ```{r}
+#Way 2 for Fibacci Numbers
+FibacciSeq<- function(n){
+sofar=c(0,1)
+if (n<0 | floor(n)!= n){   #!n NOT EQUAL
+   warning("Your n was no good, meanie!") return(NA) }
+for (k in 3:n){
+ sofar[k] <- sofar[k-1] + sofar [k-2]
+}
+return(sofar)
+}
+FibacciSeq(-1)
+```
