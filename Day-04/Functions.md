@@ -1,6 +1,6 @@
-
-
-## Early Practice Ones
+Functions and Graphics
+========================================
+## Function that counts the number of odd numbers
 
 ```r
 CountsOdd <- function(x) {
@@ -12,36 +12,79 @@ CountsOdd <- function(x) {
 ```
 
 
-Now we'll test it.  The answer should be 1:
+Now we'll test it.  The answer should be 3:
 
 ```r
-CountsOdd(c(3, 4, 2, 4))
+CountsOdd(c(3, 5, 7))
 ```
 
 ```
-## [1] 1
+## [1] 3
 ```
-
-
 
 ```r
-CountEvens <- function(x) {
-    TotalCount <- length(x)
-    Remainder <- vector(length = length(x))
+CountsOdd(c(3, 5, 7, 6, 2, 0))
+```
+
+```
+## [1] 3
+```
+
+
+## Function that counts the number of even numbers
+
+```r
+CountEvens1 <- function(x) {
+    TotalCount <- length(x)  #This finds the amount numbers in the vector x.
+    Remainder <- vector(length = length(x))  #Generates a vector of the equal length as x.
     Remainder <- x%%2
     Oddcount <- sum(Remainder)
-    Evencount <- TotalCount - Oddcount
+    Evencount <- TotalCount - Oddcount  # After counting the total odd numbers in the vector, the function will subtract that amount from the total. If a number is not odd, it must be even. Therefore, the numbers not counted must be even.
     return(Evencount)
 }
+```
 
-CountEvens <- function(x) {
-    x <- x + 1
+
+The answer should be 2:
+
+```r
+CountEvens1(c(3, 5, 7, 6, 2, 0))
+```
+
+```
+## [1] 3
+```
+
+
+## This is another function that will count the number of even numbers.
+
+```r
+CountEvens2 <- function(x) {
+    x <- x + 1  #This changes every odd number to even and every even number to odd.
+    # We can then use the odd count function to count the amount of 'odd'
+    # numbers.
     Remainder <- vector(length = length(x))
     Remainder <- x%%2
     Evencount <- sum(Remainder)
     return(Evencount)
 }
+```
 
+
+The answer should be 2:
+
+```r
+CountEvens2(c(3, 5, 7, 6, 2, 0))
+```
+
+```
+## [1] 3
+```
+
+
+## This will calculate hypotenuse of a right angled triangle.
+
+```r
 hypotenuseLength <- function(a, b) {
     asquared <- a^2
     bsquared <- b^2
@@ -52,7 +95,31 @@ hypotenuseLength <- function(a, b) {
 ```
 
 
+Test for the hypotenuse function.
 
+* Answer should be 5.
+
+```r
+hypotenuseLength(3, 4)
+```
+
+```
+## [1] 5
+```
+
+
+* Answer should be 85.
+
+```r
+hypotenuseLength(13, 84)
+```
+
+```
+## [1] 85
+```
+
+ 
+## This is a function that calculates the missing side of triangle using the Law of Cosine. 
 
 ```r
 LawOfCosines <- function(a, b, theta) {
@@ -74,15 +141,40 @@ Test statements:
 
 
 ```r
-LawOfCosines(10, 10, pi/3)
+LawOfCosines(5, 5, pi/3)
 ```
 
 ```
 ##      [,1]
-## [1,]   10
+## [1,]    5
 ```
 
 
+* A collapsed triangle. Answer should be 71.
+
+```r
+LawOfCosines(13, 84, 0)
+```
+
+```
+##      [,1]
+## [1,]   71
+```
+
+
+*Right angled triangle. Answer should be 85.
+
+```r
+LawOfCosines(13, 84, pi/2)
+```
+
+```
+##      [,1]
+## [1,]   85
+```
+
+
+## This will calculate the angle of a triangle using the sides of the triangle 
 
 ```r
 ThetaFromLengths <- function(a, b, c) {
@@ -98,7 +190,7 @@ ThetaFromLengths <- function(a, b, c) {
 ```
 
 
-Test again on an equilateral triangle: Angle should be $\pi/3$
+Test again on an equilateral and right angled triangle: 
 
 ```r
 ThetaFromLengths(10, 10, 10)
@@ -134,11 +226,13 @@ pi/2
 ## [1] 1.571
 ```
 
-
+ 
+## This function tests the accuracy of ThetaFromLengths
 
 ```r
-testTriangles <- function(a = 10, b = 5, theta) {
-    abs(ThetaFromLengths(a, b, LawOfCosines(a, b, theta)) - theta) < 1e-05
+testThetaFromLengths <- function(a, b, theta) {
+    Difference <- abs(ThetaFromLengths(a, b, LawOfCosines(a, b, theta)) - theta)
+    return(Difference)
 }
 ```
 
@@ -146,12 +240,12 @@ testTriangles <- function(a = 10, b = 5, theta) {
 Here are the test cases:
 
 ```r
-testTriangles(a = 100, theta = 2.412)
+testThetaFromLengths(a = 100, b = 34, theta = 2.412)
 ```
 
 ```
 ##      [,1]
-## [1,] TRUE
+## [1,]    0
 ```
 
 
