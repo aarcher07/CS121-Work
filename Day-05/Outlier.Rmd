@@ -1,0 +1,17 @@
+
+##Finds numbers outside of the First and Second Quartile
+```{r}
+outlier<- function(x){
+  quartile2<- median(x)
+  quartile1 <- median(x[x<=quartile2])
+  quartile3 <- median(x[x>=quartile2])
+  
+
+  low <- quartile1 - 1.5*(quartile3 - quartile1)
+  high<- quartile3 + 1.5*(quartile3 - quartile1)
+  
+  return(x[x < low | x > high])
+  
+}
+```
+

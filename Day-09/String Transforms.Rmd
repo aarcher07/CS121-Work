@@ -1,5 +1,4 @@
 # Oct 1, 2013
-
 ##Reverse
 ```{r}
 reverser <- function(x){
@@ -63,47 +62,4 @@ Test statements:
 ```{r}
 #Test statement here. Should return true or false. 
 l33t("sgethaerhe")
-```
-#Substitution Cypher
-```{r}
-KEY<-function(word){
-  for (k in 1:26){
-    word<-gsub(letters[k],k,word)
-  }
-  return(word)
-}
-```
-
-```{r}
-KEY("key")
-
-```{r}
-Cypher<- function(word,key=KEY("key")){
-  set.seed(key)
-  
-   from<-c(letters,LETTERS,"'",".",";",":","/", ",", " ")
-  
-  to<- sample(from, replace=FALSE)
-  to<- paste(to, collapse="")
-  from<- paste(from,collapse="")
-  substituted <-chartr(from,to,word)
-  return(substituted)
-}
-
-message<-Cypher("The enemy comes at dawn",)
-```
-
-```{r}
-ECypher<- function(code,key=KEY("key")){
-  set.seed(key)
-   from<-c(letters,LETTERS,"'",".",";",":","/", ",", " ")
-  
-  to<- sample(from, replace=FALSE)
-  to<- paste(to, collapse="")
-  from<- paste(from,collapse="")
-  substituted <-chartr(to,from, code)
-  return(substituted)
-}
-
-ECypher(message,)
 ```

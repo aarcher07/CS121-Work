@@ -45,7 +45,7 @@ scrambler("egegsegr")
 ```
 
 ```
-## [1] "reeggesg"
+## [1] "egsggeer"
 ```
 
 
@@ -91,5 +91,48 @@ l33t("sgethaerhe")
 
 ```
 ## [1] "593tha3rh3"
+```
+
+
+#Substitution Cypher
+
+```r
+Cypher <- function(word, key) {
+    set.seed(key)
+    
+    from <- c(letters, LETTERS, "'", ".", ";", ":", "/", ",", " ")
+    
+    to <- sample(from, replace = FALSE)
+    to <- paste(to, collapse = "")
+    from <- paste(from, collapse = "")
+    substituted <- chartr(from, to, word)
+    return(substituted)
+}
+
+message <- Cypher("The enemy comes at dawn", 21)
+```
+
+
+
+```r
+ECypher <- function(code, key) {
+    set.seed(key)
+    from <- c(letters, LETTERS, "'", ".", ";", ":", "/", ",", " ")
+    
+    to <- sample(from, replace = FALSE)
+    to <- paste(to, collapse = "")
+    from <- paste(from, collapse = "")
+    substituted <- chartr(to, from, code)
+    return(substituted)
+}
+```
+
+
+```r
+ECypher(message, 21)
+```
+
+```
+## [1] "The enemy comes at dawn"
 ```
 

@@ -1,0 +1,13 @@
+```{r}
+DigitToWord <- function(number,word) {
+ paste(number, "-" , word[number+1])
+}
+```
+
+```{r}
+word<-c("cero","uno","dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve")
+
+DigitToWord(0:9,word)
+
+```
+

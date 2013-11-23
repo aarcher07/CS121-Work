@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title>Oct 1, 2013</title>
+<title></title>
 
 <style type="text/css">
 body, td {
@@ -178,118 +178,44 @@ hljs.initHighlightingOnLoad();
 </head>
 
 <body>
-<h1>Oct 1, 2013</h1>
+<pre><code class="r">latinizer &lt;- function(word) {
 
-<p>##Reverse</p>
+    vowels &lt;- c(&quot;a&quot;, &quot;e&quot;, &quot;i&quot;, &quot;o&quot;, &quot;u&quot;)
 
-<pre><code class="r">reverser &lt;- function(x) {
-    rsplit &lt;- strsplit(x, split = &quot;&quot;)
-    reversal &lt;- rsplit[[1]][rev(1:nchar(x))]
-    stick &lt;- paste(reversal, collapse = &quot;&quot;)
-    return(stick)
-}
+    positions &lt;- vector(length = 5)
 
-</code></pre>
 
-<p>Test statements:</p>
+    for (k in 1:5) {
+        vowel &lt;- vowels[k]
+        empty &lt;- regexpr(vowel, word)
+        positions[k] &lt;- empty[[1]]
+    }
 
-<pre><code class="r"># Test statement here. Should return true or false.
-reverser(&quot;vsgsfgs&quot;) == &quot;sgfsgsv&quot;
-</code></pre>
+    positions[positions == -1] &lt;- NA
 
-<pre><code>## [1] TRUE
-</code></pre>
+    if (any(positions == 1, na.rm = T)) {
+        piglatin &lt;- paste(word, &quot;yay&quot;, collapse = &quot;&quot;, sep = &quot;&quot;)
+    } else {
+        if (!all(is.na(positions))) {
+            firstvowel &lt;- min(positions, na.rm = T)
+            fronthalf &lt;- substring(word, 1, (firstvowel - 1))
 
-<p>##Scrambler</p>
+            backhalf &lt;- substring(word, firstvowel, nchar(word))
 
-<pre><code class="r">scrambler &lt;- function(x) {
-    rscram &lt;- strsplit(x, split = &quot;&quot;)
-    scram &lt;- rscram[[1]][sample(1:nchar(x))]
-    stick &lt;- paste(scram, collapse = &quot;&quot;)
-    return(stick)
-}
 
-</code></pre>
-
-<p>Test statements:</p>
-
-<pre><code class="r"># Test statement here. Should return true or false.
-scrambler(&quot;egegsegr&quot;)
-</code></pre>
-
-<pre><code>## [1] &quot;egsggeer&quot;
-</code></pre>
-
-<p>#VowelBleeper</p>
-
-<pre><code class="r">VowelBleeper &lt;- function(x) {
-    asterisks &lt;- gsub(&quot;[aeiou]&quot;, &quot;*&quot;, x)
-    return(asterisks)
+            piglatin &lt;- paste(backhalf, fronthalf, &quot;ay&quot;, collapse = &quot;&quot;, sep = &quot;&quot;)
+        } else {
+            piglatin &lt;- paste(word, &quot;yay&quot;, sep = &quot;&quot;)
+        }
+    }
+    return(piglatin)
 }
 </code></pre>
 
-<p>Test statements:</p>
-
-<pre><code class="r"># Test statement here. Should return true or false.
-VowelBleeper(&quot;sgethaerhe&quot;) == &quot;sg*th**rh*&quot;
+<pre><code class="r">latinizer(&quot;fddbfduator&quot;)
 </code></pre>
 
-<pre><code>## [1] TRUE
-</code></pre>
-
-<p>#l33t</p>
-
-<pre><code class="r">l33t &lt;- function(x) {
-    Ereplace &lt;- gsub(&quot;[e]&quot;, &quot;3&quot;, x)
-    Oreplace &lt;- gsub(&quot;[o]&quot;, &quot;0&quot;, Ereplace)
-    Sreplace &lt;- gsub(&quot;[s]&quot;, &quot;5&quot;, Oreplace)
-    Greplace &lt;- gsub(&quot;[g]&quot;, &quot;9&quot;, Sreplace)
-    return(Greplace)
-}
-</code></pre>
-
-<p>Test statements:</p>
-
-<pre><code class="r"># Test statement here. Should return true or false.
-l33t(&quot;sgethaerhe&quot;)
-</code></pre>
-
-<pre><code>## [1] &quot;593tha3rh3&quot;
-</code></pre>
-
-<p>#Substitution Cypher</p>
-
-<pre><code class="r">Cypher &lt;- function(word, key) {
-    set.seed(key)
-
-    from &lt;- c(letters, LETTERS, &quot;&#39;&quot;, &quot;.&quot;, &quot;;&quot;, &quot;:&quot;, &quot;/&quot;, &quot;,&quot;, &quot; &quot;)
-
-    to &lt;- sample(from, replace = FALSE)
-    to &lt;- paste(to, collapse = &quot;&quot;)
-    from &lt;- paste(from, collapse = &quot;&quot;)
-    substituted &lt;- chartr(from, to, word)
-    return(substituted)
-}
-
-message &lt;- Cypher(&quot;The enemy comes at dawn&quot;, 21)
-</code></pre>
-
-<pre><code class="r">ECypher &lt;- function(code, key) {
-    set.seed(key)
-    from &lt;- c(letters, LETTERS, &quot;&#39;&quot;, &quot;.&quot;, &quot;;&quot;, &quot;:&quot;, &quot;/&quot;, &quot;,&quot;, &quot; &quot;)
-
-    to &lt;- sample(from, replace = FALSE)
-    to &lt;- paste(to, collapse = &quot;&quot;)
-    from &lt;- paste(from, collapse = &quot;&quot;)
-    substituted &lt;- chartr(to, from, code)
-    return(substituted)
-}
-</code></pre>
-
-<pre><code class="r">ECypher(message, 21)
-</code></pre>
-
-<pre><code>## [1] &quot;The enemy comes at dawn&quot;
+<pre><code>## [1] &quot;uatorfddbfday&quot;
 </code></pre>
 
 </body>

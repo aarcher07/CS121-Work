@@ -1,0 +1,61 @@
+
+```{r}
+
+testlatency<-function(N=20){ 
+  
+  result<- vector(length=N)
+  time<-rexp(N,rate=1/2)
+  for (k in 1:N){
+    
+before<- Sys.time()
+readline("Press return")
+cat(rep("\n",3))
+after<-Sys.time()
+diff<- after-before
+result[k] <- diff
+Sys.sleep(time[k])
+} #runif is a random number generator
+  
+table<-data.frame("Time Interval"=time, "Latency"=result )
+  return(table)
+}
+```
+
+```{r}
+load("DorisData.RData")
+plot(DorisData$Time.Interval, DorisData$Latency, xlim=c(0,2), ylim=c(0,5))
+
+```
+
+```{r} 
+#Testing Latency with varying word lengths and random letters
+testLatencyLETTERS<-function(N=20){ 
+  
+  result<- vector(length=N)
+  WordLength <- round(runif(N,1,20))
+
+  for (k in 1:N){
+    
+  x<-sample(letters,WordLength[k],replace=FALSE)
+  
+  word<- paste(x,collapse="")
+  
+  phrase<- paste("Type the word, '", word, "' ",sep=" ")
+  
+before<- Sys.time()
+  
+  statement<- readline(prompt=phrase)
+  
+  while(statement != word){ 
+    statement<- readline("Look again ")}
+  
+after<-Sys.time()
+
+diff<- after-before
+result[k] <- diff
+Sys.sleep(3)
+} 
+  
+table<-data.frame("Word Length"=WordLength, "Latency"=result )
+  return(table)}
+```

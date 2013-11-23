@@ -183,23 +183,16 @@ hljs.initHighlightingOnLoad();
 Summary &lt;- function(words) {
     # 100 Longest Words
     numberofcharacters &lt;- nchar(words)
-    DescendingCharacters &lt;- sort(numberofcharacters, decreasing = TRUE)
-    longest100 &lt;- DescendingCharacters[1:100]
-    LongestWords &lt;- words[which(numberofcharacters == longest100)]
+    DescendingCharacters &lt;- order(-numberofcharacters)
+    longest100 &lt;- words[DescendingCharacters[1:100]]
+    LongestWords &lt;- words[which(numberofcharacters %in% longest100)]
 
     # Word Length
     wordLength &lt;- table(numberofcharacters)
 
 
-    qwords &lt;- words[(grep(&quot;[q]&quot;, words))]
-    uwords &lt;- words[(grep(&quot;[u]&quot;, words))]
-
-    dups &lt;- duplicated(c(uwords, qwords))  #Duplicated combines the vectors and detects which words in uwords are repeated in qwords. The words that are duplicated are given a &#39;TRUE&#39; value and those that are not are given &#39;FALSE.&#39;
-    UinQwords &lt;- dups[(length(uwords) + 1):(length(qwords) + length(uwords))]  #Removes the uword vector from dups, leaving qwords.
-
-    indexofUinQ &lt;- which(UinQwords == &quot;TRUE&quot;)  #Determines the indices of duplicated values
-    qwordsWithoutU &lt;- qwords[-indexofUinQ]  #Removes duplicated indices             
-
+    NoUwords &lt;- words[(grep(&quot;[^u]&quot;, words))]
+    qNoUwords &lt;- NoUwords[(grep(&quot;[q]&quot;, NoUwords))]
 
     # Words starting with a given letter of the alphabet
     letters &lt;- c(&quot;^a&quot;, &quot;^b&quot;, &quot;^c&quot;, &quot;^d&quot;, &quot;^e&quot;, &quot;^f&quot;, &quot;^g&quot;, &quot;^h&quot;, &quot;^i&quot;, &quot;^j&quot;, 
@@ -211,96 +204,1137 @@ Summary &lt;- function(words) {
         lettersnew &lt;- letters[k]
         Sums[k] &lt;- sum(grepl(lettersnew, words))
     }
-    return(c(qwordsWithoutU, LongestWords, wordLength, table(Sums)))
+    return(c(qNoUwords, LongestWords, wordLength, Sums))
 }
 
 
 Summary(words)
 </code></pre>
 
-<pre><code>## Warning: longer object length is not a multiple of shorter object length
-## Warning: closing unused connection 5
+<pre><code>## Warning: closing unused connection 5
 ## (http://dtkaplan.github.io/ScientificComputing/Syllabus/Daily/Day-07/word_list_moby_crossword-flat/word_list_moby_crossword.flat.txt)
 </code></pre>
 
-<pre><code>##                                                                      
-##                &quot;faqir&quot;               &quot;faqirs&quot;                 &quot;qaid&quot; 
-##                                                                      
-##                &quot;qaids&quot;               &quot;qindar&quot;              &quot;qindars&quot; 
-##                                                                      
-##               &quot;qintar&quot;              &quot;qintars&quot;                 &quot;qoph&quot; 
-##                                                                      
-##                &quot;qophs&quot;   &quot;absentmindednesses&quot;   &quot;antiadministration&quot; 
-##                                                                      
-##    &quot;antimaterialistic&quot;    &quot;antimiscegenation&quot;    &quot;antitechnological&quot; 
-##                                                                      
-##    &quot;blameworthinesses&quot;    &quot;characterizations&quot;   &quot;chemotherapeutical&quot; 
-##                                                                      
-##   &quot;counteraccusations&quot;   &quot;counteraggressions&quot;    &quot;countercomplaints&quot; 
-##                                                                      
-##    &quot;countercriticisms&quot;   &quot;counterpropagation&quot;   &quot;counterretaliation&quot; 
-##                                                                      
-##   &quot;counterrevolutions&quot;   &quot;countersuggestions&quot;    &quot;counterterrorisms&quot; 
-##                                                                      
-##    &quot;counterterrorists&quot;    &quot;cyclophosphamides&quot;  &quot;disinterestednesses&quot; 
-##                                                                      
-##   &quot;electrocardiograms&quot;   &quot;electrocardiograph&quot;   &quot;feeblemindednesses&quot; 
-##                                                                      
-##    &quot;halfheartednesses&quot;    &quot;homogeneousnesses&quot;   &quot;hypernationalistic&quot; 
-##                                                                      
-##   &quot;hypersensitiveness&quot;   &quot;hypersensitivities&quot;    &quot;impenetrabilities&quot; 
-##                                                                      
-##    &quot;inattentivenesses&quot;  &quot;inconsideratenesses&quot;    &quot;inquisitivenesses&quot; 
-##                                                                      
-##    &quot;intergovernmental&quot;    &quot;internationalisms&quot;    &quot;internationalized&quot; 
-##                                                                      
-##    &quot;internationalizes&quot;   &quot;interrelatednesses&quot;    &quot;irreconcilability&quot; 
-##                                                                      
-## &quot;microminiaturization&quot;   &quot;misinterpretations&quot;   &quot;misrepresentations&quot; 
-##                                                                      
-##    &quot;misunderstandings&quot;    &quot;multidisciplinary&quot;    &quot;nearsightednesses&quot; 
-##                                                                      
-##    &quot;nondenominational&quot;    &quot;nondiscrimination&quot;   &quot;obstreperousnesses&quot; 
-##                                                                      
-##    &quot;picturesquenesses&quot;   &quot;postfertilizations&quot;    &quot;professionalizing&quot; 
-##                                                                      
-##    &quot;reclassifications&quot;    &quot;rehospitalization&quot;   &quot;remunerativenesses&quot; 
-##                                                                      
-##    &quot;responsiblenesses&quot;   &quot;simultaneousnesses&quot;   &quot;straightforwardest&quot; 
-##                                                                      
-##    &quot;subclassification&quot;   &quot;superintellectuals&quot;   &quot;superintelligences&quot; 
-##                                                                    2 
-##    &quot;trustworthinesses&quot;   &quot;unscrupulousnesses&quot;                   &quot;85&quot; 
-##                      3                      4                      5 
-##                  &quot;908&quot;                 &quot;3686&quot;                 &quot;8258&quot; 
-##                      6                      7                      8 
-##                &quot;14374&quot;                &quot;21727&quot;                &quot;26447&quot; 
-##                      9                     10                     11 
-##                &quot;16658&quot;                 &quot;9199&quot;                 &quot;5296&quot; 
-##                     12                     13                     14 
-##                 &quot;3166&quot;                 &quot;1960&quot;                 &quot;1023&quot; 
-##                     15                     16                     17 
-##                  &quot;557&quot;                  &quot;261&quot;                  &quot;132&quot; 
-##                     18                     19                     20 
-##                   &quot;48&quot;                   &quot;16&quot;                    &quot;5&quot; 
-##                     21                     82                    398 
-##                    &quot;3&quot;                    &quot;1&quot;                    &quot;1&quot; 
-##                    438                    568                   1106 
-##                    &quot;1&quot;                    &quot;1&quot;                    &quot;1&quot; 
-##                   1312                   1932                   2208 
-##                    &quot;1&quot;                    &quot;1&quot;                    &quot;1&quot; 
-##                   2927                   2934                   3710 
-##                    &quot;1&quot;                    &quot;1&quot;                    &quot;1&quot; 
-##                   3950                   3978                   4013 
-##                    &quot;1&quot;                    &quot;1&quot;                    &quot;1&quot; 
-##                   4080                   4364                   4937 
-##                    &quot;1&quot;                    &quot;1&quot;                    &quot;1&quot; 
-##                   5951                   6270                   6436 
-##                    &quot;1&quot;                    &quot;1&quot;                    &quot;1&quot; 
-##                   6557                   6848                   7141 
-##                    &quot;1&quot;                    &quot;1&quot;                    &quot;1&quot; 
-##                   8693                  10385                  12591 
-##                    &quot;1&quot;                    &quot;1&quot;                    &quot;1&quot;
+<pre><code>##                                                             
+##           &quot;acequia&quot;          &quot;acequias&quot;          &quot;acquaint&quot; 
+##                                                             
+##      &quot;acquaintance&quot;     &quot;acquaintances&quot;  &quot;acquaintanceship&quot; 
+##                                                             
+## &quot;acquaintanceships&quot;        &quot;acquainted&quot;       &quot;acquainting&quot; 
+##                                                             
+##         &quot;acquaints&quot;           &quot;acquest&quot;          &quot;acquests&quot; 
+##                                                             
+##         &quot;acquiesce&quot;        &quot;acquiesced&quot;      &quot;acquiescence&quot; 
+##                                                             
+##     &quot;acquiescences&quot;       &quot;acquiescent&quot;     &quot;acquiescently&quot; 
+##                                                             
+##        &quot;acquiesces&quot;       &quot;acquiescing&quot;           &quot;acquire&quot; 
+##                                                             
+##          &quot;acquired&quot;          &quot;acquirer&quot;         &quot;acquirers&quot; 
+##                                                             
+##          &quot;acquires&quot;         &quot;acquiring&quot;       &quot;acquisition&quot; 
+##                                                             
+##      &quot;acquisitions&quot;       &quot;acquisitive&quot;            &quot;acquit&quot; 
+##                                                             
+##           &quot;acquits&quot;         &quot;acquitted&quot;        &quot;acquitting&quot; 
+##                                                             
+##        &quot;adequacies&quot;          &quot;adequacy&quot;          &quot;adequate&quot; 
+##                                                             
+##        &quot;adequately&quot;           &quot;alfaqui&quot;          &quot;alfaquin&quot; 
+##                                                             
+##         &quot;alfaquins&quot;          &quot;alfaquis&quot;          &quot;aliquant&quot; 
+##                                                             
+##           &quot;aliquot&quot;          &quot;aliquots&quot;      &quot;antimosquito&quot; 
+##                                                             
+##       &quot;antiquarian&quot;    &quot;antiquarianism&quot;      &quot;antiquarians&quot; 
+##                                                             
+##       &quot;antiquaries&quot;         &quot;antiquary&quot;        &quot;antiquated&quot; 
+##                                                             
+##           &quot;antique&quot;          &quot;antiqued&quot;          &quot;antiquer&quot; 
+##                                                             
+##         &quot;antiquers&quot;          &quot;antiques&quot;         &quot;antiquing&quot; 
+##                                                             
+##       &quot;antiquities&quot;         &quot;antiquity&quot;          &quot;applique&quot; 
+##                                                             
+##         &quot;appliqued&quot;       &quot;appliqueing&quot;         &quot;appliques&quot; 
+##                                                             
+##              &quot;aqua&quot;          &quot;aquacade&quot;         &quot;aquacades&quot; 
+##                                                             
+##             &quot;aquae&quot;        &quot;aquamarine&quot;       &quot;aquamarines&quot; 
+##                                                             
+##          &quot;aquanaut&quot;         &quot;aquanauts&quot;           &quot;aquaria&quot; 
+##                                                             
+##          &quot;aquarial&quot;          &quot;aquarian&quot;         &quot;aquarians&quot; 
+##                                                             
+##          &quot;aquarist&quot;         &quot;aquarists&quot;          &quot;aquarium&quot; 
+##                                                             
+##         &quot;aquariums&quot;             &quot;aquas&quot;           &quot;aquatic&quot; 
+##                                                             
+##          &quot;aquatics&quot;          &quot;aquatint&quot;        &quot;aquatinted&quot; 
+##                                                             
+##       &quot;aquatinting&quot;         &quot;aquatints&quot;          &quot;aquatone&quot; 
+##                                                             
+##         &quot;aquatones&quot;           &quot;aquavit&quot;          &quot;aquavits&quot; 
+##                                                             
+##          &quot;aqueduct&quot;         &quot;aqueducts&quot;           &quot;aqueous&quot; 
+##                                                             
+##           &quot;aquifer&quot;          &quot;aquifers&quot;          &quot;aquiline&quot; 
+##                                                             
+##           &quot;aquiver&quot;         &quot;arabesque&quot;        &quot;arabesques&quot; 
+##                                                             
+##          &quot;arquebus&quot;        &quot;arquebuses&quot;           &quot;asquint&quot; 
+##                                                             
+##           &quot;banquet&quot;         &quot;banqueted&quot;        &quot;banqueting&quot; 
+##                                                             
+##          &quot;banquets&quot;           &quot;baroque&quot;          &quot;baroques&quot; 
+##                                                             
+##            &quot;barque&quot;           &quot;barques&quot;            &quot;basque&quot; 
+##                                                             
+##           &quot;basques&quot;          &quot;bedquilt&quot;         &quot;bedquilts&quot; 
+##                                                             
+##          &quot;beliquor&quot;        &quot;beliquored&quot;       &quot;beliquoring&quot; 
+##                                                             
+##         &quot;beliquors&quot;          &quot;bequeath&quot;        &quot;bequeathed&quot; 
+##                                                             
+##       &quot;bequeathing&quot;         &quot;bequeaths&quot;           &quot;bequest&quot; 
+##                                                             
+##          &quot;bequests&quot;           &quot;bezique&quot;          &quot;beziques&quot; 
+##                                                             
+##            &quot;bisque&quot;           &quot;bisques&quot;            &quot;bosque&quot; 
+##                                                             
+##           &quot;bosques&quot;           &quot;bosquet&quot;          &quot;bosquets&quot; 
+##                                                             
+##           &quot;bouquet&quot;          &quot;bouquets&quot;          &quot;boutique&quot; 
+##                                                             
+##         &quot;boutiques&quot;           &quot;briquet&quot;          &quot;briquets&quot; 
+##                                                             
+##        &quot;briquetted&quot;       &quot;briquetting&quot;           &quot;brusque&quot; 
+##                                                             
+##         &quot;brusquely&quot;          &quot;brusquer&quot;         &quot;brusquest&quot; 
+##                                                             
+##            &quot;buqsha&quot;           &quot;buqshas&quot;         &quot;burlesque&quot; 
+##                                                             
+##        &quot;burlesqued&quot;        &quot;burlesques&quot;       &quot;burlesquing&quot; 
+##                                                             
+##           &quot;cacique&quot;          &quot;caciques&quot;            &quot;caique&quot; 
+##                                                             
+##           &quot;caiques&quot;            &quot;calque&quot;           &quot;calqued&quot; 
+##                                                             
+##           &quot;calques&quot;          &quot;calquing&quot;            &quot;casque&quot; 
+##                                                             
+##           &quot;casqued&quot;           &quot;casques&quot;           &quot;cazique&quot; 
+##                                                             
+##          &quot;caziques&quot;          &quot;chaqueta&quot;         &quot;chaquetas&quot; 
+##                                                             
+##           &quot;charqui&quot;          &quot;charquid&quot;          &quot;charquis&quot; 
+##                                                             
+##            &quot;cheque&quot;           &quot;chequer&quot;         &quot;chequered&quot; 
+##                                                             
+##        &quot;chequering&quot;          &quot;chequers&quot;           &quot;cheques&quot; 
+##                                                             
+##          &quot;cinquain&quot;         &quot;cinquains&quot;            &quot;cinque&quot; 
+##                                                             
+##           &quot;cinques&quot;            &quot;cirque&quot;           &quot;cirques&quot; 
+##                                                             
+##            &quot;claque&quot;           &quot;claquer&quot;          &quot;claquers&quot; 
+##                                                             
+##           &quot;claques&quot;          &quot;claqueur&quot;         &quot;claqueurs&quot; 
+##                                                             
+##            &quot;clique&quot;           &quot;cliqued&quot;         &quot;cliqueier&quot; 
+##                                                             
+##        &quot;cliqueiest&quot;           &quot;cliques&quot;           &quot;cliquey&quot; 
+##                                                             
+##          &quot;cliquier&quot;         &quot;cliquiest&quot;          &quot;cliquing&quot; 
+##                                                             
+##          &quot;cliquish&quot;            &quot;cliquy&quot;           &quot;coequal&quot; 
+##                                                             
+##          &quot;coequals&quot;          &quot;coequate&quot;         &quot;coequated&quot; 
+##                                                             
+##         &quot;coequates&quot;        &quot;coequating&quot;        &quot;colloquial&quot; 
+##                                                             
+##     &quot;colloquialism&quot;    &quot;colloquialisms&quot;        &quot;colloquies&quot; 
+##                                                             
+##          &quot;colloquy&quot;        &quot;communique&quot;       &quot;communiques&quot; 
+##                                                             
+##           &quot;conquer&quot;         &quot;conquered&quot;        &quot;conquering&quot; 
+##                                                             
+##         &quot;conqueror&quot;        &quot;conquerors&quot;          &quot;conquers&quot; 
+##                                                             
+##          &quot;conquest&quot;         &quot;conquests&quot;          &quot;conquian&quot; 
+##                                                             
+##         &quot;conquians&quot;       &quot;consequence&quot;      &quot;consequences&quot; 
+##                                                             
+##        &quot;consequent&quot;     &quot;consequential&quot;      &quot;consequently&quot; 
+##                                                             
+##       &quot;consequents&quot;            &quot;coquet&quot;        &quot;coquetries&quot; 
+##                                                             
+##          &quot;coquetry&quot;           &quot;coquets&quot;          &quot;coquette&quot; 
+##                                                             
+##         &quot;coquetted&quot;         &quot;coquettes&quot;        &quot;coquetting&quot; 
+##                                                             
+##          &quot;coquille&quot;         &quot;coquilles&quot;           &quot;coquina&quot; 
+##                                                             
+##          &quot;coquinas&quot;           &quot;coquito&quot;          &quot;coquitos&quot; 
+##                                                             
+##          &quot;cotquean&quot;         &quot;cotqueans&quot;   &quot;counterquestion&quot; 
+##                                                             
+##  &quot;counterquestions&quot;          &quot;critique&quot;         &quot;critiqued&quot; 
+##                                                             
+##         &quot;critiques&quot;        &quot;critiquing&quot;           &quot;croquet&quot; 
+##                                                             
+##         &quot;croqueted&quot;        &quot;croqueting&quot;          &quot;croquets&quot; 
+##                                                             
+##         &quot;croquette&quot;        &quot;croquettes&quot;           &quot;croquis&quot; 
+##                                                             
+##           &quot;cumquat&quot;          &quot;cumquats&quot;          &quot;daiquiri&quot; 
+##                                                             
+##         &quot;daiquiris&quot;     &quot;delinquencies&quot;       &quot;delinquency&quot; 
+##                                                             
+##        &quot;delinquent&quot;       &quot;delinquents&quot;      &quot;desquamation&quot; 
+##                                                             
+##     &quot;desquamations&quot;            &quot;diquat&quot;           &quot;diquats&quot; 
+##                                                             
+##  &quot;disqualification&quot; &quot;disqualifications&quot;      &quot;disqualified&quot; 
+##                                                             
+##      &quot;disqualifies&quot;        &quot;disqualify&quot;     &quot;disqualifying&quot; 
+##                                                             
+##          &quot;disquiet&quot;        &quot;disquieted&quot;       &quot;disquieting&quot; 
+##                                                             
+##         &quot;disquiets&quot;        &quot;earthquake&quot;       &quot;earthquakes&quot; 
+##                                                             
+##          &quot;eloquent&quot;        &quot;eloquently&quot;           &quot;enquire&quot; 
+##                                                             
+##          &quot;enquired&quot;          &quot;enquires&quot;         &quot;enquiries&quot; 
+##                                                             
+##         &quot;enquiring&quot;           &quot;enquiry&quot;      &quot;equabilities&quot; 
+##                                                             
+##        &quot;equability&quot;           &quot;equable&quot;           &quot;equably&quot; 
+##                                                             
+##             &quot;equal&quot;           &quot;equaled&quot;          &quot;equaling&quot; 
+##                                                             
+##          &quot;equalise&quot;         &quot;equalised&quot;         &quot;equalises&quot; 
+##                                                             
+##        &quot;equalising&quot;        &quot;equalities&quot;          &quot;equality&quot; 
+##                                                             
+##          &quot;equalize&quot;         &quot;equalized&quot;         &quot;equalizes&quot; 
+##                                                             
+##        &quot;equalizing&quot;          &quot;equalled&quot;         &quot;equalling&quot; 
+##                                                             
+##           &quot;equally&quot;            &quot;equals&quot;      &quot;equanimities&quot; 
+##                                                             
+##        &quot;equanimity&quot;            &quot;equate&quot;           &quot;equated&quot; 
+##                                                             
+##           &quot;equates&quot;          &quot;equating&quot;          &quot;equation&quot; 
+##                                                             
+##         &quot;equations&quot;           &quot;equator&quot;        &quot;equatorial&quot; 
+##                                                             
+##          &quot;equators&quot;         &quot;equerries&quot;           &quot;equerry&quot; 
+##                                                             
+##        &quot;equestrian&quot;       &quot;equestrians&quot;       &quot;equilateral&quot; 
+##                                                             
+##       &quot;equilibrium&quot;            &quot;equine&quot;          &quot;equinely&quot; 
+##                                                             
+##           &quot;equines&quot;        &quot;equinities&quot;          &quot;equinity&quot; 
+##                                                             
+##           &quot;equinox&quot;         &quot;equinoxes&quot;             &quot;equip&quot; 
+##                                                             
+##          &quot;equipage&quot;         &quot;equipages&quot;         &quot;equipment&quot; 
+##                                                             
+##        &quot;equipments&quot;          &quot;equipped&quot;          &quot;equipper&quot; 
+##                                                             
+##         &quot;equippers&quot;         &quot;equipping&quot;            &quot;equips&quot; 
+##                                                             
+##          &quot;equiseta&quot;         &quot;equitable&quot;          &quot;equitant&quot; 
+##                                                             
+##           &quot;equites&quot;          &quot;equities&quot;            &quot;equity&quot; 
+##                                                             
+##       &quot;equivalence&quot;      &quot;equivalences&quot;        &quot;equivalent&quot; 
+##                                                             
+##       &quot;equivalents&quot;         &quot;equivocal&quot;        &quot;equivocate&quot; 
+##                                                             
+##       &quot;equivocated&quot;       &quot;equivocates&quot;      &quot;equivocating&quot; 
+##                                                             
+##      &quot;equivocation&quot;     &quot;equivocations&quot;          &quot;equivoke&quot; 
+##                                                             
+##         &quot;equivokes&quot;           &quot;esquire&quot;          &quot;esquired&quot; 
+##                                                             
+##          &quot;esquires&quot;         &quot;esquiring&quot;          &quot;exequial&quot; 
+##                                                             
+##          &quot;exequies&quot;            &quot;exequy&quot;         &quot;exquisite&quot; 
+##                                                             
+##             &quot;faqir&quot;            &quot;faqirs&quot;            &quot;faquir&quot; 
+##                                                             
+##           &quot;faquirs&quot;             &quot;fique&quot;            &quot;fiques&quot; 
+##                                                             
+##       &quot;forequarter&quot;      &quot;forequarters&quot;       &quot;frequencies&quot; 
+##                                                             
+##         &quot;frequency&quot;          &quot;frequent&quot;        &quot;frequented&quot; 
+##                                                             
+##        &quot;frequenter&quot;       &quot;frequenters&quot;       &quot;frequentest&quot; 
+##                                                             
+##       &quot;frequenting&quot;        &quot;frequently&quot;         &quot;frequents&quot; 
+##                                                             
+##         &quot;grotesque&quot;       &quot;grotesquely&quot;         &quot;harlequin&quot; 
+##                                                             
+##        &quot;harlequins&quot;       &quot;headquarter&quot;     &quot;headquartered&quot; 
+##                                                             
+##    &quot;headquartering&quot;      &quot;headquarters&quot;          &quot;henequen&quot; 
+##                                                             
+##         &quot;henequens&quot;          &quot;henequin&quot;         &quot;henequins&quot; 
+##                                                             
+##          &quot;heniquen&quot;         &quot;heniquens&quot;       &quot;hindquarter&quot; 
+##                                                             
+##      &quot;hindquarters&quot;          &quot;illiquid&quot;      &quot;inadequacies&quot; 
+##                                                             
+##        &quot;inadequacy&quot;        &quot;inadequate&quot;      &quot;inadequately&quot; 
+##                                                             
+##     &quot;inconsequence&quot;    &quot;inconsequences&quot;   &quot;inconsequential&quot; 
+##                                                             
+## &quot;inconsequentially&quot;      &quot;inequalities&quot;        &quot;inequality&quot; 
+##                                                             
+##        &quot;inequities&quot;          &quot;inequity&quot;        &quot;infrequent&quot; 
+##                                                             
+##      &quot;infrequently&quot;        &quot;iniquities&quot;        &quot;iniquitous&quot; 
+##                                                             
+##          &quot;iniquity&quot;           &quot;inquest&quot;          &quot;inquests&quot; 
+##                                                             
+##           &quot;inquiet&quot;         &quot;inquieted&quot;        &quot;inquieting&quot; 
+##                                                             
+##          &quot;inquiets&quot;           &quot;inquire&quot;          &quot;inquired&quot; 
+##                                                             
+##          &quot;inquirer&quot;         &quot;inquirers&quot;          &quot;inquires&quot; 
+##                                                             
+##         &quot;inquiries&quot;         &quot;inquiring&quot;       &quot;inquiringly&quot; 
+##                                                             
+##           &quot;inquiry&quot;       &quot;inquisition&quot;      &quot;inquisitions&quot; 
+##                                                             
+##       &quot;inquisitive&quot;     &quot;inquisitively&quot;   &quot;inquisitiveness&quot; 
+##                                                             
+## &quot;inquisitivenesses&quot;        &quot;inquisitor&quot;     &quot;inquisitorial&quot; 
+##                                                             
+##       &quot;inquisitors&quot;     &quot;interquartile&quot;          &quot;jacquard&quot; 
+##                                                             
+##         &quot;jacquards&quot;        &quot;jacqueline&quot;           &quot;jonquil&quot; 
+##                                                             
+##          &quot;jonquils&quot;           &quot;kumquat&quot;          &quot;kumquats&quot; 
+##                                                             
+##           &quot;lacquer&quot;         &quot;lacquered&quot;        &quot;lacquering&quot; 
+##                                                             
+##          &quot;lacquers&quot;           &quot;lacquey&quot;         &quot;lacqueyed&quot; 
+##                                                             
+##        &quot;lacqueying&quot;          &quot;lacqueys&quot;           &quot;liquate&quot; 
+##                                                             
+##          &quot;liquated&quot;          &quot;liquates&quot;         &quot;liquating&quot; 
+##                                                             
+##      &quot;liquefaction&quot;     &quot;liquefactions&quot;       &quot;liquefiable&quot; 
+##                                                             
+##         &quot;liquefied&quot;         &quot;liquefier&quot;        &quot;liquefiers&quot; 
+##                                                             
+##         &quot;liquefies&quot;           &quot;liquefy&quot;        &quot;liquefying&quot; 
+##                                                             
+##           &quot;liqueur&quot;          &quot;liqueurs&quot;            &quot;liquid&quot; 
+##                                                             
+##         &quot;liquidate&quot;        &quot;liquidated&quot;        &quot;liquidates&quot; 
+##                                                             
+##       &quot;liquidating&quot;       &quot;liquidation&quot;      &quot;liquidations&quot; 
+##                                                             
+##       &quot;liquidities&quot;         &quot;liquidity&quot;          &quot;liquidly&quot; 
+##                                                             
+##           &quot;liquids&quot;         &quot;liquified&quot;         &quot;liquifies&quot; 
+##                                                             
+##           &quot;liquify&quot;        &quot;liquifying&quot;            &quot;liquor&quot; 
+##                                                             
+##          &quot;liquored&quot;         &quot;liquoring&quot;           &quot;liquors&quot; 
+##                                                             
+##        &quot;loquacious&quot;       &quot;loquacities&quot;         &quot;loquacity&quot; 
+##                                                             
+##            &quot;loquat&quot;           &quot;loquats&quot;           &quot;macaque&quot; 
+##                                                             
+##          &quot;macaques&quot;         &quot;mannequin&quot;        &quot;mannequins&quot; 
+##                                                             
+##            &quot;manque&quot;          &quot;maquette&quot;         &quot;maquettes&quot; 
+##                                                             
+##             &quot;maqui&quot;            &quot;maquis&quot;            &quot;marque&quot; 
+##                                                             
+##           &quot;marquee&quot;          &quot;marquees&quot;           &quot;marques&quot; 
+##                                                             
+##          &quot;marquess&quot;        &quot;marquesses&quot;           &quot;marquis&quot; 
+##                                                             
+##          &quot;marquise&quot;         &quot;marquises&quot;            &quot;masque&quot; 
+##                                                             
+##           &quot;masquer&quot;        &quot;masquerade&quot;       &quot;masqueraded&quot; 
+##                                                             
+##       &quot;masquerader&quot;      &quot;masqueraders&quot;       &quot;masquerades&quot; 
+##                                                             
+##      &quot;masquerading&quot;          &quot;masquers&quot;           &quot;masques&quot; 
+##                                                             
+##           &quot;mesquit&quot;          &quot;mesquite&quot;         &quot;mesquites&quot; 
+##                                                             
+##          &quot;mesquits&quot;           &quot;mezquit&quot;          &quot;mezquite&quot; 
+##                                                             
+##         &quot;mezquites&quot;          &quot;mezquits&quot;          &quot;miquelet&quot; 
+##                                                             
+##         &quot;miquelets&quot;      &quot;misquotation&quot;     &quot;misquotations&quot; 
+##                                                             
+##          &quot;misquote&quot;         &quot;misquoted&quot;         &quot;misquotes&quot; 
+##                                                             
+##        &quot;misquoting&quot;          &quot;moquette&quot;         &quot;moquettes&quot; 
+##                                                             
+##          &quot;moresque&quot;         &quot;moresques&quot;            &quot;mosque&quot; 
+##                                                             
+##           &quot;mosques&quot;          &quot;mosquito&quot;        &quot;mosquitoes&quot; 
+##                                                             
+##         &quot;mosquitos&quot;          &quot;musquash&quot;        &quot;musquashes&quot; 
+##                                                             
+##          &quot;mystique&quot;         &quot;mystiques&quot;          &quot;nonequal&quot; 
+##                                                             
+##         &quot;nonequals&quot;          &quot;nonquota&quot;           &quot;oblique&quot; 
+##                                                             
+##          &quot;obliqued&quot;         &quot;obliquely&quot;       &quot;obliqueness&quot; 
+##                                                             
+##     &quot;obliquenesses&quot;          &quot;obliques&quot;         &quot;obliquing&quot; 
+##                                                             
+##       &quot;obliquities&quot;         &quot;obliquity&quot;         &quot;obloquies&quot; 
+##                                                             
+##           &quot;obloquy&quot;         &quot;obsequies&quot;        &quot;obsequious&quot; 
+##                                                             
+##      &quot;obsequiously&quot;    &quot;obsequiousness&quot;  &quot;obsequiousnesses&quot; 
+##                                                             
+##           &quot;obsequy&quot;            &quot;opaque&quot;           &quot;opaqued&quot; 
+##                                                             
+##          &quot;opaquely&quot;        &quot;opaqueness&quot;      &quot;opaquenesses&quot; 
+##                                                             
+##           &quot;opaquer&quot;           &quot;opaques&quot;          &quot;opaquest&quot; 
+##                                                             
+##          &quot;opaquing&quot;           &quot;oquassa&quot;          &quot;oquassas&quot; 
+##                                                             
+##          &quot;outquote&quot;         &quot;outquoted&quot;         &quot;outquotes&quot; 
+##                                                             
+##        &quot;outquoting&quot;     &quot;overqualified&quot;          &quot;paraquat&quot; 
+##                                                             
+##         &quot;paraquats&quot;          &quot;paraquet&quot;         &quot;paraquets&quot; 
+##                                                             
+##          &quot;paroquet&quot;         &quot;paroquets&quot;           &quot;parquet&quot; 
+##                                                             
+##         &quot;parqueted&quot;        &quot;parqueting&quot;       &quot;parquetries&quot; 
+##                                                             
+##         &quot;parquetry&quot;          &quot;parquets&quot;           &quot;pasquil&quot; 
+##                                                             
+##          &quot;pasquils&quot;           &quot;perique&quot;          &quot;periques&quot; 
+##                                                             
+##        &quot;perquisite&quot;       &quot;perquisites&quot;          &quot;physique&quot; 
+##                                                             
+##         &quot;physiques&quot;           &quot;picquet&quot;          &quot;picquets&quot; 
+##                                                             
+##       &quot;picturesque&quot;   &quot;picturesqueness&quot; &quot;picturesquenesses&quot; 
+##                                                             
+##        &quot;piquancies&quot;          &quot;piquancy&quot;           &quot;piquant&quot; 
+##                                                             
+##             &quot;pique&quot;            &quot;piqued&quot;            &quot;piques&quot; 
+##                                                             
+##            &quot;piquet&quot;           &quot;piquets&quot;           &quot;piquing&quot; 
+##                                                             
+##           &quot;piroque&quot;          &quot;piroques&quot;            &quot;plaque&quot; 
+##                                                             
+##           &quot;plaques&quot;          &quot;postique&quot;         &quot;postiques&quot; 
+##                                                             
+##          &quot;pratique&quot;         &quot;pratiques&quot;     &quot;predelinquent&quot; 
+##                                                             
+##      &quot;prerequisite&quot;     &quot;prerequisites&quot;     &quot;propinquities&quot; 
+##                                                             
+##       &quot;propinquity&quot;            &quot;pulque&quot;           &quot;pulques&quot; 
+##                                                             
+##              &quot;qaid&quot;             &quot;qaids&quot;            &quot;qindar&quot; 
+##                                                             
+##           &quot;qindars&quot;            &quot;qintar&quot;           &quot;qintars&quot; 
+##                                                             
+##            &quot;qiviut&quot;           &quot;qiviuts&quot;              &quot;qoph&quot; 
+##                                                             
+##             &quot;qophs&quot;               &quot;qua&quot;             &quot;quack&quot; 
+##                                                             
+##           &quot;quacked&quot;        &quot;quackeries&quot;          &quot;quackery&quot; 
+##                                                             
+##          &quot;quacking&quot;          &quot;quackish&quot;          &quot;quackism&quot; 
+##                                                             
+##         &quot;quackisms&quot;            &quot;quacks&quot;              &quot;quad&quot; 
+##                                                             
+##           &quot;quadded&quot;          &quot;quadding&quot;        &quot;quadrangle&quot; 
+##                                                             
+##       &quot;quadrangles&quot;      &quot;quadrangular&quot;          &quot;quadrans&quot; 
+##                                                             
+##          &quot;quadrant&quot;        &quot;quadrantes&quot;         &quot;quadrants&quot; 
+##                                                             
+##           &quot;quadrat&quot;          &quot;quadrate&quot;         &quot;quadrated&quot; 
+##                                                             
+##         &quot;quadrates&quot;        &quot;quadrating&quot;          &quot;quadrats&quot; 
+##                                                             
+##           &quot;quadric&quot;          &quot;quadrics&quot;          &quot;quadriga&quot; 
+##                                                             
+##         &quot;quadrigae&quot;     &quot;quadrilateral&quot;    &quot;quadrilaterals&quot; 
+##                                                             
+##         &quot;quadrille&quot;        &quot;quadrilles&quot;          &quot;quadroon&quot; 
+##                                                             
+##         &quot;quadroons&quot;         &quot;quadruped&quot;       &quot;quadrupedal&quot; 
+##                                                             
+##        &quot;quadrupeds&quot;         &quot;quadruple&quot;        &quot;quadrupled&quot; 
+##                                                             
+##        &quot;quadruples&quot;        &quot;quadruplet&quot;       &quot;quadruplets&quot; 
+##                                                             
+##       &quot;quadrupling&quot;             &quot;quads&quot;            &quot;quaere&quot; 
+##                                                             
+##           &quot;quaeres&quot;          &quot;quaestor&quot;         &quot;quaestors&quot; 
+##                                                             
+##             &quot;quaff&quot;           &quot;quaffed&quot;           &quot;quaffer&quot; 
+##                                                             
+##          &quot;quaffers&quot;          &quot;quaffing&quot;            &quot;quaffs&quot; 
+##                                                             
+##              &quot;quag&quot;            &quot;quagga&quot;           &quot;quaggas&quot; 
+##                                                             
+##          &quot;quaggier&quot;         &quot;quaggiest&quot;            &quot;quaggy&quot; 
+##                                                             
+##          &quot;quagmire&quot;         &quot;quagmires&quot;        &quot;quagmirier&quot; 
+##                                                             
+##       &quot;quagmiriest&quot;          &quot;quagmiry&quot;             &quot;quags&quot; 
+##                                                             
+##           &quot;quahaug&quot;          &quot;quahaugs&quot;            &quot;quahog&quot; 
+##                                                             
+##           &quot;quahogs&quot;              &quot;quai&quot;            &quot;quaich&quot; 
+##                                                             
+##          &quot;quaiches&quot;           &quot;quaichs&quot;            &quot;quaigh&quot; 
+##                                                             
+##           &quot;quaighs&quot;             &quot;quail&quot;           &quot;quailed&quot; 
+##                                                             
+##          &quot;quailing&quot;            &quot;quails&quot;            &quot;quaint&quot; 
+##                                                             
+##          &quot;quainter&quot;         &quot;quaintest&quot;          &quot;quaintly&quot; 
+##                                                             
+##        &quot;quaintness&quot;      &quot;quaintnesses&quot;             &quot;quais&quot; 
+##                                                             
+##             &quot;quake&quot;            &quot;quaked&quot;            &quot;quaker&quot; 
+##                                                             
+##           &quot;quakers&quot;            &quot;quakes&quot;           &quot;quakier&quot; 
+##                                                             
+##          &quot;quakiest&quot;           &quot;quakily&quot;           &quot;quaking&quot; 
+##                                                             
+##             &quot;quaky&quot;             &quot;quale&quot;            &quot;qualia&quot; 
+##                                                             
+##     &quot;qualification&quot;    &quot;qualifications&quot;         &quot;qualified&quot; 
+##                                                             
+##         &quot;qualifier&quot;        &quot;qualifiers&quot;         &quot;qualifies&quot; 
+##                                                             
+##           &quot;qualify&quot;        &quot;qualifying&quot;       &quot;qualitative&quot; 
+##                                                             
+##         &quot;qualities&quot;           &quot;quality&quot;             &quot;qualm&quot; 
+##                                                             
+##          &quot;qualmier&quot;         &quot;qualmiest&quot;          &quot;qualmish&quot; 
+##                                                             
+##            &quot;qualms&quot;            &quot;qualmy&quot;           &quot;quamash&quot; 
+##                                                             
+##         &quot;quamashes&quot;          &quot;quandang&quot;         &quot;quandangs&quot; 
+##                                                             
+##        &quot;quandaries&quot;          &quot;quandary&quot;          &quot;quandong&quot; 
+##                                                             
+##         &quot;quandongs&quot;             &quot;quant&quot;            &quot;quanta&quot; 
+##                                                             
+##           &quot;quantal&quot;           &quot;quanted&quot;           &quot;quantic&quot; 
+##                                                             
+##          &quot;quantics&quot;        &quot;quantified&quot;        &quot;quantifies&quot; 
+##                                                             
+##          &quot;quantify&quot;       &quot;quantifying&quot;          &quot;quanting&quot; 
+##                                                             
+##      &quot;quantitative&quot;        &quot;quantities&quot;          &quot;quantity&quot; 
+##                                                             
+##          &quot;quantize&quot;         &quot;quantized&quot;         &quot;quantizes&quot; 
+##                                                             
+##        &quot;quantizing&quot;          &quot;quantong&quot;         &quot;quantongs&quot; 
+##                                                             
+##            &quot;quants&quot;           &quot;quantum&quot;        &quot;quarantine&quot; 
+##                                                             
+##       &quot;quarantined&quot;       &quot;quarantines&quot;      &quot;quarantining&quot; 
+##                                                             
+##             &quot;quare&quot;             &quot;quark&quot;            &quot;quarks&quot; 
+##                                                             
+##           &quot;quarrel&quot;         &quot;quarreled&quot;        &quot;quarreling&quot; 
+##                                                             
+##        &quot;quarrelled&quot;       &quot;quarrelling&quot;          &quot;quarrels&quot; 
+##                                                             
+##       &quot;quarrelsome&quot;          &quot;quarried&quot;          &quot;quarrier&quot; 
+##                                                             
+##         &quot;quarriers&quot;          &quot;quarries&quot;            &quot;quarry&quot; 
+##                                                             
+##         &quot;quarrying&quot;             &quot;quart&quot;           &quot;quartan&quot; 
+##                                                             
+##          &quot;quartans&quot;            &quot;quarte&quot;           &quot;quarter&quot; 
+##                                                             
+##       &quot;quarterback&quot;     &quot;quarterbacked&quot;    &quot;quarterbacking&quot; 
+##                                                             
+##      &quot;quarterbacks&quot;         &quot;quartered&quot;        &quot;quartering&quot; 
+##                                                             
+##       &quot;quarterlies&quot;         &quot;quarterly&quot;     &quot;quartermaster&quot; 
+##                                                             
+##    &quot;quartermasters&quot;          &quot;quartern&quot;         &quot;quarterns&quot; 
+##                                                             
+##          &quot;quarters&quot;           &quot;quartes&quot;           &quot;quartet&quot; 
+##                                                             
+##          &quot;quartets&quot;           &quot;quartic&quot;          &quot;quartics&quot; 
+##                                                             
+##          &quot;quartile&quot;         &quot;quartiles&quot;            &quot;quarto&quot; 
+##                                                             
+##           &quot;quartos&quot;            &quot;quarts&quot;            &quot;quartz&quot; 
+##                                                             
+##          &quot;quartzes&quot;            &quot;quasar&quot;           &quot;quasars&quot; 
+##                                                             
+##             &quot;quash&quot;           &quot;quashed&quot;           &quot;quashes&quot; 
+##                                                             
+##          &quot;quashing&quot;             &quot;quasi&quot;             &quot;quass&quot; 
+##                                                             
+##           &quot;quasses&quot;           &quot;quassia&quot;          &quot;quassias&quot; 
+##                                                             
+##           &quot;quassin&quot;          &quot;quassins&quot;             &quot;quate&quot; 
+##                                                             
+##          &quot;quatorze&quot;         &quot;quatorzes&quot;          &quot;quatrain&quot; 
+##                                                             
+##         &quot;quatrains&quot;            &quot;quatre&quot;           &quot;quatres&quot; 
+##                                                             
+##            &quot;quaver&quot;          &quot;quavered&quot;          &quot;quaverer&quot; 
+##                                                             
+##         &quot;quaverers&quot;         &quot;quavering&quot;           &quot;quavers&quot; 
+##                                                             
+##           &quot;quavery&quot;              &quot;quay&quot;           &quot;quayage&quot; 
+##                                                             
+##          &quot;quayages&quot;          &quot;quaylike&quot;             &quot;quays&quot; 
+##                                                             
+##          &quot;quayside&quot;         &quot;quaysides&quot;             &quot;quean&quot; 
+##                                                             
+##            &quot;queans&quot;          &quot;queasier&quot;         &quot;queasiest&quot; 
+##                                                             
+##          &quot;queasily&quot;        &quot;queasiness&quot;      &quot;queasinesses&quot; 
+##                                                             
+##            &quot;queasy&quot;          &quot;queazier&quot;         &quot;queaziest&quot; 
+##                                                             
+##            &quot;queazy&quot;             &quot;queen&quot;           &quot;queened&quot; 
+##                                                             
+##          &quot;queening&quot;         &quot;queenlier&quot;        &quot;queenliest&quot; 
+##                                                             
+##           &quot;queenly&quot;            &quot;queens&quot;             &quot;queer&quot; 
+##                                                             
+##           &quot;queered&quot;           &quot;queerer&quot;          &quot;queerest&quot; 
+##                                                             
+##          &quot;queering&quot;          &quot;queerish&quot;           &quot;queerly&quot; 
+##                                                             
+##         &quot;queerness&quot;       &quot;queernesses&quot;            &quot;queers&quot; 
+##                                                             
+##             &quot;quell&quot;           &quot;quelled&quot;           &quot;queller&quot; 
+##                                                             
+##          &quot;quellers&quot;          &quot;quelling&quot;            &quot;quells&quot; 
+##                                                             
+##            &quot;quench&quot;        &quot;quenchable&quot;          &quot;quenched&quot; 
+##                                                             
+##          &quot;quencher&quot;         &quot;quenchers&quot;          &quot;quenches&quot; 
+##                                                             
+##         &quot;quenching&quot;        &quot;quenchless&quot;          &quot;quenelle&quot; 
+##                                                             
+##         &quot;quenelles&quot;          &quot;quercine&quot;           &quot;querida&quot; 
+##                                                             
+##          &quot;queridas&quot;           &quot;queried&quot;           &quot;querier&quot; 
+##                                                             
+##          &quot;queriers&quot;           &quot;queries&quot;           &quot;querist&quot; 
+##                                                             
+##          &quot;querists&quot;             &quot;quern&quot;            &quot;querns&quot; 
+##                                                             
+##         &quot;querulous&quot;       &quot;querulously&quot;     &quot;querulousness&quot; 
+##                                                             
+##   &quot;querulousnesses&quot;             &quot;query&quot;          &quot;querying&quot; 
+##                                                             
+##             &quot;quest&quot;           &quot;quested&quot;           &quot;quester&quot; 
+##                                                             
+##          &quot;questers&quot;          &quot;questing&quot;          &quot;question&quot; 
+##                                                             
+##      &quot;questionable&quot;        &quot;questioned&quot;        &quot;questioner&quot; 
+##                                                             
+##       &quot;questioners&quot;       &quot;questioning&quot;     &quot;questionnaire&quot; 
+##                                                             
+##    &quot;questionnaires&quot;     &quot;questionniare&quot;    &quot;questionniares&quot; 
+##                                                             
+##         &quot;questions&quot;           &quot;questor&quot;          &quot;questors&quot; 
+##                                                             
+##            &quot;quests&quot;           &quot;quetzal&quot;         &quot;quetzales&quot; 
+##                                                             
+##          &quot;quetzals&quot;             &quot;queue&quot;            &quot;queued&quot; 
+##                                                             
+##          &quot;queueing&quot;            &quot;queuer&quot;           &quot;queuers&quot; 
+##                                                             
+##            &quot;queues&quot;           &quot;queuing&quot;              &quot;quey&quot; 
+##                                                             
+##             &quot;queys&quot;            &quot;quezal&quot;          &quot;quezales&quot; 
+##                                                             
+##           &quot;quezals&quot;           &quot;quibble&quot;          &quot;quibbled&quot; 
+##                                                             
+##          &quot;quibbler&quot;         &quot;quibblers&quot;          &quot;quibbles&quot; 
+##                                                             
+##         &quot;quibbling&quot;            &quot;quiche&quot;           &quot;quiches&quot; 
+##                                                             
+##             &quot;quick&quot;           &quot;quicken&quot;         &quot;quickened&quot; 
+##                                                             
+##        &quot;quickening&quot;          &quot;quickens&quot;           &quot;quicker&quot; 
+##                                                             
+##          &quot;quickest&quot;           &quot;quickie&quot;          &quot;quickies&quot; 
+##                                                             
+##           &quot;quickly&quot;         &quot;quickness&quot;       &quot;quicknesses&quot; 
+##                                                             
+##            &quot;quicks&quot;         &quot;quicksand&quot;        &quot;quicksands&quot; 
+##                                                             
+##          &quot;quickset&quot;         &quot;quicksets&quot;       &quot;quicksilver&quot; 
+##                                                             
+##      &quot;quicksilvers&quot;              &quot;quid&quot;        &quot;quiddities&quot; 
+##                                                             
+##          &quot;quiddity&quot;          &quot;quidnunc&quot;         &quot;quidnuncs&quot; 
+##                                                             
+##             &quot;quids&quot;        &quot;quiescence&quot;       &quot;quiescences&quot; 
+##                                                             
+##         &quot;quiescent&quot;             &quot;quiet&quot;           &quot;quieted&quot; 
+##                                                             
+##           &quot;quieten&quot;         &quot;quietened&quot;        &quot;quietening&quot; 
+##                                                             
+##          &quot;quietens&quot;           &quot;quieter&quot;          &quot;quieters&quot; 
+##                                                             
+##          &quot;quietest&quot;          &quot;quieting&quot;          &quot;quietism&quot; 
+##                                                             
+##         &quot;quietisms&quot;          &quot;quietist&quot;         &quot;quietists&quot; 
+##                                                             
+##           &quot;quietly&quot;         &quot;quietness&quot;       &quot;quietnesses&quot; 
+##                                                             
+##            &quot;quiets&quot;          &quot;quietude&quot;         &quot;quietudes&quot; 
+##                                                             
+##           &quot;quietus&quot;         &quot;quietuses&quot;             &quot;quiff&quot; 
+##                                                             
+##            &quot;quiffs&quot;             &quot;quill&quot;           &quot;quillai&quot; 
+##                                                             
+##          &quot;quillais&quot;           &quot;quilled&quot;           &quot;quillet&quot; 
+##                                                             
+##          &quot;quillets&quot;          &quot;quilling&quot;            &quot;quills&quot; 
+##                                                             
+##             &quot;quilt&quot;           &quot;quilted&quot;           &quot;quilter&quot; 
+##                                                             
+##          &quot;quilters&quot;          &quot;quilting&quot;         &quot;quiltings&quot; 
+##                                                             
+##            &quot;quilts&quot;         &quot;quinaries&quot;           &quot;quinary&quot; 
+##                                                             
+##           &quot;quinate&quot;            &quot;quince&quot;           &quot;quinces&quot; 
+##                                                             
+##          &quot;quincunx&quot;        &quot;quincunxes&quot;          &quot;quinella&quot; 
+##                                                             
+##         &quot;quinellas&quot;            &quot;quinic&quot;          &quot;quiniela&quot; 
+##                                                             
+##         &quot;quinielas&quot;            &quot;quinin&quot;           &quot;quinina&quot; 
+##                                                             
+##          &quot;quininas&quot;           &quot;quinine&quot;          &quot;quinines&quot; 
+##                                                             
+##           &quot;quinins&quot;           &quot;quinnat&quot;          &quot;quinnats&quot; 
+##                                                             
+##            &quot;quinoa&quot;           &quot;quinoas&quot;           &quot;quinoid&quot; 
+##                                                             
+##          &quot;quinoids&quot;            &quot;quinol&quot;          &quot;quinolin&quot; 
+##                                                             
+##         &quot;quinolins&quot;           &quot;quinols&quot;           &quot;quinone&quot; 
+##                                                             
+##          &quot;quinones&quot;          &quot;quinsies&quot;            &quot;quinsy&quot; 
+##                                                             
+##             &quot;quint&quot;          &quot;quintain&quot;         &quot;quintains&quot; 
+##                                                             
+##           &quot;quintal&quot;          &quot;quintals&quot;           &quot;quintan&quot; 
+##                                                             
+##          &quot;quintans&quot;           &quot;quintar&quot;          &quot;quintars&quot; 
+##                                                             
+##      &quot;quintessence&quot;     &quot;quintessences&quot;    &quot;quintessential&quot; 
+##                                                             
+##           &quot;quintet&quot;          &quot;quintets&quot;           &quot;quintic&quot; 
+##                                                             
+##          &quot;quintics&quot;          &quot;quintile&quot;         &quot;quintiles&quot; 
+##                                                             
+##           &quot;quintin&quot;          &quot;quintins&quot;            &quot;quints&quot; 
+##                                                             
+##         &quot;quintuple&quot;        &quot;quintupled&quot;        &quot;quintuples&quot; 
+##                                                             
+##        &quot;quintuplet&quot;       &quot;quintuplets&quot;       &quot;quintupling&quot; 
+##                                                             
+##              &quot;quip&quot;           &quot;quipped&quot;          &quot;quipping&quot; 
+##                                                             
+##          &quot;quippish&quot;            &quot;quippu&quot;           &quot;quippus&quot; 
+##                                                             
+##             &quot;quips&quot;          &quot;quipster&quot;         &quot;quipsters&quot; 
+##                                                             
+##             &quot;quipu&quot;            &quot;quipus&quot;             &quot;quire&quot; 
+##                                                             
+##            &quot;quired&quot;            &quot;quires&quot;           &quot;quiring&quot; 
+##                                                             
+##             &quot;quirk&quot;           &quot;quirked&quot;          &quot;quirkier&quot; 
+##                                                             
+##         &quot;quirkiest&quot;          &quot;quirkily&quot;          &quot;quirking&quot; 
+##                                                             
+##            &quot;quirks&quot;            &quot;quirky&quot;             &quot;quirt&quot; 
+##                                                             
+##           &quot;quirted&quot;          &quot;quirting&quot;            &quot;quirts&quot; 
+##                                                             
+##          &quot;quisling&quot;         &quot;quislings&quot;              &quot;quit&quot; 
+##                                                             
+##            &quot;quitch&quot;          &quot;quitches&quot;             &quot;quite&quot; 
+##                                                             
+##          &quot;quitrent&quot;         &quot;quitrents&quot;             &quot;quits&quot; 
+##                                                             
+##           &quot;quitted&quot;           &quot;quitter&quot;          &quot;quitters&quot; 
+##                                                             
+##          &quot;quitting&quot;           &quot;quittor&quot;          &quot;quittors&quot; 
+##                                                             
+##            &quot;quiver&quot;          &quot;quivered&quot;          &quot;quiverer&quot; 
+##                                                             
+##         &quot;quiverers&quot;         &quot;quivering&quot;           &quot;quivers&quot; 
+##                                                             
+##           &quot;quivery&quot;           &quot;quixote&quot;          &quot;quixotes&quot; 
+##                                                             
+##          &quot;quixotic&quot;        &quot;quixotries&quot;          &quot;quixotry&quot; 
+##                                                             
+##              &quot;quiz&quot;        &quot;quizmaster&quot;       &quot;quizmasters&quot; 
+##                                                             
+##           &quot;quizzed&quot;           &quot;quizzer&quot;          &quot;quizzers&quot; 
+##                                                             
+##           &quot;quizzes&quot;          &quot;quizzing&quot;              &quot;quod&quot; 
+##                                                             
+##             &quot;quods&quot;             &quot;quoin&quot;           &quot;quoined&quot; 
+##                                                             
+##          &quot;quoining&quot;            &quot;quoins&quot;             &quot;quoit&quot; 
+##                                                             
+##           &quot;quoited&quot;          &quot;quoiting&quot;            &quot;quoits&quot; 
+##                                                             
+##           &quot;quomodo&quot;          &quot;quomodos&quot;           &quot;quondam&quot; 
+##                                                             
+##            &quot;quorum&quot;           &quot;quorums&quot;             &quot;quota&quot; 
+##                                                             
+##          &quot;quotable&quot;          &quot;quotably&quot;            &quot;quotas&quot; 
+##                                                             
+##         &quot;quotation&quot;        &quot;quotations&quot;             &quot;quote&quot; 
+##                                                             
+##            &quot;quoted&quot;            &quot;quoter&quot;           &quot;quoters&quot; 
+##                                                             
+##            &quot;quotes&quot;             &quot;quoth&quot;            &quot;quotha&quot; 
+##                                                             
+##          &quot;quotient&quot;         &quot;quotients&quot;           &quot;quoting&quot; 
+##                                                             
+##             &quot;qursh&quot;           &quot;qurshes&quot;            &quot;qurush&quot; 
+##                                                             
+##          &quot;qurushes&quot;           &quot;racquet&quot;          &quot;racquets&quot; 
+##                                                             
+##          &quot;ramequin&quot;         &quot;ramequins&quot;        &quot;reacquaint&quot; 
+##                                                             
+##      &quot;reacquainted&quot;     &quot;reacquainting&quot;       &quot;reacquaints&quot; 
+##                                                             
+##         &quot;reacquire&quot;        &quot;reacquired&quot;        &quot;reacquires&quot; 
+##                                                             
+##       &quot;reacquiring&quot;         &quot;reconquer&quot;       &quot;reconquered&quot; 
+##                                                             
+##      &quot;reconquering&quot;        &quot;reconquers&quot;        &quot;reconquest&quot; 
+##                                                             
+##       &quot;reconquests&quot;           &quot;reequip&quot;        &quot;reequipped&quot; 
+##                                                             
+##       &quot;reequipping&quot;          &quot;reequips&quot;        &quot;relinquish&quot; 
+##                                                             
+##      &quot;relinquished&quot;      &quot;relinquishes&quot;     &quot;relinquishing&quot; 
+##                                                             
+##    &quot;relinquishment&quot;   &quot;relinquishments&quot;           &quot;relique&quot; 
+##                                                             
+##          &quot;reliques&quot;          &quot;remarque&quot;         &quot;remarques&quot; 
+##                                                             
+##           &quot;request&quot;         &quot;requested&quot;        &quot;requesting&quot; 
+##                                                             
+##          &quot;requests&quot;           &quot;requiem&quot;          &quot;requiems&quot; 
+##                                                             
+##            &quot;requin&quot;           &quot;requins&quot;           &quot;require&quot; 
+##                                                             
+##          &quot;required&quot;       &quot;requirement&quot;      &quot;requirements&quot; 
+##                                                             
+##          &quot;requirer&quot;         &quot;requirers&quot;          &quot;requires&quot; 
+##                                                             
+##         &quot;requiring&quot;         &quot;requisite&quot;        &quot;requisites&quot; 
+##                                                             
+##       &quot;requisition&quot;     &quot;requisitioned&quot;    &quot;requisitioning&quot; 
+##                                                             
+##      &quot;requisitions&quot;          &quot;requital&quot;         &quot;requitals&quot; 
+##                                                             
+##           &quot;requite&quot;          &quot;requited&quot;          &quot;requiter&quot; 
+##                                                             
+##         &quot;requiters&quot;          &quot;requites&quot;         &quot;requiting&quot; 
+##                                                             
+##            &quot;risque&quot;             &quot;roque&quot;            &quot;roques&quot; 
+##                                                             
+##            &quot;roquet&quot;          &quot;roqueted&quot;         &quot;roqueting&quot; 
+##                                                             
+##           &quot;roquets&quot;           &quot;rorqual&quot;          &quot;rorquals&quot; 
+##                                                             
+##            &quot;sacque&quot;           &quot;sacques&quot;          &quot;seaquake&quot; 
+##                                                             
+##         &quot;seaquakes&quot;            &quot;sequel&quot;           &quot;sequela&quot; 
+##                                                             
+##          &quot;sequelae&quot;           &quot;sequels&quot;          &quot;sequence&quot; 
+##                                                             
+##         &quot;sequenced&quot;         &quot;sequences&quot;        &quot;sequencies&quot; 
+##                                                             
+##        &quot;sequencing&quot;          &quot;sequency&quot;           &quot;sequent&quot; 
+##                                                             
+##        &quot;sequential&quot;      &quot;sequentially&quot;          &quot;sequents&quot; 
+##                                                             
+##         &quot;sequester&quot;       &quot;sequestered&quot;      &quot;sequestering&quot; 
+##                                                             
+##        &quot;sequesters&quot;            &quot;sequin&quot;          &quot;sequined&quot; 
+##                                                             
+##           &quot;sequins&quot;          &quot;sequitur&quot;         &quot;sequiturs&quot; 
+##                                                             
+##           &quot;sequoia&quot;          &quot;sequoias&quot;           &quot;siliqua&quot; 
+##                                                             
+##          &quot;siliquae&quot;           &quot;silique&quot;          &quot;siliques&quot; 
+##                                                             
+##       &quot;soliloquize&quot;      &quot;soliloquized&quot;      &quot;soliloquizes&quot; 
+##                                                             
+##     &quot;soliloquizing&quot;         &quot;soliloquy&quot;        &quot;soliloquys&quot; 
+##                                                             
+##          &quot;soliquid&quot;         &quot;soliquids&quot;             &quot;squab&quot; 
+##                                                             
+##         &quot;squabbier&quot;        &quot;squabbiest&quot;          &quot;squabble&quot; 
+##                                                             
+##         &quot;squabbled&quot;         &quot;squabbles&quot;        &quot;squabbling&quot; 
+##                                                             
+##           &quot;squabby&quot;            &quot;squabs&quot;             &quot;squad&quot; 
+##                                                             
+##          &quot;squadded&quot;         &quot;squadding&quot;          &quot;squadron&quot; 
+##                                                             
+##        &quot;squadroned&quot;       &quot;squadroning&quot;         &quot;squadrons&quot; 
+##                                                             
+##            &quot;squads&quot;          &quot;squalene&quot;         &quot;squalenes&quot; 
+##                                                             
+##           &quot;squalid&quot;         &quot;squalider&quot;        &quot;squalidest&quot; 
+##                                                             
+##            &quot;squall&quot;          &quot;squalled&quot;          &quot;squaller&quot; 
+##                                                             
+##         &quot;squallers&quot;         &quot;squallier&quot;        &quot;squalliest&quot; 
+##                                                             
+##         &quot;squalling&quot;           &quot;squalls&quot;           &quot;squally&quot; 
+##                                                             
+##           &quot;squalor&quot;          &quot;squalors&quot;            &quot;squama&quot; 
+##                                                             
+##           &quot;squamae&quot;          &quot;squamate&quot;          &quot;squamose&quot; 
+##                                                             
+##          &quot;squamous&quot;          &quot;squander&quot;        &quot;squandered&quot; 
+##                                                             
+##       &quot;squandering&quot;         &quot;squanders&quot;            &quot;square&quot; 
+##                                                             
+##           &quot;squared&quot;          &quot;squarely&quot;           &quot;squarer&quot; 
+##                                                             
+##          &quot;squarers&quot;           &quot;squares&quot;          &quot;squarest&quot; 
+##                                                             
+##          &quot;squaring&quot;          &quot;squarish&quot;            &quot;squash&quot; 
+##                                                             
+##          &quot;squashed&quot;          &quot;squasher&quot;         &quot;squashers&quot; 
+##                                                             
+##          &quot;squashes&quot;         &quot;squashier&quot;        &quot;squashiest&quot; 
+##                                                             
+##         &quot;squashing&quot;           &quot;squashy&quot;             &quot;squat&quot; 
+##                                                             
+##           &quot;squatly&quot;            &quot;squats&quot;          &quot;squatted&quot; 
+##                                                             
+##          &quot;squatter&quot;        &quot;squattered&quot;       &quot;squattering&quot; 
+##                                                             
+##         &quot;squatters&quot;         &quot;squattest&quot;         &quot;squattier&quot; 
+##                                                             
+##        &quot;squattiest&quot;         &quot;squatting&quot;           &quot;squatty&quot; 
+##                                                             
+##             &quot;squaw&quot;            &quot;squawk&quot;          &quot;squawked&quot; 
+##                                                             
+##          &quot;squawker&quot;         &quot;squawkers&quot;         &quot;squawking&quot; 
+##                                                             
+##           &quot;squawks&quot;            &quot;squaws&quot;            &quot;squeak&quot; 
+##                                                             
+##          &quot;squeaked&quot;          &quot;squeaker&quot;         &quot;squeakers&quot; 
+##                                                             
+##         &quot;squeakier&quot;        &quot;squeakiest&quot;         &quot;squeaking&quot; 
+##                                                             
+##           &quot;squeaks&quot;           &quot;squeaky&quot;            &quot;squeal&quot; 
+##                                                             
+##          &quot;squealed&quot;          &quot;squealer&quot;         &quot;squealers&quot; 
+##                                                             
+##         &quot;squealing&quot;           &quot;squeals&quot;         &quot;squeamish&quot; 
+##                                                             
+##          &quot;squeegee&quot;         &quot;squeegeed&quot;       &quot;squeegeeing&quot; 
+##                                                             
+##         &quot;squeegees&quot;           &quot;squeeze&quot;          &quot;squeezed&quot; 
+##                                                             
+##          &quot;squeezer&quot;         &quot;squeezers&quot;          &quot;squeezes&quot; 
+##                                                             
+##         &quot;squeezing&quot;             &quot;squeg&quot;          &quot;squegged&quot; 
+##                                                             
+##         &quot;squegging&quot;            &quot;squegs&quot;           &quot;squelch&quot; 
+##                                                             
+##         &quot;squelched&quot;         &quot;squelches&quot;        &quot;squelchier&quot; 
+##                                                             
+##       &quot;squelchiest&quot;        &quot;squelching&quot;          &quot;squelchy&quot; 
+##                                                             
+##             &quot;squib&quot;          &quot;squibbed&quot;         &quot;squibbing&quot; 
+##                                                             
+##            &quot;squibs&quot;             &quot;squid&quot;          &quot;squidded&quot; 
+##                                                             
+##         &quot;squidding&quot;            &quot;squids&quot;          &quot;squiffed&quot; 
+##                                                             
+##           &quot;squiffy&quot;          &quot;squiggle&quot;         &quot;squiggled&quot; 
+##                                                             
+##         &quot;squiggles&quot;        &quot;squigglier&quot;       &quot;squiggliest&quot; 
+##                                                             
+##        &quot;squiggling&quot;          &quot;squiggly&quot;          &quot;squilgee&quot; 
+##                                                             
+##         &quot;squilgeed&quot;       &quot;squilgeeing&quot;         &quot;squilgees&quot; 
+##                                                             
+##            &quot;squill&quot;           &quot;squilla&quot;          &quot;squillae&quot; 
+##                                                             
+##          &quot;squillas&quot;           &quot;squills&quot;           &quot;squinch&quot; 
+##                                                             
+##         &quot;squinched&quot;         &quot;squinches&quot;        &quot;squinching&quot; 
+##                                                             
+##         &quot;squinnied&quot;         &quot;squinnier&quot;         &quot;squinnies&quot; 
+##                                                             
+##        &quot;squinniest&quot;           &quot;squinny&quot;        &quot;squinnying&quot; 
+##                                                             
+##            &quot;squint&quot;          &quot;squinted&quot;          &quot;squinter&quot; 
+##                                                             
+##         &quot;squinters&quot;         &quot;squintest&quot;         &quot;squintier&quot; 
+##                                                             
+##        &quot;squintiest&quot;         &quot;squinting&quot;           &quot;squints&quot; 
+##                                                             
+##           &quot;squinty&quot;            &quot;squire&quot;           &quot;squired&quot; 
+##                                                             
+##          &quot;squireen&quot;         &quot;squireens&quot;           &quot;squires&quot; 
+##                                                             
+##          &quot;squiring&quot;          &quot;squirish&quot;            &quot;squirm&quot; 
+##                                                             
+##          &quot;squirmed&quot;          &quot;squirmer&quot;         &quot;squirmers&quot; 
+##                                                             
+##         &quot;squirmier&quot;        &quot;squirmiest&quot;         &quot;squirming&quot; 
+##                                                             
+##           &quot;squirms&quot;           &quot;squirmy&quot;          &quot;squirrel&quot; 
+##                                                             
+##        &quot;squirreled&quot;       &quot;squirreling&quot;       &quot;squirrelled&quot; 
+##                                                             
+##      &quot;squirrelling&quot;         &quot;squirrels&quot;            &quot;squirt&quot; 
+##                                                             
+##          &quot;squirted&quot;          &quot;squirter&quot;         &quot;squirters&quot; 
+##                                                             
+##         &quot;squirting&quot;           &quot;squirts&quot;            &quot;squish&quot; 
+##                                                             
+##          &quot;squished&quot;          &quot;squishes&quot;         &quot;squishier&quot; 
+##                                                             
+##        &quot;squishiest&quot;         &quot;squishing&quot;           &quot;squishy&quot; 
+##                                                             
+##           &quot;squoosh&quot;         &quot;squooshed&quot;         &quot;squooshes&quot; 
+##                                                             
+##        &quot;squooshing&quot;            &quot;squush&quot;          &quot;squushed&quot; 
+##                                                             
+##          &quot;squushes&quot;         &quot;squushing&quot;        &quot;statuesque&quot; 
+##                                                             
+##     &quot;subequatorial&quot;        &quot;subsequent&quot;      &quot;subsequently&quot; 
+##                                                             
+##         &quot;technique&quot;        &quot;techniques&quot;           &quot;tequila&quot; 
+##                                                             
+##          &quot;tequilas&quot;             &quot;toque&quot;            &quot;toques&quot; 
+##                                                             
+##            &quot;toquet&quot;           &quot;toquets&quot;          &quot;torquate&quot; 
+##                                                             
+##            &quot;torque&quot;           &quot;torqued&quot;           &quot;torquer&quot; 
+##                                                             
+##          &quot;torquers&quot;           &quot;torques&quot;         &quot;torqueses&quot; 
+##                                                             
+##          &quot;torquing&quot;        &quot;tourniquet&quot;       &quot;tourniquets&quot; 
+##                                                             
+##          &quot;tranquil&quot;        &quot;tranquiler&quot;       &quot;tranquilest&quot; 
+##                                                             
+##     &quot;tranquilities&quot;       &quot;tranquility&quot;       &quot;tranquilize&quot; 
+##                                                             
+##      &quot;tranquilized&quot;      &quot;tranquilizer&quot;     &quot;tranquilizers&quot; 
+##                                                             
+##      &quot;tranquilizes&quot;     &quot;tranquilizing&quot;       &quot;tranquiller&quot; 
+##                                                             
+##      &quot;tranquillest&quot;    &quot;tranquillities&quot;      &quot;tranquillity&quot; 
+##                                                             
+##      &quot;tranquillize&quot;     &quot;tranquillized&quot;     &quot;tranquillizer&quot; 
+##                                                             
+##    &quot;tranquillizers&quot;     &quot;tranquillizes&quot;    &quot;tranquillizing&quot; 
+##                                                             
+##        &quot;tranquilly&quot;             &quot;tuque&quot;            &quot;tuques&quot; 
+##                                                             
+##          &quot;turquois&quot;         &quot;turquoise&quot;        &quot;turquoises&quot; 
+##                                                             
+##            &quot;ubique&quot;        &quot;ubiquities&quot;      &quot;ubiquitities&quot; 
+##                                                             
+##        &quot;ubiquitity&quot;        &quot;ubiquitous&quot;      &quot;ubiquitously&quot; 
+##                                                             
+##          &quot;ubiquity&quot;           &quot;unequal&quot;         &quot;unequaled&quot; 
+##                                                             
+##         &quot;unequally&quot;          &quot;unequals&quot;       &quot;unequivocal&quot; 
+##                                                             
+##     &quot;unequivocally&quot;            &quot;unique&quot;          &quot;uniquely&quot; 
+##                                                             
+##        &quot;uniqueness&quot;           &quot;uniquer&quot;           &quot;uniques&quot; 
+##                                                             
+##          &quot;uniquest&quot;       &quot;unqualified&quot;    &quot;unquantifiable&quot; 
+##                                                             
+##      &quot;unquenchable&quot;    &quot;unquestionable&quot;    &quot;unquestionably&quot; 
+##                                                             
+##     &quot;unquestioning&quot;           &quot;unquiet&quot;         &quot;unquieter&quot; 
+##                                                             
+##        &quot;unquietest&quot;          &quot;unquiets&quot;           &quot;unquote&quot; 
+##                                                             
+##          &quot;unquoted&quot;          &quot;unquotes&quot;         &quot;unquoting&quot; 
+##                                                             
+##        &quot;unrequited&quot;          &quot;usquabae&quot;         &quot;usquabaes&quot; 
+##                                                             
+##             &quot;usque&quot;          &quot;usquebae&quot;         &quot;usquebaes&quot; 
+##                                                             
+##            &quot;usques&quot;          &quot;vanquish&quot;        &quot;vanquished&quot; 
+##                                                             
+##        &quot;vanquishes&quot;       &quot;vanquishing&quot;           &quot;vaquero&quot; 
+##                                                             
+##          &quot;vaqueros&quot;     &quot;ventriloquism&quot;    &quot;ventriloquisms&quot; 
+##                                                             
+##     &quot;ventriloquist&quot;    &quot;ventriloquists&quot;       &quot;ventriloquy&quot; 
+##                                                             
+##      &quot;ventriloquys&quot;            &quot;yanqui&quot;           &quot;yanquis&quot; 
+##                   2                   3                   4 
+##                &quot;85&quot;               &quot;908&quot;              &quot;3686&quot; 
+##                   5                   6                   7 
+##              &quot;8258&quot;             &quot;14374&quot;             &quot;21727&quot; 
+##                   8                   9                  10 
+##             &quot;26447&quot;             &quot;16658&quot;              &quot;9199&quot; 
+##                  11                  12                  13 
+##              &quot;5296&quot;              &quot;3166&quot;              &quot;1960&quot; 
+##                  14                  15                  16 
+##              &quot;1023&quot;               &quot;557&quot;               &quot;261&quot; 
+##                  17                  18                  19 
+##               &quot;132&quot;                &quot;48&quot;                &quot;16&quot; 
+##                  20                  21                     
+##                 &quot;5&quot;                 &quot;3&quot;              &quot;6557&quot; 
+##                                                             
+##              &quot;6848&quot;             &quot;10385&quot;              &quot;6436&quot; 
+##                                                             
+##              &quot;4364&quot;              &quot;4937&quot;              &quot;3950&quot; 
+##                                                             
+##              &quot;4080&quot;              &quot;4013&quot;              &quot;1106&quot; 
+##                                                             
+##              &quot;1312&quot;              &quot;3710&quot;              &quot;6270&quot; 
+##                                                             
+##              &quot;2208&quot;              &quot;3978&quot;              &quot;8693&quot; 
+##                                                             
+##               &quot;568&quot;              &quot;7141&quot;             &quot;12591&quot; 
+##                                                             
+##              &quot;5951&quot;              &quot;2934&quot;              &quot;1932&quot; 
+##                                                             
+##              &quot;2927&quot;                &quot;82&quot;               &quot;438&quot; 
+##                     
+##               &quot;398&quot;
 </code></pre>
 
 </body>
