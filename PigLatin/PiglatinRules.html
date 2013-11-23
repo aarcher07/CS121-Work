@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title>Oct 1, 2013</title>
+<title></title>
 
 <style type="text/css">
 body, td {
@@ -178,118 +178,154 @@ hljs.initHighlightingOnLoad();
 </head>
 
 <body>
-<h1>Oct 1, 2013</h1>
-
-<p>##Reverse</p>
-
-<pre><code class="r">reverser &lt;- function(x) {
-    rsplit &lt;- strsplit(x, split = &quot;&quot;)
-    reversal &lt;- rsplit[[1]][rev(1:nchar(x))]
-    stick &lt;- paste(reversal, collapse = &quot;&quot;)
-    return(stick)
-}
-
-</code></pre>
-
-<p>Test statements:</p>
-
-<pre><code class="r"># Test statement here. Should return true or false.
-reverser(&quot;vsgsfgs&quot;) == &quot;sgfsgsv&quot;
-</code></pre>
-
-<pre><code>## [1] TRUE
-</code></pre>
-
-<p>##Scrambler</p>
-
-<pre><code class="r">scrambler &lt;- function(x) {
-    rscram &lt;- strsplit(x, split = &quot;&quot;)
-    scram &lt;- rscram[[1]][sample(1:nchar(x))]
-    stick &lt;- paste(scram, collapse = &quot;&quot;)
-    return(stick)
-}
-
-</code></pre>
-
-<p>Test statements:</p>
-
-<pre><code class="r"># Test statement here. Should return true or false.
-scrambler(&quot;egegsegr&quot;)
-</code></pre>
-
-<pre><code>## [1] &quot;egsggeer&quot;
-</code></pre>
-
-<p>#VowelBleeper</p>
-
-<pre><code class="r">VowelBleeper &lt;- function(x) {
-    asterisks &lt;- gsub(&quot;[aeiou]&quot;, &quot;*&quot;, x)
-    return(asterisks)
+<pre><code class="r">pigLatinRule &lt;- function(word) {
+    if (grepl(&quot;^[^aeiou]+[aeiou]&quot;, word)) {
+        res &lt;- &quot;consonant&quot;
+    } else {
+        if (grepl(&quot;^[aeiou].+$&quot;, word)) {
+            res &lt;- &quot;vowel&quot;
+        } else {
+            ifelse(grepl(&quot;[:;,.?!&#39;]&quot;, word), res &lt;- &quot;punc&quot;, res &lt;- &quot;novowels&quot;)
+        }
+    }
+    return(res)
 }
 </code></pre>
 
-<p>Test statements:</p>
-
-<pre><code class="r"># Test statement here. Should return true or false.
-VowelBleeper(&quot;sgethaerhe&quot;) == &quot;sg*th**rh*&quot;
+<pre><code class="r">pigLatinRule(&quot;wdgsrigr&quot;)
 </code></pre>
 
-<pre><code>## [1] TRUE
+<pre><code>## [1] &quot;consonant&quot;
 </code></pre>
 
-<p>#l33t</p>
-
-<pre><code class="r">l33t &lt;- function(x) {
-    Ereplace &lt;- gsub(&quot;[e]&quot;, &quot;3&quot;, x)
-    Oreplace &lt;- gsub(&quot;[o]&quot;, &quot;0&quot;, Ereplace)
-    Sreplace &lt;- gsub(&quot;[s]&quot;, &quot;5&quot;, Oreplace)
-    Greplace &lt;- gsub(&quot;[g]&quot;, &quot;9&quot;, Sreplace)
-    return(Greplace)
+<pre><code class="r">rule1 &lt;- function(word) {
+    if (grepl(&quot;^[^aeiou]+[aeiou]&quot;, word)) {
+        firstletter &lt;- min(as.numeric(regexpr(&quot;[aeiou]&quot;, word)))
+        fronthalf &lt;- substr(word, 1, (firstletter - 1))
+        backhalf &lt;- substr(word, firstletter, nchar(word))
+        piglatin &lt;- paste(backhalf, fronthalf, &quot;ay&quot;, sep = &quot;&quot;, collapse = &quot;&quot;)
+        return(piglatin)
+    }
 }
 </code></pre>
 
-<p>Test statements:</p>
-
-<pre><code class="r"># Test statement here. Should return true or false.
-l33t(&quot;sgethaerhe&quot;)
-</code></pre>
-
-<pre><code>## [1] &quot;593tha3rh3&quot;
-</code></pre>
-
-<p>#Substitution Cypher</p>
-
-<pre><code class="r">Cypher &lt;- function(word, key) {
-    set.seed(key)
-
-    from &lt;- c(letters, LETTERS, &quot;&#39;&quot;, &quot;.&quot;, &quot;;&quot;, &quot;:&quot;, &quot;/&quot;, &quot;,&quot;, &quot; &quot;)
-
-    to &lt;- sample(from, replace = FALSE)
-    to &lt;- paste(to, collapse = &quot;&quot;)
-    from &lt;- paste(from, collapse = &quot;&quot;)
-    substituted &lt;- chartr(from, to, word)
-    return(substituted)
-}
-
-message &lt;- Cypher(&quot;The enemy comes at dawn&quot;, 21)
-</code></pre>
-
-<pre><code class="r">ECypher &lt;- function(code, key) {
-    set.seed(key)
-    from &lt;- c(letters, LETTERS, &quot;&#39;&quot;, &quot;.&quot;, &quot;;&quot;, &quot;:&quot;, &quot;/&quot;, &quot;,&quot;, &quot; &quot;)
-
-    to &lt;- sample(from, replace = FALSE)
-    to &lt;- paste(to, collapse = &quot;&quot;)
-    from &lt;- paste(from, collapse = &quot;&quot;)
-    substituted &lt;- chartr(to, from, code)
-    return(substituted)
+<pre><code class="r">rule2 &lt;- function(word) {
+    if (grepl(&quot;^[aeiou].+$&quot;, word)) {
+        piglatin &lt;- paste(word, &quot;yay&quot;, sep = &quot;&quot;, collapse = &quot;&quot;)
+        return(piglatin)
+    }
 }
 </code></pre>
 
-<pre><code class="r">ECypher(message, 21)
+<pre><code class="r">rule3 &lt;- function(word) {
+    if (grepl(&quot;[^aeiou]&quot;, word)) {
+        piglatin &lt;- paste(word, &quot;yay&quot;, sep = &quot;&quot;, collapse = &quot;&quot;)
+    }
+    return(piglatin)
+}
 </code></pre>
 
-<pre><code>## [1] &quot;The enemy comes at dawn&quot;
+<pre><code class="r">punctuation &lt;- function(word) {
+    return(word)
+}
+</code></pre>
+
+<pre><code class="r">piglatinizer &lt;- function(word) {
+    res &lt;- switch(pigLatinRule(word), consonant = rule1(word), vowel = rule2(word), 
+        novowels = rule3(word), punc = punctuation(word))
+    return(res)
+}
+</code></pre>
+
+<pre><code class="r">piglatinizer(&quot;pig&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;igpay&quot;
+</code></pre>
+
+<pre><code class="r">toPigLatin &lt;- function(string) {
+
+    number &lt;- unlist(gregexpr(&quot; &quot;, string))
+    spaces &lt;- vector(length = (length(number) + 2))
+    spaces[2:(length(spaces) - 1)] &lt;- number
+    spaces[1] &lt;- 0
+    spaces[length(spaces)] &lt;- nchar(string) + 1
+
+    Word &lt;- vector(length = (length(number) + 1))
+    k &lt;- 1
+
+    numberofPunctuations &lt;- sum(grepl(&quot;[:;,.?!&#39;]&quot;, string))
+    punc &lt;- vector(length = numberofPunctuations + length(Word))
+
+    while (k != length(spaces)) {
+        first &lt;- spaces[k]
+        second &lt;- spaces[k + 1]
+        Word[k] &lt;- substr(string, (first + 1), (second - 1))
+
+        k &lt;- k + 1
+    }
+
+    i &lt;- 1
+    for (w in Word) {
+        if (grepl(&quot;[:;,.?!&#39;]&quot;, w)) {
+            pos &lt;- unlist(gregexpr(&quot;[:;,.?!&#39;]&quot;, w))
+            if (pos == 1) {
+                fronthalf &lt;- substr(w, pos, pos)
+                punc[i] &lt;- fronthalf
+                backhalf &lt;- substr(w, pos + 1, nchar(w))
+                punc[i + 1] &lt;- backhalf
+                i &lt;- i + 2
+            } else {
+                fronthalf &lt;- substr(w, 1, pos - 1)
+                punc[i] &lt;- fronthalf
+                backhalf &lt;- substr(w, pos, pos)
+                punc[i + 1] &lt;- backhalf
+                i &lt;- i + 2
+            }
+        } else {
+            punc[i] &lt;- w
+            i &lt;- i + 1
+        }
+    }
+
+    sentence &lt;- sapply(punc, piglatinizer)
+    CompleteSentence &lt;- paste(sentence, collapse = &quot; &quot;)
+    return(CompleteSentence)
+}
+
+toPigLatin(c(&quot;when in the course of human events, it becomes necessary, for one people to dissolve the political bonds.&quot;))
+</code></pre>
+
+<pre><code>## [1] &quot;enwhay inyay ethay oursecay ofyay umanhay eventsyay , ityay ecomesbay ecessarynay , orfay oneyay eoplepay otay issolveday ethay oliticalpay ondsbay .&quot;
+</code></pre>
+
+<p>##There are actually two rule to pig latin. 1) If the word contains a vowel, but not at the start, break the word vowel and reverse the segments , adding &#39;ay&#39;. 2) If the word does not contain a vowel or starts with a vowel, just add &#39;yay&#39;.</p>
+
+<pre><code class="r">pigLatinRule2 &lt;- function(word) {
+    ifelse(grepl(&quot;^[^aeiou]+[aeiou]&quot;, word), res &lt;- &quot;consonant&quot;, ifelse(grepl(&quot;^[aeiou].+$&quot;, 
+        word), res &lt;- &quot;vowel&quot;, res &lt;- &quot;novowels&quot;))
+    return(res)
+}
+# This provides more truncated and simplier format for an if else statement
+</code></pre>
+
+<pre><code class="r">pigLatinRule2(&quot;JKDVFGHSKHeMb&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;consonant&quot;
+</code></pre>
+
+<pre><code class="r">pigLatinRuleFixed &lt;- function(word) {
+    ifelse(grepl(&quot;^[^aeiouAEIOU]+[aeiouAEIOU]&quot;, word), res &lt;- &quot;consonant&quot;, ifelse(grepl(&quot;^[aeiouAEIOU].+$&quot;, 
+        word), res &lt;- &quot;vowel&quot;, res &lt;- &quot;novowels&quot;))
+    return(res)
+}
+</code></pre>
+
+<pre><code class="r">pigLatinRuleFixed(&quot;JKDVFGHSKHeMb&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;consonant&quot;
 </code></pre>
 
 </body>

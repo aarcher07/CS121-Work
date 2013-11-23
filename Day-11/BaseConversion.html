@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title>Oct 1, 2013</title>
+<title>BaseConversion</title>
 
 <style type="text/css">
 body, td {
@@ -178,118 +178,117 @@ hljs.initHighlightingOnLoad();
 </head>
 
 <body>
-<h1>Oct 1, 2013</h1>
+<h1>BaseConversion</h1>
 
-<p>##Reverse</p>
-
-<pre><code class="r">reverser &lt;- function(x) {
-    rsplit &lt;- strsplit(x, split = &quot;&quot;)
-    reversal &lt;- rsplit[[1]][rev(1:nchar(x))]
-    stick &lt;- paste(reversal, collapse = &quot;&quot;)
-    return(stick)
-}
-
-</code></pre>
-
-<p>Test statements:</p>
-
-<pre><code class="r"># Test statement here. Should return true or false.
-reverser(&quot;vsgsfgs&quot;) == &quot;sgfsgsv&quot;
-</code></pre>
-
-<pre><code>## [1] TRUE
-</code></pre>
-
-<p>##Scrambler</p>
-
-<pre><code class="r">scrambler &lt;- function(x) {
-    rscram &lt;- strsplit(x, split = &quot;&quot;)
-    scram &lt;- rscram[[1]][sample(1:nchar(x))]
-    stick &lt;- paste(scram, collapse = &quot;&quot;)
-    return(stick)
-}
-
-</code></pre>
-
-<p>Test statements:</p>
-
-<pre><code class="r"># Test statement here. Should return true or false.
-scrambler(&quot;egegsegr&quot;)
-</code></pre>
-
-<pre><code>## [1] &quot;egsggeer&quot;
-</code></pre>
-
-<p>#VowelBleeper</p>
-
-<pre><code class="r">VowelBleeper &lt;- function(x) {
-    asterisks &lt;- gsub(&quot;[aeiou]&quot;, &quot;*&quot;, x)
-    return(asterisks)
+<pre><code class="r">toBase &lt;- function(Z, b) {
+    base &lt;- vector(length = 145)
+    k &lt;- 1
+    while (Z != 0) {
+        rem &lt;- Z%%b
+        base[k] &lt;- rem
+        Z &lt;- (Z - rem)/b
+        k &lt;- k + 1
+    }
+    return(as.character(rev(base[1:k - 1])))
 }
 </code></pre>
 
-<p>Test statements:</p>
-
-<pre><code class="r"># Test statement here. Should return true or false.
-VowelBleeper(&quot;sgethaerhe&quot;) == &quot;sg*th**rh*&quot;
+<pre><code class="r">toBase(Z = 10, b = 2)
 </code></pre>
 
-<pre><code>## [1] TRUE
+<pre><code>## [1] &quot;1&quot; &quot;0&quot; &quot;1&quot; &quot;0&quot;
 </code></pre>
 
-<p>#l33t</p>
+<pre><code class="r">toBase(Z = 10, b = 2)
+</code></pre>
 
-<pre><code class="r">l33t &lt;- function(x) {
-    Ereplace &lt;- gsub(&quot;[e]&quot;, &quot;3&quot;, x)
-    Oreplace &lt;- gsub(&quot;[o]&quot;, &quot;0&quot;, Ereplace)
-    Sreplace &lt;- gsub(&quot;[s]&quot;, &quot;5&quot;, Oreplace)
-    Greplace &lt;- gsub(&quot;[g]&quot;, &quot;9&quot;, Sreplace)
-    return(Greplace)
+<pre><code>## [1] &quot;1&quot; &quot;0&quot; &quot;1&quot; &quot;0&quot;
+</code></pre>
+
+<pre><code class="r">basetoNumeric &lt;- function(x, b) {
+    n &lt;- length(x)
+    base &lt;- b^((n - 1):0)
+    numbers &lt;- as.numeric(x) * base
+    return(sum(numbers))
 }
 </code></pre>
 
-<p>Test statements:</p>
-
-<pre><code class="r"># Test statement here. Should return true or false.
-l33t(&quot;sgethaerhe&quot;)
-</code></pre>
-
-<pre><code>## [1] &quot;593tha3rh3&quot;
-</code></pre>
-
-<p>#Substitution Cypher</p>
-
-<pre><code class="r">Cypher &lt;- function(word, key) {
-    set.seed(key)
-
-    from &lt;- c(letters, LETTERS, &quot;&#39;&quot;, &quot;.&quot;, &quot;;&quot;, &quot;:&quot;, &quot;/&quot;, &quot;,&quot;, &quot; &quot;)
-
-    to &lt;- sample(from, replace = FALSE)
-    to &lt;- paste(to, collapse = &quot;&quot;)
-    from &lt;- paste(from, collapse = &quot;&quot;)
-    substituted &lt;- chartr(from, to, word)
-    return(substituted)
-}
-
-message &lt;- Cypher(&quot;The enemy comes at dawn&quot;, 21)
-</code></pre>
-
-<pre><code class="r">ECypher &lt;- function(code, key) {
-    set.seed(key)
-    from &lt;- c(letters, LETTERS, &quot;&#39;&quot;, &quot;.&quot;, &quot;;&quot;, &quot;:&quot;, &quot;/&quot;, &quot;,&quot;, &quot; &quot;)
-
-    to &lt;- sample(from, replace = FALSE)
-    to &lt;- paste(to, collapse = &quot;&quot;)
-    from &lt;- paste(from, collapse = &quot;&quot;)
-    substituted &lt;- chartr(to, from, code)
-    return(substituted)
+<pre><code class="r">basetoNumeric2 &lt;- function(x, b) {
+    numbers &lt;- vector(length = (length(x)))
+    n &lt;- b^((length(x) - 1):0)
+    for (k in 1:length(x)) {
+        numbers[k] &lt;- as.numeric(x[k]) * n[k]
+    }
+    return(sum(numbers))
 }
 </code></pre>
 
-<pre><code class="r">ECypher(message, 21)
+<pre><code class="r">basetoNumeric(c(&quot;1&quot;, &quot;0&quot;, &quot;1&quot;, &quot;0&quot;, &quot;1&quot;, &quot;0&quot;), 2)
 </code></pre>
 
-<pre><code>## [1] &quot;The enemy comes at dawn&quot;
+<pre><code>## [1] 42
+</code></pre>
+
+<pre><code class="r">basetoNumeric2(c(&quot;1&quot;, &quot;0&quot;, &quot;1&quot;, &quot;0&quot;, &quot;1&quot;, &quot;0&quot;), 2)
+</code></pre>
+
+<pre><code>## [1] 42
+</code></pre>
+
+<pre><code class="r">ToBaseSixteen &lt;- function(Z) {
+    base16 &lt;- vector(length = 456)
+    k &lt;- 1
+    while (Z != 0) {
+        base16[k] &lt;- Z%%16
+        Z &lt;- floor(Z/16)
+        k &lt;- k + 1
+    }
+    base &lt;- as.character(base16[1:k - 1])
+
+    base[base == 10] &lt;- &quot;a&quot;
+    base[base == 11] &lt;- &quot;b&quot;
+    base[base == 12] &lt;- &quot;c&quot;
+    base[base == 13] &lt;- &quot;d&quot;
+    base[base == 14] &lt;- &quot;e&quot;
+    base[base == 15] &lt;- &quot;f&quot;
+
+    return(rev(base))
+}
+</code></pre>
+
+<pre><code class="r">ToBaseSixteen(34332)
+</code></pre>
+
+<pre><code>## [1] &quot;8&quot; &quot;6&quot; &quot;1&quot; &quot;c&quot;
+</code></pre>
+
+<pre><code class="r">ToBase256 &lt;- function(Z) {
+    base &lt;- vector(length = 456)
+    k &lt;- 1
+    while (Z != 0) {
+        base[k] &lt;- Z%%256
+        Z &lt;- floor(Z/256)
+        k &lt;- k + 1
+    }
+    base &lt;- base[1:k - 1]
+    base256 &lt;- vector(length = (k - 1))
+
+    base16 &lt;- c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;)
+
+    for (n in 1:k - 1) {
+        firstdigit &lt;- base16[(floor(base[n]/16)) + 1]
+        seconddigit &lt;- base16[(base[n]%%16) + 1]
+        base256[n] &lt;- paste(c(firstdigit, seconddigit), collapse = &quot;&quot;)
+    }
+
+    return(rev(base256))
+}
+</code></pre>
+
+<pre><code class="r">ToBase256(256)
+</code></pre>
+
+<pre><code>## [1] &quot;01&quot; &quot;00&quot;
 </code></pre>
 
 </body>

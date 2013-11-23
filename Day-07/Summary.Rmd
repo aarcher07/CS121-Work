@@ -4,23 +4,16 @@ words <- readLines(url("http://dtkaplan.github.io/ScientificComputing/Syllabus/D
 Summary<- function(words){
 #100 Longest Words
   numberofcharacters <- nchar(words)
-  DescendingCharacters<- sort(numberofcharacters, decreasing=TRUE)
-longest100<-DescendingCharacters[1:100]
-  LongestWords<- words[which(numberofcharacters==longest100)]
+  DescendingCharacters<- order(-numberofcharacters)
+longest100<-words[DescendingCharacters[1:100]]
+  LongestWords<- words[which(numberofcharacters %in% longest100)]
 
 #Word Length
 wordLength<- table(numberofcharacters)
 
   
- qwords<- words[(grep("[q]", words))]
-uwords<- words[(grep("[u]", words))]
-  
-dups<-duplicated(c(uwords,qwords)) #Duplicated combines the vectors and detects which words in uwords are repeated in qwords. The words that are duplicated are given a "TRUE" value and those that are not are given "FALSE."
-  UinQwords<-dups[(length(uwords)+1):(length(qwords)+length(uwords))] #Removes the uword vector from dups, leaving qwords.
-  
-    indexofUinQ <- which(UinQwords== "TRUE") #Determines the indices of duplicated values
-      qwordsWithoutU<- qwords[-indexofUinQ] #Removes duplicated indices             
-
+ NoUwords<- words[-(grep("[u]", words))]
+ qNoUwords<-NoUwords[(grep("[q]", NoUwords))]
 
 #Words starting with a given letter of the alphabet
 letters <-c("^a","^b","^c","^d","^e","^f","^g","^h","^i","^j","^k","^l","^m","^n","^o","^p","^q","^r","^s","^t","^u","^v","^w","^x","^y","^z")
@@ -30,7 +23,7 @@ for (k in 1:26) {
   lettersnew<- letters[k]
 Sums[k] <- sum(grepl(lettersnew,words))
 }
-  return(c(qwordsWithoutU,LongestWords,wordLength,Sums))
+  return(c(qNoUwords,LongestWords,wordLength,Sums))
 }
 
 

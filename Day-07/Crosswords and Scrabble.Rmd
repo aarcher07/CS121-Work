@@ -1,3 +1,35 @@
+```{r}
+words <- readLines(url("http://dtkaplan.github.io/ScientificComputing/Syllabus/Daily/Day-07/word_list_moby_crossword-flat/word_list_moby_crossword.flat.txt"))
+
+Summary<- function(words){
+#100 Longest Words
+  numberofcharacters <- nchar(words)
+  DescendingCharacters<- order(-numberofcharacters)
+longest100<-words[DescendingCharacters[1:100]]
+  LongestWords<- words[which(numberofcharacters %in% longest100)]
+
+#Word Length
+wordLength<- table(numberofcharacters)
+
+  
+ NoUwords<- words[-(grep("[u]", words))]
+ qNoUwords<-NoUwords[(grep("[q]", NoUwords))]
+
+#Words starting with a given letter of the alphabet
+letters <-c("^a","^b","^c","^d","^e","^f","^g","^h","^i","^j","^k","^l","^m","^n","^o","^p","^q","^r","^s","^t","^u","^v","^w","^x","^y","^z")
+ 
+ Sums<- vector(length=26)
+for (k in 1:26) {
+  lettersnew<- letters[k]
+Sums[k] <- sum(grepl(lettersnew,words))
+}
+  return(c(qNoUwords,LongestWords,wordLength,Sums))
+}
+
+
+Summary(words)
+```
+
 ##Crossword
 
 ```{r}
