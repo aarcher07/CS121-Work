@@ -1,0 +1,36 @@
+names() #Tells you the names
+ncol () #Number of columns
+nrow () #Number of rows
+table() 
+sort()
+order()
+merge()
+rbind and cbind #dataframes need to be of the same length
+merge() #adds dataframes together 
+unique() #
+
+
+Data frames are combinations of lists. The lists have to be homogeneous
+Indexing 
+nhanes[1:5,1:6] #The right numbers represents rows and the left represents the amount of column is to represent
+
+plot(nhanes$wgt ~ nhanes$hgt)
+small<- sample(nhanes, size=1000)
+plot(wgt ~ hgt, data=nhanes)
+with(small,table(diab))
+
+plot(wgt ~ hgt, data=nhanes, col=c("green","red", "blue"))
+
+diacolors<- with(small, ifelse(diab==0, "blue", "red"))
+diasize <- with(small.ifelse(diab==0, 1,3))
+plot(wgt ~ hgt, data=small, col=diacolors, cex=diasize)
+plot(wgt ~ hgt, data=small, col=diacolors, cex=diasize, pch=20)
+
+diacolors<- with(small, ifelse(diab==0, "blue", "red"), alpha("blue",.2"), alpha("red",0.4))
+mPlot(small)
+ggplot(data=small, aes(x=hgt,y=wgt) + geom_point() + aes(colour=diab) + aes(size=sex)+ theme(legend.position="right") + labs(title="Example") + xlab("Height (m)"))
+data(WakeVotersSmall)
+
+
+count<-(V,table(first_name))
+length(count)

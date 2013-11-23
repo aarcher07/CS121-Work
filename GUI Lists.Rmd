@@ -1,0 +1,9 @@
+myUI <- div(class="jumbotron masthead", h3("Some Animals"),
+list("Animals", list(" Domesticated", list("Horse","Cat","Dog"))), h3("Continents and  Some Conunties"), list("The World", list("Non-Continent", list("Fiji","New Zealand"), "Continental", list("Africa", list("Ghana","Kenya","Morocco"), list("Americas", list("North", list("Canada","Mexico")), list("South", list("Chile"))), "Antarctica", "Asia", list("Vietnam", "Malaysia"), "Australia", "Europe", list("Slovakia","Romania")))))
+
+
+
+
+
+runApp(list(ui = bootstrapPage(myUI), 
+            server = myServer))
