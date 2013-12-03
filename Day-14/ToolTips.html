@@ -213,7 +213,8 @@ hljs.initHighlightingOnLoad();
 }
 </code></pre>
 
-<pre><code class="r">formatWord &lt;- function(word, translation, class) {
+<pre><code class="r">
+formatWord &lt;- function(word, translation, class) {
     if (is.na(translation)) {
         return(paste(&quot;&lt;span class&quot;, &quot;=&quot;, &quot;&#39;&quot;, class, &quot;&#39;&gt;&quot;, word, &quot;&lt;/span&gt;&quot;, 
             sep = &quot;&quot;))
@@ -222,18 +223,32 @@ hljs.initHighlightingOnLoad();
             &quot;&#39;&gt;&quot;, word, &quot;&lt;/span&gt;&quot;, sep = &quot;&quot;))
     }
 }
+</code></pre>
 
-words &lt;- c(&quot;who&quot;, &quot;is&quot;, &quot;the&quot;, &quot;cow&quot;, &quot;?&quot;)
+<pre><code class="r">words &lt;- c(&quot;who&quot;, &quot;is&quot;, &quot;the&quot;, &quot;cow&quot;, &quot;?&quot;)
 tips &lt;- c(&quot;Someone&quot;, NA, &quot;article&quot;, &quot;noun&quot;, &quot;interrogation&quot;)
 styles &lt;- c(&quot;hiword&quot;, &quot;&quot;, &quot;color1&quot;, &quot;color2&quot;, &quot;hiword&quot;)
 
-cat(&quot;&lt;style&gt; .hiword {background:pink;}  .color1{color:green;} .color2{color:orange;} &lt;/style&gt;&quot;, 
+cat(&quot;&lt;style&gt; .hiword {background:pink;}  .color1{color:green;} .color2{color:orange;}  &lt;/style&gt;&quot;, 
     formatWord(words[1], tips[1], styles[1]), formatWord(words[2], tips[2], 
         styles[2]), formatWord(words[3], tips[3], styles[3]), formatWord(words[4], 
         tips[4], styles[4]), formatWord(words[5], tips[5], styles[5]))
 </code></pre>
 
-<p><style> .hiword {background:pink;}  .color1{color:green;} .color2{color:orange;} </style> <span class='hiword' title='Someone'>who</span> <span class=''>is</span> <span class='color1' title='article'>the</span> <span class='color2' title='noun'>cow</span> <span class='hiword' title='interrogation'>?</span></p>
+<p><style> .hiword {background:pink;}  .color1{color:green;} .color2{color:orange;}  </style> <span class='hiword' title='Someone'>who</span> <span class=''>is</span> <span class='color1' title='article'>the</span> <span class='color2' title='noun'>cow</span> <span class='hiword' title='interrogation'>?</span></p>
+
+<pre><code class="r">cat(&quot;&lt;style&gt; .big {font-family:&#39;Brush Script MT&#39;;
+font-size:30px;} .small {font-family:&#39;Brush Script MT&#39;;
+font-size:10px;} &lt;/style&gt;&quot;,   
+
+    &quot;&lt;p class=&#39;big&#39;&gt; When &lt;/p&gt;  &lt;p class=&#39;small&#39;&gt; in the course of human events, it becomes necessary for one people to dissolve the political bands which have connected them with another, and to assume among the powers of the earth the separate and equal station to which the Laws of Nature and of Natures God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes which impel them to the separation.
+We hold these truths to be self-evident: that all men are created equal, that they are endowed by their Creator with certain unalienable Rights, that among these are Life, Liberty, and the pursuit of Happiness. &lt;/p&gt;&quot;)
+</code></pre>
+
+<p><style> .big {font-family:&#39;Brush Script MT&#39;;
+font-size:30px;} .small {font-family:&#39;Brush Script MT&#39;;
+font-size:10px;} </style> <p class='big'> When </p>  <p class='small'> in the course of human events, it becomes necessary for one people to dissolve the political bands which have connected them with another, and to assume among the powers of the earth the separate and equal station to which the Laws of Nature and of Natures God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes which impel them to the separation.
+We hold these truths to be self-evident: that all men are created equal, that they are endowed by their Creator with certain unalienable Rights, that among these are Life, Liberty, and the pursuit of Happiness. </p></p>
 
 </body>
 
