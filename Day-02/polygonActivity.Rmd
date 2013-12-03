@@ -1,0 +1,20 @@
+Black Canvases, Circles and Squares by Andre Archer
+=======================================
+
+```{r}
+circle <- function(x,y,r,ry=r, col = "#8fc8d844"){
+    angles<- seq(0,(2*pi), length=1000)
+    xpts <- x + r*cos(angles)
+    ypts <- y + ry*sin(angles)
+    polygon(xpts, ypts, xlim=c(0,40), ylim=c(0,40), asp=1, col= col)
+}
+canvas <- function(min=0,max=100){
+    plot(1:2, type='n', xlim=c(min,max), ylim=c(min,max),asp=1)
+}
+canvas(max=60)
+circle(26,20, 10)
+circle(16,40,r=10,ry=20)
+polygon(c(14,25,25,14), c(20,20,31,31), col= "#66990044", border="blue", lwd=10, line=NULL)
+polygon(c(16,22,22,16),  c(9,9,15,15), col = "#c5191944", lwd=3)
+polygon(c(33,31,35,39,37),  c(22,26,29,26,22), col="#0fff0044")
+ ```
