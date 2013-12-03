@@ -1,0 +1,181 @@
+Functions and Graphics
+========================================
+## Function that counts the number of odd numbers
+```{r}
+CountsOdd<-function(x){
+  Remainder<- vector(length=length(x))
+  Remainder <- x%%2
+  count <- sum(Remainder)
+  return(count)
+  }
+```
+
+Now we'll test it.  The answer should be 3:
+```{r}
+CountsOdd(c(3,5,7))
+CountsOdd(c(3,5,7,6,2,0))
+```
+
+## Function that counts the number of even numbers
+```{r}
+CountEvens1<- function(x){
+ TotalCount<- length(x) #This finds the amount numbers in the vector x.
+ Remainder<- vector(length=length(x)) #Generates a vector of the equal length as x.
+ Remainder <- x%%2 
+ Oddcount <- sum(Remainder) 
+ Evencount<- TotalCount-Oddcount # After counting the total odd numbers in the vector, the function will subtract that amount from the total. If a number is not odd, it must be even. Therefore, the numbers not counted must be even.
+ return(Evencount)}
+```
+
+The answer should be 2:
+``` {r}
+CountEvens1(c(3,5,7,6,2,0))
+```
+
+## This is another function that will count the number of even numbers.
+```{r}
+ CountEvens2<- function(x){
+  x <- x+1 #This changes every odd number to even and every even number to odd.
+  #We can then use the odd count function to count the amount of "odd" numbers.
+  Remainder<- vector(length=length(x))
+Remainder <- x%%2
+Evencount <- sum(Remainder)
+return(Evencount)
+  }
+```
+
+The answer should be 2:
+``` {r}
+CountEvens2(c(3,5,7,6,2,0))
+```
+
+## This will calculate hypotenuse of a right angled triangle.
+```{r}
+hypotenuseLength<- function(a,b) {
+asquared <- a^2
+bsquared <- b^2
+hypotenusesquared <- asquared + bsquared
+hypotenuse<- (hypotenusesquared)^(1/2)
+return(hypotenuse)
+}
+```
+
+Test for the hypotenuse function.
+
+* Answer should be 5.
+```{r}
+hypotenuseLength(3,4)
+```
+
+* Answer should be 85.
+```{r}
+hypotenuseLength(13,84)
+```
+ 
+## This is a function that calculates the missing side of triangle using the Law of Cosine. 
+```{r}
+LawOfCosines<- function(a,b,theta){
+asquared <- a^2
+bsquared <- b^2
+sum <- asquared + bsquared
+Cosine <- cos(theta)
+abCosine <- a %*% b %*% Cosine
+TwoCosine <- 2 %*% abCosine
+csquared <- sum - TwoCosine
+c <- (csquared)^(1/2)
+return(c)
+}
+```
+
+Test statements:    
+* Equalateral triangle.  Answer should be 10.
+
+```{r}
+LawOfCosines(5,5,pi/3)
+```
+
+* A collapsed triangle. Answer should be 71.
+```{r}
+LawOfCosines(13,84,0)
+```
+
+*Right angled triangle. Answer should be 85.
+```{r}
+LawOfCosines(13,84,pi/2)
+```
+
+## This will calculate the angle of a triangle using the sides of the triangle 
+```{r}
+ThetaFromLengths<-function(a,b,c){
+asqred <- a^2
+bsqred <- b^2
+csqred <- c^2
+Sum <- asqred + bsqred - csqred
+Divisor<- 2%*%a%*%b
+quotient <- Sum/Divisor
+angles <- acos(quotient)
+return(angles)
+}
+```
+
+Test again on an equilateral and right angled triangle: 
+```{r}
+ThetaFromLengths(10,10,10)
+pi/3
+ThetaFromLengths(3,4,5)
+pi/2
+```
+ 
+## This function tests the accuracy of ThetaFromLengths
+```{r}
+testThetaFromLengths <- function(a,b,theta){
+Difference<- abs(ThetaFromLengths(a,b,LawOfCosines(a,b,theta) ) -theta) 
+return(Difference)
+}
+
+```
+
+Here are the test cases:
+```{r}
+testThetaFromLengths(a=100,b=34,theta=2.412)
+```
+
+Graphics
+==================
+
+## Black Canvas
+```{r}
+canvas<- function(min, max){
+  plot(1:2, type='n', xlim=c(min,max), ylim=c(min,max))
+}
+canvas(min=0,max=100) 
+```
+
+```{r}
+DrawCircle<- function(x,y,r,...){
+  angles<- seq(from=0, to=2*pi, length= 1000)
+  xpts <- x + r*cos(angles)
+  ypts <- y + r*sin(angles)
+  polygon(xpts, ypts, asp=1, ...)
+}
+```
+
+## Overlapping Circles
+```{r}
+canvas(min=0,max=100)
+DrawCircle(17,47,10, border="blue") 
+DrawCircle(30,38,10, border="yellow") 
+```
+
+## Olympic Symbol
+```{r}
+ 
+canvas(min=0,max=100)
+DrawCircle(17,47,10, border="blue", lwd=7) 
+DrawCircle(30,38,10, border="yellow", lwd=7)   
+DrawCircle(44,47,10, border="black", lwd=7)
+DrawCircle(58,38,10, border="green", lwd=7) 
+DrawCircle(72,47,10, border="red", lwd=7)
+
+```
+
