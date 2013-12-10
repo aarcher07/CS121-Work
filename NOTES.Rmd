@@ -71,7 +71,24 @@ rep(c(4,5,6), each=2) - returns a vector of numbers that repeats each number twi
 
 table(  ) - returns the frequency of variables in the form of a table
 
-sort(   , decreasing=F) - sorts the vectors according to 
+sort( x  , decreasing=F) - returns a sorted vector,x, with elements in alphabetical order or ascending order. The decreasing argument tells the function to sort it according to descending order or from Z to A.
+
+order(  x , decreasing= F) - returns the indices of the vector,x, in alphabetical order or according to numerical value. The decreasing argument tells the function to sort it according to descending order. Order is used to sort dataframes specifically.
+
+eg.
+```{r}
+y<-data.frame("V1"=c("def", "ab","zzzz"), "V2" =c(2,5,1) )
+y
+#We want to order the dataframe according to V2. But how?
+
+v<-order(y$V2) #returns the row number of the values in V2 sorted.
+v
+
+#We can the use this the ordered row numbers to sort the data frame.
+y[v,] #The indexing here tells it to return y[3,] first, then y[1,] then y[2,]
+
+```     
+
 CONDITIONS: 
 
 repeat{       if (  ) break}
