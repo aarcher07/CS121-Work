@@ -1,0 +1,219 @@
+ENVIRONMENT:
+parent.frame() - 
+base.env
+ls
+global.env
+
+MATHMETICAL OPERATIONS:
+
+Boolean Operations:
+
+union(x,y) - putting x and y together
+
+intersect(x, y) - returs the intersetion between x and y
+
+setdiff(x, y) - what does have that is not in x?
+
+setequal(x, y) - Are x and y equal? x == y ?
+
+2 %in% x -- Is 2 in x? 
+
+which.max(    ) - returns the position of the maximum element
+
+which.min(   ) - returns the position of the minimum element
+
+which(  ) - returns the position of the which element meets the criteria set. 
+
+all(  ) - returns a logical if all values in the vector meet the criteria.
+
+any( ) - returns a logical if any of the valus in a vector meet the criteria.
+
+BOOLEANS
+
+"==" - equal
+">"  - greater than
+"<"  - less than
+
+
+MISCELLANOUS:
+
+unique() - removes duplicated values.
+
+names() - returns the names of list, database columns, and names of the vector.
+
+runif(1000, min=2, max=6) - generates 1000 numbers ranging from 2 to 6.
+
+min(x) - returns the minimum
+
+max(x) - returns the maximum
+
+x%%2 - returns the remainder when divided by 2.
+
+cumsum() - returns the cumulative sums 
+
+cumprod() - returns the cumulative product
+
+mean() - returns the average
+
+median() - returns the median value
+
+rev( ) - reverses the order of the vector
+
+seq(from=1 , to=2   , by = 0.1, length =10 ) - returns a vector of number from 1 to 2,by 0.1 or a vector of length 10.
+
+prod() - multiples the numbers together
+
+1:5 - returns 1,2,3,4,5.
+
+rep(8,4)- returns a vectors of numbers that repeats 8 4 times.
+
+rep(c(4,5,6), each=2) - returns a vector of numbers that repeats each number twice.
+
+table(  ) - returns the frequency of variables in the form of a table
+
+sort(   , decreasing=F) - sorts the vectors according to 
+CONDITIONS: 
+
+repeat{       if (  ) break}
+
+while (     ) {}
+
+for (    in   ) {}
+
+if(   ){}else{}
+
+ifelse(BOOLEAN, if condition true, if condition false)
+
+DETERMINING THE PROPERTIES OF THE OBJECTS:
+
+typeof()
+mode()
+class()
+
+SYSTEM OPERATION:
+
+sys.time()
+
+sys.sleep(n) - n is the duration of the sleeping
+
+INPUT:
+
+readline() - reads any input
+
+readJPEG() - reads JPEG file
+
+readPNG() - read PNG file
+
+getURLcontent("  ")- reads URL
+
+OUTPUT:
+
+print()
+cat()
+return()
+
+VECTOR OPERATIONS:
+
+vector(length)
+
+as.vector( )
+
+LIST:
+
+list()
+
+as.list()
+
+is.list()
+
+MATRIX:
+matrix
+
+ARRAY:
+dim()
+
+DATAFRAME:
+data.frame
+as.data.frame
+dataframe$col
+ddply(dataframe,~column,summarize,d=2*2)
+subset(dataframe, column > 2 )
+summarize(dataframe, count=1+Colm)
+with(dataframe, table(col1))
+
+nrow()
+ncol()
+mutate(dataframe, calculations to be added)
+join(table1,table2)
+ggplot(data=  dataframe, aes(xcol,y= Freq, fill=col2 ))+geom_bar(stat='identity),position=position_stack(width=.9)
+
+PLOTS.
+To call a blank canvas with a given scale, we must use plot() with type="n". eg. To call blank canvas with scale of y =(-1,2) , x=(-1,2), we use plot(1:2, xlim=c(-1,2), ylim=c(-1,2), type='n', asp=1)
+
+A blank canvas must be called to use:
+
+polygon(c(x values),c(y values), border= "red", col = "red") - connects lines to draw a shape
+
+lines(c(x values),c(y values),lwd= thinkness ) - draws lines
+
+points(c(x values), c(y values), pch= type number, col = , lwd = thinkness) - plots points
+
+If we called plot() again, it would overwrite everything we had previous and generate a new canvas. So it is best to use lines(), points(), polygon(). 
+
+plot() can also connect the dots, using type="l". It can generate points, using type="p". Both by using "b".
+
+REGULAR EXPRESSION.
+
+grep("[  ]", word) - "[  ]" finds the occurrence of a string of characters in a vector. It returns index of the words which contains the string of characters.
+
+grepl("[  ]", word) - returns the "TRUE" or "FALSE" if the expression is in word. 
+
+gsub("e", "**","aeiou") - subtitutes the e for **.
+
+nhcar( ) - counts the number of characters in a word
+
+paste("fwefr","gfgr", sep="", collapse="") - sep means to replace the space between the words with something, and collapse to separate the results
+
+substring("Equator", 3,5) -returns a subdivision of the string. starts at the third letter, u, and fifth letter, t.
+
+strsplit("6-16-2011", split="-") - returns a subdivison the string by a variable. So, the expression splits  the string by "-".
+
+regexpr("ion","Expression") - returns the first position where the expression "ion" begins.
+
+gregexpr("s","Expressions") - the returns all the occurences of "s".
+
+chartr(old, new, x) - translates the "old" words in x with words in the "new" vector 
+
+Regular Expression syntax (using grep):
+
+grep("[ ]",) - brackets means a collection of possiblities.
+
+grep("^[q]", c("qiii", "quarte", "qistar","quite","youte","qdiiee")) - the first contains q.
+
+grep("[]$", c()) - the dollar sign means to end with eg. "$[g]" means 
+
+grep("[^e]", c("rds", "her", "ffe")) - [^her] means does not have "e" as its first letter.
+
+grep("....", c(  )) - . means any letter, the amount full stops represents the amount of letters in the string.
+
+grep(".+[^e].+", c("rds", "her", "ffe")) - a three letter word that doesnt have e has its second letter
+
+grep("[^f][^e]", c("rds", "her", "ffe","fre"))- does not contain f or e
+
+grep("^[q][^u]", c("qiii", "quarte", "qistar","quite","youte","qdiiee")) - first letter is q but the second lette is not q and u.
+
+grep("^[b].*[s]$",v) - begins with b but does not end with s. "." means any letter and "*" means 0 or more of the preceeding character. So, the expression [.*] means contains any amount of letters, including 0. 
+
+"^[b].*[s]$" means starts with b and ends with s. But contains 0 or more letters letter  
+between the b and s. 
+
+grep("^[b].+[s]$",v) - begins with b but does not end with s. "." means any letter and "+" means at least one of the preceeding character. So, the expression [.+] means at least one letter.
+
+grep("^[^e]+$", c("rds", "her", "ffe")) - does not start with or ends with e. And does not contain any letter e. 
+
+FUNCTIONS:
+
+sapply(x,fun) - applies the function (fun) to the vector x.
+g <- function(x,r=5){ 
+
+return( )                    } - note the use of curly brackets. Return terminates the the function. x and r are formula 
