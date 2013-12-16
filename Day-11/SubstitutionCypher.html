@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta http-equiv="x-ua-compatible" content="IE=9" >
 
-<title>Oct 1, 2013</title>
+<title>Substitution Cypher</title>
 
 <style type="text/css">
 body, td {
@@ -179,86 +179,7 @@ hljs.initHighlightingOnLoad();
 </head>
 
 <body>
-<h1>Oct 1, 2013</h1>
-
-<p>##Reverse</p>
-
-<pre><code class="r">reverser &lt;- function(x) {
-    rsplit &lt;- strsplit(x, split = &quot;&quot;)
-    reversal &lt;- rsplit[[1]][rev(1:nchar(x))]
-    stick &lt;- paste(reversal, collapse = &quot;&quot;)
-    return(stick)
-}
-
-</code></pre>
-
-<p>Test statements:</p>
-
-<pre><code class="r"># Test statement here. Should return true or false.
-reverser(&quot;vsgsfgs&quot;) == &quot;sgfsgsv&quot;
-</code></pre>
-
-<pre><code>## [1] TRUE
-</code></pre>
-
-<p>##Scrambler</p>
-
-<pre><code class="r">scrambler &lt;- function(x) {
-    rscram &lt;- strsplit(x, split = &quot;&quot;)
-    scram &lt;- rscram[[1]][sample(1:nchar(x))]
-    stick &lt;- paste(scram, collapse = &quot;&quot;)
-    return(stick)
-}
-
-</code></pre>
-
-<p>Test statements:</p>
-
-<pre><code class="r"># Test statement here. Should return true or false.
-scrambler(&quot;egegsegr&quot;)
-</code></pre>
-
-<pre><code>## [1] &quot;gegeegsr&quot;
-</code></pre>
-
-<p>#VowelBleeper</p>
-
-<pre><code class="r">VowelBleeper &lt;- function(x) {
-    asterisks &lt;- gsub(&quot;[aeiou]&quot;, &quot;*&quot;, x)
-    return(asterisks)
-}
-</code></pre>
-
-<p>Test statements:</p>
-
-<pre><code class="r"># Test statement here. Should return true or false.
-VowelBleeper(&quot;sgethaerhe&quot;) == &quot;sg*th**rh*&quot;
-</code></pre>
-
-<pre><code>## [1] TRUE
-</code></pre>
-
-<p>#l33t</p>
-
-<pre><code class="r">l33t &lt;- function(x) {
-    Ereplace &lt;- gsub(&quot;[e]&quot;, &quot;3&quot;, x)
-    Oreplace &lt;- gsub(&quot;[o]&quot;, &quot;0&quot;, Ereplace)
-    Sreplace &lt;- gsub(&quot;[s]&quot;, &quot;5&quot;, Oreplace)
-    Greplace &lt;- gsub(&quot;[g]&quot;, &quot;9&quot;, Sreplace)
-    return(Greplace)
-}
-</code></pre>
-
-<p>Test statements:</p>
-
-<pre><code class="r"># Test statement here. Should return true or false.
-l33t(&quot;sgethaerhe&quot;)
-</code></pre>
-
-<pre><code>## [1] &quot;593tha3rh3&quot;
-</code></pre>
-
-<p>#Substitution Cypher</p>
+<h1>Substitution Cypher</h1>
 
 <pre><code class="r">KEY &lt;- function(word) {
     for (k in 1:26) {
@@ -286,7 +207,7 @@ l33t(&quot;sgethaerhe&quot;)
     return(substituted)
 }
 
-message &lt;- Cypher(&quot;The enemy comes at dawn&quot;, )
+message &lt;- Cypher(&quot;The enemy comes at dawn&quot;)
 </code></pre>
 
 <pre><code class="r">ECypher &lt;- function(code, key = KEY(&quot;key&quot;)) {
@@ -300,7 +221,7 @@ message &lt;- Cypher(&quot;The enemy comes at dawn&quot;, )
     return(substituted)
 }
 
-ECypher(message, )
+ECypher(message)
 </code></pre>
 
 <pre><code>## [1] &quot;The enemy comes at dawn&quot;
