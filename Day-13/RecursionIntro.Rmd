@@ -49,7 +49,7 @@ addNSeq(5)
 addRecursively<- function(n){
   if (length(n)==1)
     return(n)
-return(n[1] + addRecursively[-1])
+return(n[1] + addRecursively(n[-1]))
   }
 ``` 
 
@@ -80,25 +80,48 @@ simpleRiemann <- function(f, a=0,b=1, n=3){
 ```
 
 ```{r}
-integrateRecursive<- function(f, a, b){
+integrateRecursive<- function(f, a, b, bLIM = (b-a)*1e-4){
   
 
   bigBins<- simpleRiemann(f,a=a,b=b, n=5)  
   smallBins<- simpleRiemann(f,a=a,b=b,n=10)
-  
-  if (abs(bigBins - smallBins)< 1e-05){
-return(smallBins)}
-  else{  
+  if ((abs(bigBins - smallBins)< 1e-04)){ #| ( (b-a)/10 < bLIM)){
+return(smallBins)    
+    }else{
+      if( (b-a)/10 < bLIM){
+        warning("bLim exceeded") #If blim is exceeded a warning is returned
+        return(smallBins)
+      }else{
     mid<-(a+b)/2
-    total<- integrateRecursive(f,a=a,b=mid)+integrateRecursive(f,a=mid,b=b)
+    total<- integrateRecursive(f,a=a,b=mid,bLIM = bLIM)+integrateRecursive(f,a=mid,b=b,bLIM = bLIM)
     return(total)
-    }
+    }}
   }
 ```
 
+Testing with $x^{6}$
+Integral of  $x^{6}$ is $\frac{x^{7}}{7}$
 ```{r}
-
+integral <- (10)^7/7  - 1^7/7 #Integral x^6
+integrateRecursive(function(x){x^6},1,10,)
 ```
+Testing with $x^{5}$
+Integral of  $x^{5}$ is $\frac{x^{6}}{6}$
+```{r}
+integral2<- (10)^6/6  - 1^6/6
+integrateRecursive(function(x){x^5},1,10,) 
+integrateRecursive(function(x){x^5},1,10,) == integral2
+```
+
+Testing with $1$
+Integral of  $1$ is $x$
+```{r}
+integral3 <- 10  - 1
+integrateRecursive(function(x){1},1,10,)
+integrateRecursive(function(x){1},1,10,)==integral3
+```
+
+
 
 ```{r}
 guassQuadrature<- function(f,a=0,b=1){
