@@ -24,7 +24,7 @@ lines(0:10,Df(0:10),col="red",lwd=2)
 
 ```{r}
 Difference<-Df(0:10)-fprime
-return(Difference)
+Difference
 
 plot(y=Difference, x=0:10,type="l") #The difference between the symbolic and finite-difference derviative is neglible, so it is a good approximation.
 
@@ -61,13 +61,16 @@ Difference2<-function(){
    diff4<- Df(0:10) - evalDh(function(x) {x^3 + 2*x^2 +3},0:10,1e-10)
    diff5<- Df(0:10) - evalDh(function(x) {x^3 + 2*x^2 +3},0:10,1e-15)
    diff6<- Df(0:10) - evalDh(function(x) {x^3 + 2*x^2 +3},0:10,1-20)
-return(list(hEquals1=c(diff1),hEquals0.1=c(diff2),hEquals5=c(diff3),hEquals10=c(diff4),hEquals10=c(diff5),hequals20=c(diff6))) #1e-5 is the best
-  }
+g<-list(hEquals1=c(diff1),hEquals0.1=c(diff2),hEquals5=c(diff3),hEquals10=c(diff4),hEquals10=c(diff5),hequals20=c(diff6))) #1e-5 is the best
+return(g)  
+}
+Difference2()
 ```
  
 
- Task 3 #This is incomplete
-When $x=0$, 1e-8(abs(x)) will be 0.If $2*h$ is defined as 1e-8*abs(x) and $x = 0$, the numerator will be then divided by 0. As result, the derivative will be undefined.
+ Task 3  
+ 
+This is incomplete. When $x=0$, 1e-8(abs(x)) will be 0.If $2*h$ is defined as 1e-8*abs(x) and $x = 0$, the numerator will be then divided by 0. As result, the derivative will be undefined.
 
 When h is defined by 1e-8*pmax(1,abs(x)) and $x=0$, h will become 1. The derivative will then no longer be a undefined when x=0.
 
@@ -80,7 +83,7 @@ myD <- function(f) {
 
 #Example
 ```{r}
-FirstDev <- myD(sin)
+FirstDev <- myD(sin(x^2)})
 FirstDev(3.14/2) 
 
 #Since this returns a value(which is equal to sin(3.14/2)), myD(sin) returns a function.
@@ -92,21 +95,24 @@ FirstDev(3.14/2)
 ```
 
 ```{r}
-SecDev<- myD(myD(sin))
+SecDev<- myD(myD(function(x){sin(x)}))
 SecDev(3.14/2) #This should be approximately equal to -1.
 
 ThirdDev<- myD(myD(myD(sin)))
 ThirdDev(3.14/2) #This should be approximately 0, but approaches 0 from a negative value.
 
-plot(1:2,xlim=c(0,10), ylim=c(-2,2), type='n')
-lines(1:10,SecDev(1:10))
-lines(1:10,ThirdDev(1:10))
+SecDev<- myD(myD(function(x){sin(x^2)}))
+ThirdDev<- myD(myD(myD(function(x){sin(x^2)})))
+                   
+plot(1:10,SecDev(1:10),xlim=c(0,10), ylim=c(-1000,1000), type='l')
+plot(1:10,ThirdDev(1:10),xlim=c(0,10), ylim=c(-1000,1000), type='l')
+
 ```
 
 ```{r}
 dddf<- D(sin(x^2) ~ x & x & x)
-plot(1:2,xlim=c(20,20), ylim=c(-10,10), type='n')
-lines(1:10, dddf(1:10))
+plot(0:10,dddf(0:10), xlim=c(0,10), ylim=c(-1000,1000), type='l')
+lines(0:10,ThirdDev(0:10), col="blue")
 ```
 
 ```{r}
@@ -117,6 +123,6 @@ myD2<-function(f){
 ```
 
 ```{r}
-SinD2<- myD2(sin)
+SinD2<- myD2(function(x){sin(x^2)})
 SinD2(1.57)
 ```
