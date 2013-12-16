@@ -11,9 +11,7 @@ longest100<-words[DescendingCharacters[1:100]]
 #Word Length
 wordLength<- table(numberofcharacters)
 
-  
- NoUwords<- words[-(grep("[u]", words))]
- qNoUwords<-NoUwords[(grep("[q]", NoUwords))]
+ qNoUwords<-words[grep("^q[^u].*", words)]
 
 #Words starting with a given letter of the alphabet
 letters <-c("^a","^b","^c","^d","^e","^f","^g","^h","^i","^j","^k","^l","^m","^n","^o","^p","^q","^r","^s","^t","^u","^v","^w","^x","^y","^z")
@@ -41,13 +39,10 @@ words <- readLines(url("http://dtkaplan.github.io/ScientificComputing/Syllabus/D
 ```
 
 ```{r}
-crosswordPattern<-function(letters){ 
-  word<- rep(".",letters["length"]+2) #Assigns the word vector. 2 is added to compensate for the "^" and "$".
+crosswordPattern<-function(letters,length){ 
+  word<- rep(".",length+2) #Assigns the word vector. 2 is added to compensate for the "^" and "$".
   
-  
-  ListNames<-names(letters) #This takes the name of the vectors in the "Letters"" argument
-  
-  SomeLetters<-ListNames[-(which(ListNames=="length"))] #This removes the length vector
+  SomeLetters<-names(letters) #This takes the name of the vectors in the "Letters"" argument
   
 word[letters[SomeLetters]+1]<-  SomeLetters   #Places the letters in their respective positions
   
@@ -61,49 +56,39 @@ word[letters[SomeLetters]+1]<-  SomeLetters   #Places the letters in their respe
 ```
 
 ```{r}
-crosswordPattern(c(b=4, s=7, length= 7))
+crosswordPattern(c(b=4, s=7), length=7)
 ```
 
 ```![just some text](http://www.slushcreekwalkers.com/images/Crossword.gif)
 
 ```{r}
-crossword(crosswordPattern(c(e=2, r=3, n=5,length= 5)))
-crossword(crosswordPattern(c(v=1, r=3,length= 5)))
-crossword(crosswordPattern(c(b=1, l=3, s=4,a=5,length= 5)))
+crossword(crosswordPattern(c(e=2, r=3, n=5),length= 5))
+crossword(crosswordPattern(c(v=1, r=3),length= 5))
+crossword(crosswordPattern(c(b=1, l=3, s=4,a=5),length= 5))
     
 ```
 
 ```{r}
 Scrabble<-function(letters){
   words <- readLines(url("http://dtkaplan.github.io/ScientificComputing/Syllabus/Daily/Day-07/word_list_moby_crossword-flat/word_list_moby_crossword.flat.txt"))
-   
-letter1<- letters[1]
-letter2<- letters[2]
-letter3<- letters[3]
-letter4<- letters[4]
-letter5<- letters[5]
-letter6<- letters[6]
-letter7<- letters[7]
-letter8<- letters[8]
-letter9<- letters[9]
-  
+
   Numofchar<-nchar(words)
   limitedWords<-words[which(Numofchar>=7& Numofchar<=9)]
-scrabblewords1<- limitedWords[grep(letter1,limitedWords)]
-scrabblewords2<- scrabblewords1[grep(letter2,scrabblewords1)]
-scrabblewords3<- scrabblewords2[grep(letter3,scrabblewords2)]
-scrabblewords4<- scrabblewords3[grep(letter4,scrabblewords3)]
-scrabblewords5<- scrabblewords4[grep(letter5,scrabblewords4)]
-scrabblewords6<- scrabblewords5[grep(letter6,scrabblewords5)]
-scrabblewords7<- scrabblewords6[grep(letter7,scrabblewords6)]
+scrabblewords1<- limitedWords[grep(letters[1],limitedWords)]
+scrabblewords2<- scrabblewords1[grep(letters[2],scrabblewords1)]
+scrabblewords3<- scrabblewords2[grep(letters[3],scrabblewords2)]
+scrabblewords4<- scrabblewords3[grep(letters[4],scrabblewords3)]
+scrabblewords5<- scrabblewords4[grep(letters[5],scrabblewords4)]
+scrabblewords6<- scrabblewords5[grep(letters[6],scrabblewords5)]
+scrabblewords7<- scrabblewords6[grep(letters[7],scrabblewords6)]
 
   NoTieIn<- vector(length=10)
   NoTieIn<-  scrabblewords7
   cat("Highest scoring words ",  NoTieIn)
 
   #Tie-in Words
-scrabblewords8<- scrabblewords7[grep(letter8,scrabblewords7)]
-scrabblewords9<- scrabblewords8[grep(letter9,scrabblewords8)]
+scrabblewords8<- scrabblewords7[grep(letters[8],scrabblewords7)]
+scrabblewords9<- scrabblewords8[grep(letters[9],scrabblewords8)]
   Words<-vector(length=10)
 Words  <-c(scrabblewords9,scrabblewords7,scrabblewords8)
  cat("\n", "These are the possible words including tie-in words: ", Words)

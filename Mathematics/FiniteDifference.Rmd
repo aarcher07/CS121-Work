@@ -61,7 +61,7 @@ Difference2<-function(){
    diff4<- Df(0:10) - evalDh(function(x) {x^3 + 2*x^2 +3},0:10,1e-10)
    diff5<- Df(0:10) - evalDh(function(x) {x^3 + 2*x^2 +3},0:10,1e-15)
    diff6<- Df(0:10) - evalDh(function(x) {x^3 + 2*x^2 +3},0:10,1-20)
-g<-list(hEquals1=c(diff1),hEquals0.1=c(diff2),hEquals5=c(diff3),hEquals10=c(diff4),hEquals10=c(diff5),hequals20=c(diff6))) #1e-5 is the best
+g<-list(hEquals1=c(diff1),hEquals0.1=c(diff2),hEquals5=c(diff3),hEquals10=c(diff4),hEquals10=c(diff5),hequals20=c(diff6)) #1e-5 is the best
 return(g)  
 }
 Difference2()
@@ -83,7 +83,7 @@ myD <- function(f) {
 
 #Example
 ```{r}
-FirstDev <- myD(sin(x^2)})
+FirstDev <- myD(function(x){sin(x)})
 FirstDev(3.14/2) 
 
 #Since this returns a value(which is equal to sin(3.14/2)), myD(sin) returns a function.
@@ -125,4 +125,11 @@ myD2<-function(f){
 ```{r}
 SinD2<- myD2(function(x){sin(x^2)})
 SinD2(1.57)
+```
+
+```{r}
+myD3<-function(f){
+     h<- 1e-3     
+     return(function(x) {(-0.5*f(x-2*h)+2*(f(x-h)-f(x+h))+0.5*f(x+2*h))/h^3})
+}
 ```

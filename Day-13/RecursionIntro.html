@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title></title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+</head>
+
+<body>
+<pre><code class="r">fibLoop &lt;- function(n) {
+    fibSeq &lt;- vector(length = (n + 1))
+    fibSeq[1] &lt;- 0
+    fibSeq[2] &lt;- 1
+    for (k in 3:(n + 1)) {
+        fibSeq[k] &lt;- fibSeq[k - 1] + fibSeq[k - 2]
+    }
+    return(fibSeq)
+}
+</code></pre>
+
+<pre><code class="r">fibLoop(31)
+</code></pre>
+
+<pre><code>##  [1]       0       1       1       2       3       5       8      13
+##  [9]      21      34      55      89     144     233     377     610
+## [17]     987    1597    2584    4181    6765   10946   17711   28657
+## [25]   46368   75025  121393  196418  317811  514229  832040 1346269
+</code></pre>
+
+<pre><code class="r">fibRecurse &lt;- function(n) {
+    if (n == 1) {
+        return(1)
+    } else {
+        if (n == 0) 
+            return(0)
+    }
+    before &lt;- Sys.time()
+    thisF &lt;- fibRecurse(n - 1) + fibRecurse(n - 2)
+    return(c(as.numeric(Sys.time() - before)))
+}
+</code></pre>
+
+<pre><code class="r">fibRecurse(2)
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r">addNSeq &lt;- function(n) {
+    if (n == 0) 
+        return(0)
+    return(n + addNSeq(n - 1))
+}
+</code></pre>
+
+<pre><code class="r">addNSeq(5)
+</code></pre>
+
+<pre><code>## [1] 15
+</code></pre>
+
+<pre><code class="r">addRecursively &lt;- function(n) {
+    if (length(n) == 1) 
+        return(n)
+    return(n[1] + addRecursively(n[-1]))
+}
+</code></pre>
+
+<pre><code class="r">integrateRiemann &lt;- function(f, a = 0, b = 1) {
+    nbins &lt;- 5
+    biggerBins &lt;- simpleRiemann(f, a = a, b = b, n = nbins)  #Create the state
+    for (k in 1:5) {
+        nbins &lt;- nbins * 10  #the loop utlizies nbins as the amount of the bins need to calculate a more accurate sum. The larger nbins becomes the more accurate the approximation. Because nbins will become very large number even after 5 repetition, the value of the sum should approximate the area under the function. In the worst case, there will be 500,000 bins.
+
+        smallerBins &lt;- simpleRiemann(f, a = a, b = b, n = nbins)
+
+        if (abs(smallerBins - biggerBins) &lt; 1e-05) 
+            break
+        biggerBins &lt;- smallerBins  #The if statement above recognizes if the current approximatation is better than the previous to 5 decimal places. If it is, repeat the process creating an new approximation. To compare the current to previous approximation, the loop initializes the previous approximation to biggerBins and recalculates smallerBins with a large nbins.
+    }
+    return(smallerBins)
+}
+</code></pre>
+
+<pre><code class="r">simpleRiemann &lt;- function(f, a = 0, b = 1, n = 3) {
+    rectangleWidth &lt;- (b - a)/n
+    midpoints &lt;- seq(a + rectangleWidth/2, b - rectangleWidth/2, length = n)
+    rectangleAreas &lt;- sapply(midpoints, f) * rectangleWidth
+    return(sum(rectangleAreas))
+}
+</code></pre>
+
+<pre><code class="r">integrateRecursive &lt;- function(f, a, b, bLIM = (b - a) * 1e-04) {
+
+
+    bigBins &lt;- simpleRiemann(f, a = a, b = b, n = 5)
+    smallBins &lt;- simpleRiemann(f, a = a, b = b, n = 10)
+    if ((abs(bigBins - smallBins) &lt; 1e-04)) {
+        # | ( (b-a)/10 &lt; bLIM)){
+        return(smallBins)
+    } else {
+        if ((b - a)/10 &lt; bLIM) {
+            warning(&quot;bLim exceeded&quot;)  #If blim is exceeded a warning is returned
+            return(smallBins)
+        } else {
+            mid &lt;- (a + b)/2
+            total &lt;- integrateRecursive(f, a = a, b = mid, bLIM = bLIM) + integrateRecursive(f, 
+                a = mid, b = b, bLIM = bLIM)
+            return(total)
+        }
+    }
+}
+</code></pre>
+
+<p>Testing with \( x^{6} \)
+Integral of  \( x^{6} \) is \( \frac{x^{7}}{7} \)</p>
+
+<pre><code class="r">integral &lt;- (10)^7/7 - 1^7/7  #Integral x^6
+integrateRecursive(function(x) {
+    x^6
+}, 1, 10, )
+</code></pre>
+
+<pre><code>## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+## Warning: bLim exceeded Warning: bLim exceeded Warning: bLim exceeded
+</code></pre>
+
+<pre><code>## [1] 1428571
+</code></pre>
+
+<p>Testing with \( x^{5} \)
+Integral of  \( x^{5} \) is \( \frac{x^{6}}{6} \)</p>
+
+<pre><code class="r">integral2 &lt;- (10)^6/6 - 1^6/6
+integrateRecursive(function(x) {
+    x^5
+}, 1, 10, )
+</code></pre>
+
+<pre><code>## [1] 166666
+</code></pre>
+
+<pre><code class="r">integrateRecursive(function(x) {
+    x^5
+}, 1, 10, ) == integral2
+</code></pre>
+
+<pre><code>## [1] FALSE
+</code></pre>
+
+<p>Testing with \( 1 \)
+Integral of  \( 1 \) is \( x \)</p>
+
+<pre><code class="r">integral3 &lt;- 10 - 1
+integrateRecursive(function(x) {
+    1
+}, 1, 10, )
+</code></pre>
+
+<pre><code>## [1] 9
+</code></pre>
+
+<pre><code class="r">integrateRecursive(function(x) {
+    1
+}, 1, 10, ) == integral3
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r">guassQuadrature &lt;- function(f, a = 0, b = 1) {
+    z &lt;- c(-0.339981043584856, 0.339981043584856, -0.86113631159053, 0.86113631159053)
+
+    w &lt;- c(0.652145154862546, 0.652145154862546, 0.347854845137454, 0.347854845137454)
+
+    x &lt;- ((b - a)/2) * z + (a + b)/2
+
+    return(((b - a)/2) * sum(w * sapply(x, f)))
+}
+</code></pre>
+
+<pre><code class="r">guassQuadrature(function(x) 3 * x^317, 0, 10)  #Above this power, the value of the integral cannot be found
+</code></pre>
+
+<pre><code>## [1] 6.466e+307
+</code></pre>
+
+<pre><code class="r">guassQuadrature(function(x) 3 * x^318, 0, 10)
+</code></pre>
+
+<pre><code>## [1] Inf
+</code></pre>
+
+<pre><code class="r">guassQuadrature(function(x) sin(x), 0, 0.1)
+</code></pre>
+
+<pre><code>## [1] 0.004996
+</code></pre>
+
+<pre><code class="r">cos(0) - cos(0.1)  #Integral of sin
+</code></pre>
+
+<pre><code>## [1] 0.004996
+</code></pre>
+
+<pre><code class="r">guassQuadrature(function(x) sin(x), 0, 0.5)
+</code></pre>
+
+<pre><code>## [1] 0.1224
+</code></pre>
+
+<pre><code class="r">cos(0) - cos(0.5)  #Integral of sin
+</code></pre>
+
+<pre><code>## [1] 0.1224
+</code></pre>
+
+<pre><code class="r">guassQuadrature(function(x) sin(x), 0, 1)
+</code></pre>
+
+<pre><code>## [1] 0.4597
+</code></pre>
+
+<pre><code class="r">cos(0) - cos(1)
+</code></pre>
+
+<pre><code>## [1] 0.4597
+</code></pre>
+
+<pre><code class="r">guassQuadrature(function(x) sin(x), 0, 1.5)
+</code></pre>
+
+<pre><code>## [1] 0.9293
+</code></pre>
+
+<pre><code class="r">cos(0) - cos(1.5)
+</code></pre>
+
+<pre><code>## [1] 0.9293
+</code></pre>
+
+<pre><code class="r">guassQuadrature(function(x) sin(x), 0, 2)
+</code></pre>
+
+<pre><code>## [1] 1.416
+</code></pre>
+
+<pre><code class="r">cos(0) - cos(2)
+</code></pre>
+
+<pre><code>## [1] 1.416
+</code></pre>
+
+<pre><code class="r">guassQuadrature(function(x) sin(x), 0, 2.5)
+</code></pre>
+
+<pre><code>## [1] 1.801
+</code></pre>
+
+<pre><code class="r">cos(0) - cos(2.5)  #Integral of sin
+</code></pre>
+
+<pre><code>## [1] 1.801
+</code></pre>
+
+<pre><code class="r">guassQuadrature(function(x) sin(x), 0, 3)
+</code></pre>
+
+<pre><code>## [1] 1.99
+</code></pre>
+
+<pre><code class="r">cos(0) - cos(3)  #Integral of sin
+</code></pre>
+
+<pre><code>## [1] 1.99
+</code></pre>
+
+<pre><code class="r">guassQuadrature(function(x) sin(x), 0, 4)
+</code></pre>
+
+<pre><code>## [1] 1.654
+</code></pre>
+
+<pre><code class="r">cos(0) - cos(4)  #Integral of sin
+</code></pre>
+
+<pre><code>## [1] 1.654
+</code></pre>
+
+<pre><code class="r">guassQuadrature(function(x) sin(x), 0, 11)
+</code></pre>
+
+<pre><code>## [1] 1.427
+</code></pre>
+
+<pre><code class="r">cos(0) - cos(11)  #Integral of sin
+</code></pre>
+
+<pre><code>## [1] 0.9956
+</code></pre>
+
+<pre><code class="r">guassQuadrature(function(x) sin(x), 0, 13)
+</code></pre>
+
+<pre><code>## [1] -0.3349
+</code></pre>
+
+<pre><code class="r">cos(0) - cos(13)  #Integral of sin
+</code></pre>
+
+<pre><code>## [1] 0.09255
+</code></pre>
+
+<pre><code class="r">guassQuadrature(function(x) sin(x), 0, 18)
+</code></pre>
+
+<pre><code>## [1] -4.554
+</code></pre>
+
+<pre><code class="r">cos(0) - cos(18)  #Integral of sin
+</code></pre>
+
+<pre><code>## [1] 0.3397
+</code></pre>
+
+<pre><code class="r">integrateRecursive2 &lt;- function(f, a = 0, b = 1) {
+
+    whole &lt;- guassQuadrature(f, a, b)
+    mid &lt;- (a + b)/2
+    left &lt;- guassQuadrature(f, a, mid)
+    right &lt;- guassQuadrature(f, mid, b)
+    if (abs(whole - (left + right)) &gt; 1e-04) {
+        left &lt;- integrateRecursive2(f, a, mid)
+        right &lt;- integrateRecursive2(f, mid, b)
+    }
+    return(left + right)
+}
+</code></pre>
+
+<p>#Fix down here</p>
+
+<pre><code class="r">plotF &lt;- function(f, a = 0, b = 1) {
+    x &lt;- getX(f, a, b)
+    plot(x, f(x), pch = 20, cex = 0.2)
+
+}
+</code></pre>
+
+<pre><code class="r">simpleRiemann &lt;- function(f, a = 0, b = 1, n = 3) {
+    rectangleWidth &lt;- (b - a)/n
+    midpoints &lt;- seq(a + rectangleWidth/2, b - rectangleWidth/2, length = n)
+    rectangleAreas &lt;- sapply(midpoints, f) * rectangleWidth
+    return(sum(rectangleAreas))
+}
+
+getX &lt;- function(f, a = 0, b = 1) {
+
+    bigBins &lt;- simpleRiemann(f, a = a, b = b, n = 5)
+    smallBins &lt;- simpleRiemann(f, a = a, b = b, n = 10)
+
+    if (abs(bigBins - smallBins) &lt; 1e-05) {
+        return(seq(a, b, length = 10))
+    } else {
+        mid &lt;- (a + b)/2
+        return(c(getX(f, a, b = mid), getX(f, a = mid, b)))
+    }
+}
+</code></pre>
+
+<pre><code class="r">fun &lt;- function(x) sin(x)
+plotF(fun, 0, 10)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-31"/> </p>
+
+</body>
+
+</html>
+

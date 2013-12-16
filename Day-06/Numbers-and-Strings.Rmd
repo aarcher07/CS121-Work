@@ -82,7 +82,7 @@ pirep<-rep(pi,N)
  polygon(b, pirep)
 roundup3<-round(partialsums,digits=3)
 roundup15<-round(partialsums,digits=15)  
-  Digits3<-which(roundup3 == 3.141)
+  Digits3<-which(roundup3 == 3.141) #Returns the amount of numbers needed to sum up to 3 decimal places and 15 decimal places
   Digits15<-which(roundup15==3.141592653589792)
 return(c(Digits3[1],Digits15[1]))
             }

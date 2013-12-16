@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta http-equiv="x-ua-compatible" content="IE=9" >
 
-<title></title>
+<title>Oct 1, 2013</title>
 
 <style type="text/css">
 body, td {
@@ -179,148 +179,131 @@ hljs.initHighlightingOnLoad();
 </head>
 
 <body>
-<pre><code class="r">words &lt;- readLines(url(&quot;http://dtkaplan.github.io/ScientificComputing/Syllabus/Daily/Day-07/word_list_moby_crossword-flat/word_list_moby_crossword.flat.txt&quot;))
+<h1>Oct 1, 2013</h1>
 
-Summary &lt;- function(words) {
-    # 100 Longest Words
-    numberofcharacters &lt;- nchar(words)
-    DescendingCharacters &lt;- order(-numberofcharacters)
-    longest100 &lt;- words[DescendingCharacters[1:100]]
-    LongestWords &lt;- words[which(numberofcharacters %in% longest100)]
+<p>##Reverse</p>
 
-    # Word Length
-    wordLength &lt;- table(numberofcharacters)
+<pre><code class="r">reverser &lt;- function(x) {
+    rsplit &lt;- strsplit(x, split = &quot;&quot;)
+    reversal &lt;- rsplit[[1]][rev(1:nchar(x))]
+    stick &lt;- paste(reversal, collapse = &quot;&quot;)
+    return(stick)
+}
 
-    qNoUwords &lt;- words[grep(&quot;^q[^u].*&quot;, words)]
+</code></pre>
 
-    # Words starting with a given letter of the alphabet
-    letters &lt;- c(&quot;^a&quot;, &quot;^b&quot;, &quot;^c&quot;, &quot;^d&quot;, &quot;^e&quot;, &quot;^f&quot;, &quot;^g&quot;, &quot;^h&quot;, &quot;^i&quot;, &quot;^j&quot;, 
-        &quot;^k&quot;, &quot;^l&quot;, &quot;^m&quot;, &quot;^n&quot;, &quot;^o&quot;, &quot;^p&quot;, &quot;^q&quot;, &quot;^r&quot;, &quot;^s&quot;, &quot;^t&quot;, &quot;^u&quot;, &quot;^v&quot;, 
-        &quot;^w&quot;, &quot;^x&quot;, &quot;^y&quot;, &quot;^z&quot;)
+<p>Test statements:</p>
 
-    Sums &lt;- vector(length = 26)
+<pre><code class="r"># Test statement here. Should return true or false.
+reverser(&quot;vsgsfgs&quot;) == &quot;sgfsgsv&quot;
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<p>##Scrambler</p>
+
+<pre><code class="r">scrambler &lt;- function(x) {
+    rscram &lt;- strsplit(x, split = &quot;&quot;)
+    scram &lt;- rscram[[1]][sample(1:nchar(x))]
+    stick &lt;- paste(scram, collapse = &quot;&quot;)
+    return(stick)
+}
+
+</code></pre>
+
+<p>Test statements:</p>
+
+<pre><code class="r"># Test statement here. Should return true or false.
+scrambler(&quot;egegsegr&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;gegeegsr&quot;
+</code></pre>
+
+<p>#VowelBleeper</p>
+
+<pre><code class="r">VowelBleeper &lt;- function(x) {
+    asterisks &lt;- gsub(&quot;[aeiou]&quot;, &quot;*&quot;, x)
+    return(asterisks)
+}
+</code></pre>
+
+<p>Test statements:</p>
+
+<pre><code class="r"># Test statement here. Should return true or false.
+VowelBleeper(&quot;sgethaerhe&quot;) == &quot;sg*th**rh*&quot;
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<p>#l33t</p>
+
+<pre><code class="r">l33t &lt;- function(x) {
+    Ereplace &lt;- gsub(&quot;[e]&quot;, &quot;3&quot;, x)
+    Oreplace &lt;- gsub(&quot;[o]&quot;, &quot;0&quot;, Ereplace)
+    Sreplace &lt;- gsub(&quot;[s]&quot;, &quot;5&quot;, Oreplace)
+    Greplace &lt;- gsub(&quot;[g]&quot;, &quot;9&quot;, Sreplace)
+    return(Greplace)
+}
+</code></pre>
+
+<p>Test statements:</p>
+
+<pre><code class="r"># Test statement here. Should return true or false.
+l33t(&quot;sgethaerhe&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;593tha3rh3&quot;
+</code></pre>
+
+<p>#Substitution Cypher</p>
+
+<pre><code class="r">KEY &lt;- function(word) {
     for (k in 1:26) {
-        lettersnew &lt;- letters[k]
-        Sums[k] &lt;- sum(grepl(lettersnew, words))
+        word &lt;- gsub(letters[k], k, word)
     }
-    return(c(qNoUwords, LongestWords, wordLength, Sums))
-}
-
-
-Summary(words)
-</code></pre>
-
-<pre><code>## Warning: closing unused connection 5
-## (http://dtkaplan.github.io/ScientificComputing/Syllabus/Daily/Day-07/word_list_moby_crossword-flat/word_list_moby_crossword.flat.txt)
-</code></pre>
-
-<pre><code>##                                                                       
-##    &quot;qaid&quot;   &quot;qaids&quot;  &quot;qindar&quot; &quot;qindars&quot;  &quot;qintar&quot; &quot;qintars&quot;  &quot;qiviut&quot; 
-##                                       2         3         4         5 
-## &quot;qiviuts&quot;    &quot;qoph&quot;   &quot;qophs&quot;      &quot;85&quot;     &quot;908&quot;    &quot;3686&quot;    &quot;8258&quot; 
-##         6         7         8         9        10        11        12 
-##   &quot;14374&quot;   &quot;21727&quot;   &quot;26447&quot;   &quot;16658&quot;    &quot;9199&quot;    &quot;5296&quot;    &quot;3166&quot; 
-##        13        14        15        16        17        18        19 
-##    &quot;1960&quot;    &quot;1023&quot;     &quot;557&quot;     &quot;261&quot;     &quot;132&quot;      &quot;48&quot;      &quot;16&quot; 
-##        20        21                                                   
-##       &quot;5&quot;       &quot;3&quot;    &quot;6557&quot;    &quot;6848&quot;   &quot;10385&quot;    &quot;6436&quot;    &quot;4364&quot; 
-##                                                                       
-##    &quot;4937&quot;    &quot;3950&quot;    &quot;4080&quot;    &quot;4013&quot;    &quot;1106&quot;    &quot;1312&quot;    &quot;3710&quot; 
-##                                                                       
-##    &quot;6270&quot;    &quot;2208&quot;    &quot;3978&quot;    &quot;8693&quot;     &quot;568&quot;    &quot;7141&quot;   &quot;12591&quot; 
-##                                                                       
-##    &quot;5951&quot;    &quot;2934&quot;    &quot;1932&quot;    &quot;2927&quot;      &quot;82&quot;     &quot;438&quot;     &quot;398&quot;
-</code></pre>
-
-<p>##Crossword</p>
-
-<pre><code class="r">crossword &lt;- function(pattern) {
-    words &lt;- readLines(url(&quot;http://dtkaplan.github.io/ScientificComputing/Syllabus/Daily/Day-07/word_list_moby_crossword-flat/word_list_moby_crossword.flat.txt&quot;))
-    return(words[grep(pattern, words)])
+    return(word)
 }
 </code></pre>
 
-<pre><code class="r">crosswordPattern &lt;- function(letters, length) {
-    word &lt;- rep(&quot;.&quot;, length + 2)  #Assigns the word vector. 2 is added to compensate for the &#39;^&#39; and &#39;$&#39;.
+<pre><code class="r">KEY(&quot;key&quot;)
+</code></pre>
 
-    SomeLetters &lt;- names(letters)  #This takes the name of the vectors in the &#39;Letters&#39;&#39; argument
+<pre><code>## [1] &quot;11525&quot;
+</code></pre>
 
-    word[letters[SomeLetters] + 1] &lt;- SomeLetters  #Places the letters in their respective positions
+<pre><code class="r">Cypher &lt;- function(word, key = KEY(&quot;key&quot;)) {
+    set.seed(key)
 
-    word[length(word)] &lt;- &quot;$&quot;  #Places &#39;^&#39; in front
-    word[1] &lt;- &quot;^&quot;  #Places &#39;$&#39; at the end of the pattern 
+    from &lt;- c(letters, LETTERS, &quot;&#39;&quot;, &quot;.&quot;, &quot;;&quot;, &quot;:&quot;, &quot;/&quot;, &quot;,&quot;, &quot; &quot;)
 
-    CompleteWord &lt;- paste(word, collapse = &quot;&quot;)  #Makes a complete pattern
-
-    return(CompleteWord)  #Returns the pattern
+    to &lt;- sample(from, replace = FALSE)
+    to &lt;- paste(to, collapse = &quot;&quot;)
+    from &lt;- paste(from, collapse = &quot;&quot;)
+    substituted &lt;- chartr(from, to, word)
+    return(substituted)
 }
+
+message &lt;- Cypher(&quot;The enemy comes at dawn&quot;, )
 </code></pre>
 
-<pre><code class="r">crosswordPattern(c(b = 4, s = 7), length = 7)
-</code></pre>
+<pre><code class="r">ECypher &lt;- function(code, key = KEY(&quot;key&quot;)) {
+    set.seed(key)
+    from &lt;- c(letters, LETTERS, &quot;&#39;&quot;, &quot;.&quot;, &quot;;&quot;, &quot;:&quot;, &quot;/&quot;, &quot;,&quot;, &quot; &quot;)
 
-<pre><code>## [1] &quot;^...b..s$&quot;
-</code></pre>
-
-<p>&ldquo;<img src="http://www.slushcreekwalkers.com/images/Crossword.gif" alt="just some text"/></p>
-
-<pre><code class="r">crossword(crosswordPattern(c(e = 2, r = 3, n = 5), length = 5))
-</code></pre>
-
-<pre><code>## [1] &quot;heron&quot; &quot;reran&quot; &quot;rerun&quot; &quot;serin&quot;
-</code></pre>
-
-<pre><code class="r">crossword(crosswordPattern(c(v = 1, r = 3), length = 5))
-</code></pre>
-
-<pre><code>## Warning: closing unused connection 5
-## (http://dtkaplan.github.io/ScientificComputing/Syllabus/Daily/Day-07/word_list_moby_crossword-flat/word_list_moby_crossword.flat.txt)
-</code></pre>
-
-<pre><code>##  [1] &quot;varas&quot; &quot;varia&quot; &quot;varix&quot; &quot;varna&quot; &quot;varus&quot; &quot;varve&quot; &quot;verbs&quot; &quot;verge&quot;
-##  [9] &quot;verse&quot; &quot;verso&quot; &quot;verst&quot; &quot;verts&quot; &quot;vertu&quot; &quot;verve&quot; &quot;viral&quot; &quot;vireo&quot;
-## [17] &quot;vires&quot; &quot;virga&quot; &quot;virid&quot; &quot;virls&quot; &quot;virtu&quot; &quot;virus&quot;
-</code></pre>
-
-<pre><code class="r">crossword(crosswordPattern(c(b = 1, l = 3, s = 4, a = 5), length = 5))
-</code></pre>
-
-<pre><code>## Warning: closing unused connection 6
-## (http://dtkaplan.github.io/ScientificComputing/Syllabus/Daily/Day-07/word_list_moby_crossword-flat/word_list_moby_crossword.flat.txt)
-</code></pre>
-
-<pre><code>## [1] &quot;balsa&quot;
-</code></pre>
-
-<pre><code class="r">Scrabble &lt;- function(letters) {
-    words &lt;- readLines(url(&quot;http://dtkaplan.github.io/ScientificComputing/Syllabus/Daily/Day-07/word_list_moby_crossword-flat/word_list_moby_crossword.flat.txt&quot;))
-
-    Numofchar &lt;- nchar(words)
-    limitedWords &lt;- words[which(Numofchar &gt;= 7 &amp; Numofchar &lt;= 9)]
-    scrabblewords1 &lt;- limitedWords[grep(letters[1], limitedWords)]
-    scrabblewords2 &lt;- scrabblewords1[grep(letters[2], scrabblewords1)]
-    scrabblewords3 &lt;- scrabblewords2[grep(letters[3], scrabblewords2)]
-    scrabblewords4 &lt;- scrabblewords3[grep(letters[4], scrabblewords3)]
-    scrabblewords5 &lt;- scrabblewords4[grep(letters[5], scrabblewords4)]
-    scrabblewords6 &lt;- scrabblewords5[grep(letters[6], scrabblewords5)]
-    scrabblewords7 &lt;- scrabblewords6[grep(letters[7], scrabblewords6)]
-
-    NoTieIn &lt;- vector(length = 10)
-    NoTieIn &lt;- scrabblewords7
-    cat(&quot;Highest scoring words &quot;, NoTieIn)
-
-    # Tie-in Words
-    scrabblewords8 &lt;- scrabblewords7[grep(letters[8], scrabblewords7)]
-    scrabblewords9 &lt;- scrabblewords8[grep(letters[9], scrabblewords8)]
-    Words &lt;- vector(length = 10)
-    Words &lt;- c(scrabblewords9, scrabblewords7, scrabblewords8)
-    cat(&quot;\n&quot;, &quot;These are the possible words including tie-in words: &quot;, Words)
+    to &lt;- sample(from, replace = FALSE)
+    to &lt;- paste(to, collapse = &quot;&quot;)
+    from &lt;- paste(from, collapse = &quot;&quot;)
+    substituted &lt;- chartr(to, from, code)
+    return(substituted)
 }
-Scrabble(c(&quot;r&quot;, &quot;l&quot;, &quot;a&quot;, &quot;m&quot;, &quot;e&quot;, &quot;o&quot;, &quot;n&quot;, &quot;g&quot;, &quot;d&quot;))
+
+ECypher(message, )
 </code></pre>
 
-<pre><code>## Highest scoring words  almoner almoners almonries amelcorn amelcorns angleworm cornmeal cornmeals normalize patrolmen womanlier
-##  These are the possible words including tie-in words:  almoner almoners almonries amelcorn amelcorns angleworm cornmeal cornmeals normalize patrolmen womanlier angleworm
+<pre><code>## [1] &quot;The enemy comes at dawn&quot;
 </code></pre>
 
 </body>

@@ -3,6 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
 
 <title>Oct 1, 2013</title>
 
@@ -180,7 +181,7 @@ hljs.initHighlightingOnLoad();
 <body>
 <h1>Oct 1, 2013</h1>
 
-<p>##Reverse</p>
+<h2>Reverse</h2>
 
 <pre><code class="r">reverser &lt;- function(x) {
     rsplit &lt;- strsplit(x, split = &quot;&quot;)
@@ -217,7 +218,7 @@ reverser(&quot;vsgsfgs&quot;) == &quot;sgfsgsv&quot;
 scrambler(&quot;egegsegr&quot;)
 </code></pre>
 
-<pre><code>## [1] &quot;egsggeer&quot;
+<pre><code>## [1] &quot;eggeserg&quot;
 </code></pre>
 
 <p>#VowelBleeper</p>
@@ -257,39 +258,81 @@ l33t(&quot;sgethaerhe&quot;)
 <pre><code>## [1] &quot;593tha3rh3&quot;
 </code></pre>
 
-<p>#Substitution Cypher</p>
+<p>## Modified Functions</p>
 
-<pre><code class="r">Cypher &lt;- function(word, key) {
-    set.seed(key)
+<pre><code class="r">reverserNEW &lt;- function(x) {
 
-    from &lt;- c(letters, LETTERS, &quot;&#39;&quot;, &quot;.&quot;, &quot;;&quot;, &quot;:&quot;, &quot;/&quot;, &quot;,&quot;, &quot; &quot;)
+    reve &lt;- function(d) {
+        rsplit &lt;- strsplit(d, split = &quot;&quot;)
+        reversal &lt;- rsplit[[1]][rev(1:nchar(d))]
+        stick &lt;- paste(reversal, collapse = &quot;&quot;)
+        return(stick)
+    }
 
-    to &lt;- sample(from, replace = FALSE)
-    to &lt;- paste(to, collapse = &quot;&quot;)
-    from &lt;- paste(from, collapse = &quot;&quot;)
-    substituted &lt;- chartr(from, to, word)
-    return(substituted)
-}
-
-message &lt;- Cypher(&quot;The enemy comes at dawn&quot;, 21)
-</code></pre>
-
-<pre><code class="r">ECypher &lt;- function(code, key) {
-    set.seed(key)
-    from &lt;- c(letters, LETTERS, &quot;&#39;&quot;, &quot;.&quot;, &quot;;&quot;, &quot;:&quot;, &quot;/&quot;, &quot;,&quot;, &quot; &quot;)
-
-    to &lt;- sample(from, replace = FALSE)
-    to &lt;- paste(to, collapse = &quot;&quot;)
-    from &lt;- paste(from, collapse = &quot;&quot;)
-    substituted &lt;- chartr(to, from, code)
-    return(substituted)
+    sapply(x, reve)
 }
 </code></pre>
 
-<pre><code class="r">ECypher(message, 21)
+<pre><code class="r">reverserNEW(c(&quot;fe&quot;, &quot;wef&quot;, &quot;dfef&quot;, &quot;fe4&quot;))
 </code></pre>
 
-<pre><code>## [1] &quot;The enemy comes at dawn&quot;
+<pre><code>##     fe    wef   dfef    fe4 
+##   &quot;ef&quot;  &quot;few&quot; &quot;fefd&quot;  &quot;4ef&quot;
+</code></pre>
+
+<pre><code class="r">scramblerNEW &lt;- function(x) {
+
+    sccram &lt;- function(d) {
+        rscram &lt;- strsplit(d, split = &quot;&quot;)
+        scram &lt;- rscram[[1]][sample(1:nchar(d))]
+        stick &lt;- paste(scram, collapse = &quot;&quot;)
+        return(stick)
+    }
+
+    sapply(x, sccram)
+}
+</code></pre>
+
+<pre><code class="r">scramblerNEW(c(&quot;feel&quot;, &quot;wheel&quot;, &quot;definitely&quot;, &quot;default&quot;))
+</code></pre>
+
+<pre><code>##         feel        wheel   definitely      default 
+##       &quot;lfee&quot;      &quot;eehlw&quot; &quot;iiylneedft&quot;    &quot;efudtla&quot;
+</code></pre>
+
+<pre><code class="r">VowelBleeperNEW &lt;- function(x) {
+    fun &lt;- function(v) {
+        asterisks &lt;- gsub(&quot;[aeiou]&quot;, &quot;*&quot;, v)
+        return(asterisks)
+    }
+    sapply(x, fun)
+}
+</code></pre>
+
+<pre><code class="r">VowelBleeperNEW(c(&quot;feel&quot;, &quot;wheel&quot;, &quot;definitely&quot;, &quot;default&quot;))
+</code></pre>
+
+<pre><code>##         feel        wheel   definitely      default 
+##       &quot;f**l&quot;      &quot;wh**l&quot; &quot;d*f*n*t*ly&quot;    &quot;d*f**lt&quot;
+</code></pre>
+
+<pre><code class="r">l33tNEW &lt;- function(x) {
+    fun &lt;- function(v) {
+        Ereplace &lt;- gsub(&quot;[e]&quot;, &quot;3&quot;, v)
+        Oreplace &lt;- gsub(&quot;[o]&quot;, &quot;0&quot;, Ereplace)
+        Sreplace &lt;- gsub(&quot;[s]&quot;, &quot;5&quot;, Oreplace)
+        Greplace &lt;- gsub(&quot;[g]&quot;, &quot;9&quot;, Sreplace)
+        return(Greplace)
+    }
+    sapply(x, fun)
+}
+</code></pre>
+
+<pre><code class="r">l33tNEW(c(&quot;feel&quot;, &quot;wheel&quot;, &quot;definitely&quot;, &quot;default&quot;))
+</code></pre>
+
+<pre><code>##         feel        wheel   definitely      default 
+##       &quot;f33l&quot;      &quot;wh33l&quot; &quot;d3finit3ly&quot;    &quot;d3fault&quot;
 </code></pre>
 
 </body>

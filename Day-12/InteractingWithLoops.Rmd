@@ -1,4 +1,3 @@
-
 ```{r}
 
 testlatency<-function(N=20){ 
@@ -23,8 +22,7 @@ table<-data.frame("Time Interval"=time, "Latency"=result )
 
 ```{r}
 load("DorisData.RData")
-plot(DorisData$Time.Interval, DorisDa
-     \ta$Latency, xlim=c(0,2), ylim=c(0,5))
+plot(DorisData$Time.Interval, DorisData$Latency, xlim=c(0,2), ylim=c(0,5))
 
 ```
 
@@ -60,6 +58,7 @@ Sys.sleep(3)
 table<-data.frame("Word Length"=WordLength, "Latency"=result )
   return(table)}
 ```
+
 
 ```{r}
 blastoff<-function(time){
