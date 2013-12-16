@@ -1,0 +1,45 @@
+## Letter Proportion
+```{r}
+require(mosaic)
+fetchData("COMP121/word-hints.R")
+
+letterProportion<-function(word){
+  word<-tolower(word)
+  splitword<- unlist(strsplit(word,split=""))
+  prop<-as.data.frame(table(splitword))
+  Frequency<-mutate(prop, Proportion=Freq/sum(Freq))
+  return(Frequency)
+}
+```
+
+## Frequency Compare
+```{r}
+freqCompare<-function(Frequency,Lang){
+  splitword<-names(Lang)
+  Freqqq<-Lang
+  names(Freqqq)=NULL
+  
+  Lang<-data.frame(splitword,Freqqq)
+  
+  NEWtable<-join(Frequency,Lang)
+  T<-mutate(NEWtable, diff=(Proportion-Freqqq), Chisquare=(diff^2/Freqqq))
+  return(sum(T$Chisquare,na.rm=T))
+  }
+```
+
+## Which Language
+```{r}
+whichLanguage<- function(string,langFreq=list("English"=English,"German"=German,"Finnish"=Finnish,"French"=French,"Italian"=Italian,"Spanish"=Spanish)){
+name<-  names(langFreq)
+store<- vector(length=length(names))
+
+table <- letterProportion(string)
+i<-1
+  for (k in name){
+    store[i]<- freqCompare(table,langFreq[[k]])
+    i<- i+1
+  }
+
+return(name[which.min(store)])
+}
+```
