@@ -1,5 +1,5 @@
 # Oct 1, 2013
-## Reverse
+##Reverse
 ```{r}
 reverser <- function(x){
   rsplit <- strsplit(x, split="")
@@ -62,70 +62,4 @@ Test statements:
 ```{r}
 #Test statement here. Should return true or false. 
 l33t("sgethaerhe")
-```
- ## Modified Functions
- 
-```{r}
- reverserNEW <- function(x){
-  
-  reve<- function(d){rsplit <- strsplit(d, split="")
-  reversal <- rsplit[[1]][rev(1:nchar(d))]
-  stick<- paste(reversal,collapse="")
-  return(stick)}
-  
-  sapply(x,reve)
-}
-```
-
-```{r}
-reverserNEW(c("fe","wef","dfef","fe4"))
-```
-
-```{r}
-scramblerNEW <- function(x){
- 
-sccram <- function(d){
-  rscram<- strsplit(d, split="")
-  scram <- rscram[[1]][sample(1:nchar(d))]
-  stick<- paste(scram, collapse="")
-  return(stick)
-}
-
-  sapply(x,sccram)
-}
-```  
-
-```{r}
-scramblerNEW(c("feel","wheel","definitely","default"))
-```
-
-```{r}
-VowelBleeperNEW<- function(x){
-  fun<-function(v){
-  asterisks<- gsub("[aeiou]", "*", v)
-  return(asterisks)
-}
-  sapply(x,fun)
-  }
-```
-
-```{r}
-VowelBleeperNEW(c("feel","wheel","definitely","default"))
-```
-
-```{r}
-l33tNEW<- function(x){
-  fun<-function(v){
-  Ereplace <- gsub("[e]","3", v)
-  Oreplace <- gsub("[o]","0", Ereplace)
-  Sreplace <- gsub("[s]","5", Oreplace)
-  Greplace <- gsub("[g]","9", Sreplace)
-return(Greplace)
-  }
-  sapply(x,fun)
-  }
-```
-
-```{r}
-l33tNEW(c("feel","wheel","definitely","default"))
 ```
