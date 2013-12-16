@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta http-equiv="x-ua-compatible" content="IE=9" >
 
-<title>Black Canvases, Circles and Squares by Andre Archer</title>
+<title></title>
 
 <style type="text/css">
 body, td {
@@ -179,27 +179,166 @@ hljs.initHighlightingOnLoad();
 </head>
 
 <body>
-<h1>Black Canvases, Circles and Squares by Andre Archer</h1>
+<pre><code class="r">words &lt;- readLines(url(&quot;http://dtkaplan.github.io/ScientificComputing/Syllabus/Daily/Day-07/word_list_moby_crossword-flat/word_list_moby_crossword.flat.txt&quot;))
 
-<pre><code class="r">circle &lt;- function(x, y, r, ry = r, col = &quot;#8fc8d844&quot;) {
-    angles &lt;- seq(0, (2 * pi), length = 1000)
-    xpts &lt;- x + r * cos(angles)
-    ypts &lt;- y + ry * sin(angles)
-    polygon(xpts, ypts, xlim = c(0, 40), ylim = c(0, 40), asp = 1, col = col)
+Summary &lt;- function(words) {
+    # 100 Longest Words
+    numberofcharacters &lt;- nchar(words)
+    DescendingCharacters &lt;- order(-numberofcharacters)
+    longest100 &lt;- words[DescendingCharacters[1:100]]
+    LongestWords &lt;- words[which(numberofcharacters %in% longest100)]
+
+    # Word Length
+    wordLength &lt;- table(numberofcharacters)
+
+
+    NoUwords &lt;- words[-(grep(&quot;[u]&quot;, words))]
+    qNoUwords &lt;- NoUwords[(grep(&quot;[q]&quot;, NoUwords))]
+
+    # Words starting with a given letter of the alphabet
+    letters &lt;- c(&quot;^a&quot;, &quot;^b&quot;, &quot;^c&quot;, &quot;^d&quot;, &quot;^e&quot;, &quot;^f&quot;, &quot;^g&quot;, &quot;^h&quot;, &quot;^i&quot;, &quot;^j&quot;, 
+        &quot;^k&quot;, &quot;^l&quot;, &quot;^m&quot;, &quot;^n&quot;, &quot;^o&quot;, &quot;^p&quot;, &quot;^q&quot;, &quot;^r&quot;, &quot;^s&quot;, &quot;^t&quot;, &quot;^u&quot;, &quot;^v&quot;, 
+        &quot;^w&quot;, &quot;^x&quot;, &quot;^y&quot;, &quot;^z&quot;)
+
+    Sums &lt;- vector(length = 26)
+    for (k in 1:26) {
+        lettersnew &lt;- letters[k]
+        Sums[k] &lt;- sum(grepl(lettersnew, words))
+    }
+    return(c(qNoUwords, LongestWords, wordLength, Sums))
 }
-canvas &lt;- function(min = 0, max = 100) {
-    plot(1:2, type = &quot;n&quot;, xlim = c(min, max), ylim = c(min, max), asp = 1)
-}
-canvas(max = 60)
-circle(26, 20, 10)
-circle(16, 40, r = 10, ry = 20)
-polygon(c(14, 25, 25, 14), c(20, 20, 31, 31), col = &quot;#66990044&quot;, border = &quot;blue&quot;, 
-    lwd = 10, line = NULL)
-polygon(c(16, 22, 22, 16), c(9, 9, 15, 15), col = &quot;#c5191944&quot;, lwd = 3)
-polygon(c(33, 31, 35, 39, 37), c(22, 26, 29, 26, 22), col = &quot;#0fff0044&quot;)
+
+
+Summary(words)
 </code></pre>
 
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAAn1BMVEX9/v0AAAAAADkAAGUAAP8AOTkAOWUAOY8AZrUERAAbKQA1Bwc3UCs5AAA5ADk5AGU5OWU5OY85ZrU5j9plAABlADllAGVlOQBlOY9lZmVltf2POQCPOTmPOWWPZgCPtY+P29qP2/2o9LKv0a21ZgC1/rW1/v2+/rq/2bLZt7najzna24/a/tra/v3g8PPuwcD9tWX924/9/rX9/tr9/v23h8SjAAAANXRSTlP/////////////////////////////////////////////////////////////////////AHy10AoAAAAJcEhZcwAACxIAAAsSAdLdfvwAAA7fSURBVHic7d3peuTEGYZh2oEwLM5kYgOJZ0jw4AzECeDt/I8tknpxLyV1rVJ99T7PH3NdUGqpb5cW43Z99kKSfbb0DtAyAS8a8KIBLxrwogEvGvCiAS8a8KIBLxrwogEvGvCiAS8a8KIBLxrwogEvGvCiAS8a8KIBLxrwogEvGvCiAS8a8KIBLxrwogEvGvCiAS8a8KIBLxrwogEvGvCiAS8a8KIBLxrwogEvGvCiAS8a8KIBLxrwogEvGvCiAS8a8KIBLxrwogEvGvCiAS8a8KIBL1oK/IpqriB8wlgqHfCiAS8a8KIBLxrwoiXDP14ODwd/+hS6aVq0VPjn9zfD14cvfwvcNC1aKvzT958OvvpvmhaNGS9a8jX+6ZprvMW4qxetALzn/wYo2fJ7UH0ZHudunt+vVqeX+KVm/CD++xD64+W4ubvr7u8e31Vxc7czfw17Zxke554/3NbxOOdQ39nPvS/Vl3yq76b7w1X3OPcmdNPZG2OH3lX6zd3dcCE9dZ8Zfood+tMaeZwbPcsf0M+4Q9XXBrwHO/KHtQDvxw79QQ3A+7sj/5p9+BB35HeZhw9zR36bdfhQ955+jv2qPuPwEe7ID9mGj3JHvs80fKQ78i+24aPducMzDh/rjrxp+AR35A3Dx5/o1/Jl9676zMInusvL24VPdFc/2VuFT3ZXn/JG4ZNP9PLyVuEzuGuf7G3CZ3HXnvIm4bOc6MXlbcJnclc+2VuEz+auPOXF4XXlDcLndAd+pObhZeXtwed1B95d+/Cq8ubgc7sD76w6+Gw/u1GXNwef3R14Vwrw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" alt="plot of chunk unnamed-chunk-1"/> </p>
+<pre><code>## Warning: closing unused connection 5
+## (http://dtkaplan.github.io/ScientificComputing/Syllabus/Daily/Day-07/word_list_moby_crossword-flat/word_list_moby_crossword.flat.txt)
+</code></pre>
+
+<pre><code>##                                                                       
+##   &quot;faqir&quot;  &quot;faqirs&quot;    &quot;qaid&quot;   &quot;qaids&quot;  &quot;qindar&quot; &quot;qindars&quot;  &quot;qintar&quot; 
+##                                       2         3         4         5 
+## &quot;qintars&quot;    &quot;qoph&quot;   &quot;qophs&quot;      &quot;85&quot;     &quot;908&quot;    &quot;3686&quot;    &quot;8258&quot; 
+##         6         7         8         9        10        11        12 
+##   &quot;14374&quot;   &quot;21727&quot;   &quot;26447&quot;   &quot;16658&quot;    &quot;9199&quot;    &quot;5296&quot;    &quot;3166&quot; 
+##        13        14        15        16        17        18        19 
+##    &quot;1960&quot;    &quot;1023&quot;     &quot;557&quot;     &quot;261&quot;     &quot;132&quot;      &quot;48&quot;      &quot;16&quot; 
+##        20        21                                                   
+##       &quot;5&quot;       &quot;3&quot;    &quot;6557&quot;    &quot;6848&quot;   &quot;10385&quot;    &quot;6436&quot;    &quot;4364&quot; 
+##                                                                       
+##    &quot;4937&quot;    &quot;3950&quot;    &quot;4080&quot;    &quot;4013&quot;    &quot;1106&quot;    &quot;1312&quot;    &quot;3710&quot; 
+##                                                                       
+##    &quot;6270&quot;    &quot;2208&quot;    &quot;3978&quot;    &quot;8693&quot;     &quot;568&quot;    &quot;7141&quot;   &quot;12591&quot; 
+##                                                                       
+##    &quot;5951&quot;    &quot;2934&quot;    &quot;1932&quot;    &quot;2927&quot;      &quot;82&quot;     &quot;438&quot;     &quot;398&quot;
+</code></pre>
+
+<p>##Crossword</p>
+
+<pre><code class="r">crossword &lt;- function(pattern) {
+    words &lt;- readLines(url(&quot;http://dtkaplan.github.io/ScientificComputing/Syllabus/Daily/Day-07/word_list_moby_crossword-flat/word_list_moby_crossword.flat.txt&quot;))
+    return(words[grep(pattern, words)])
+}
+</code></pre>
+
+<pre><code class="r">crosswordPattern &lt;- function(letters) {
+    word &lt;- rep(&quot;.&quot;, letters[&quot;length&quot;] + 2)  #Assigns the word vector. 2 is added to compensate for the &#39;^&#39; and &#39;$&#39;.
+
+
+    ListNames &lt;- names(letters)  #This takes the name of the vectors in the &#39;Letters&#39;&#39; argument
+
+    SomeLetters &lt;- ListNames[-(which(ListNames == &quot;length&quot;))]  #This removes the length vector
+
+    word[letters[SomeLetters] + 1] &lt;- SomeLetters  #Places the letters in their respective positions
+
+    word[length(word)] &lt;- &quot;$&quot;  #Places &#39;$&#39; in front
+    word[1] &lt;- &quot;^&quot;  #Places &#39;^&#39; at the end of the pattern 
+
+    CompleteWord &lt;- paste(word, collapse = &quot;&quot;)  #Makes a complete pattern
+
+    return(CompleteWord)  #Returns the pattern
+}
+</code></pre>
+
+<pre><code class="r">crosswordPattern(c(b = 4, s = 7, length = 7))
+</code></pre>
+
+<pre><code>## [1] &quot;^...b..s$&quot;
+</code></pre>
+
+<p>&ldquo;<img src="http://www.slushcreekwalkers.com/images/Crossword.gif" alt="just some text"/></p>
+
+<pre><code class="r">crossword(crosswordPattern(c(e = 2, r = 3, n = 5, length = 5)))
+</code></pre>
+
+<pre><code>## [1] &quot;heron&quot; &quot;reran&quot; &quot;rerun&quot; &quot;serin&quot;
+</code></pre>
+
+<pre><code class="r">crossword(crosswordPattern(c(v = 1, r = 3, length = 5)))
+</code></pre>
+
+<pre><code>##  [1] &quot;varas&quot; &quot;varia&quot; &quot;varix&quot; &quot;varna&quot; &quot;varus&quot; &quot;varve&quot; &quot;verbs&quot; &quot;verge&quot;
+##  [9] &quot;verse&quot; &quot;verso&quot; &quot;verst&quot; &quot;verts&quot; &quot;vertu&quot; &quot;verve&quot; &quot;viral&quot; &quot;vireo&quot;
+## [17] &quot;vires&quot; &quot;virga&quot; &quot;virid&quot; &quot;virls&quot; &quot;virtu&quot; &quot;virus&quot;
+</code></pre>
+
+<pre><code class="r">crossword(crosswordPattern(c(b = 1, l = 3, s = 4, a = 5, length = 5)))
+</code></pre>
+
+<pre><code>## Warning: closing unused connection 6
+## (http://dtkaplan.github.io/ScientificComputing/Syllabus/Daily/Day-07/word_list_moby_crossword-flat/word_list_moby_crossword.flat.txt)
+## Warning: closing unused connection 5
+## (http://dtkaplan.github.io/ScientificComputing/Syllabus/Daily/Day-07/word_list_moby_crossword-flat/word_list_moby_crossword.flat.txt)
+</code></pre>
+
+<pre><code>## [1] &quot;balsa&quot;
+</code></pre>
+
+<pre><code class="r">Scrabble &lt;- function(letters) {
+    words &lt;- readLines(url(&quot;http://dtkaplan.github.io/ScientificComputing/Syllabus/Daily/Day-07/word_list_moby_crossword-flat/word_list_moby_crossword.flat.txt&quot;))
+
+    letter1 &lt;- letters[1]
+    letter2 &lt;- letters[2]
+    letter3 &lt;- letters[3]
+    letter4 &lt;- letters[4]
+    letter5 &lt;- letters[5]
+    letter6 &lt;- letters[6]
+    letter7 &lt;- letters[7]
+    letter8 &lt;- letters[8]
+    letter9 &lt;- letters[9]
+
+    Numofchar &lt;- nchar(words)
+    limitedWords &lt;- words[which(Numofchar &gt;= 7 &amp; Numofchar &lt;= 9)]
+    scrabblewords1 &lt;- limitedWords[grep(letter1, limitedWords)]
+    scrabblewords2 &lt;- scrabblewords1[grep(letter2, scrabblewords1)]
+    scrabblewords3 &lt;- scrabblewords2[grep(letter3, scrabblewords2)]
+    scrabblewords4 &lt;- scrabblewords3[grep(letter4, scrabblewords3)]
+    scrabblewords5 &lt;- scrabblewords4[grep(letter5, scrabblewords4)]
+    scrabblewords6 &lt;- scrabblewords5[grep(letter6, scrabblewords5)]
+    scrabblewords7 &lt;- scrabblewords6[grep(letter7, scrabblewords6)]
+
+    NoTieIn &lt;- vector(length = 10)
+    NoTieIn &lt;- scrabblewords7
+    cat(&quot;Highest scoring words &quot;, NoTieIn)
+
+    # Tie-in Words
+    scrabblewords8 &lt;- scrabblewords7[grep(letter8, scrabblewords7)]
+    scrabblewords9 &lt;- scrabblewords8[grep(letter9, scrabblewords8)]
+    Words &lt;- vector(length = 10)
+    Words &lt;- c(scrabblewords9, scrabblewords7, scrabblewords8)
+    cat(&quot;\n&quot;, &quot;These are the possible words including tie-in words: &quot;, Words)
+}
+Scrabble(c(&quot;r&quot;, &quot;l&quot;, &quot;a&quot;, &quot;m&quot;, &quot;e&quot;, &quot;o&quot;, &quot;n&quot;, &quot;g&quot;, &quot;d&quot;))
+</code></pre>
+
+<pre><code>## Warning: closing unused connection 5
+## (http://dtkaplan.github.io/ScientificComputing/Syllabus/Daily/Day-07/word_list_moby_crossword-flat/word_list_moby_crossword.flat.txt)
+</code></pre>
+
+<pre><code>## Highest scoring words  almoner almoners almonries amelcorn amelcorns angleworm cornmeal cornmeals normalize patrolmen womanlier
+##  These are the possible words including tie-in words:  almoner almoners almonries amelcorn amelcorns angleworm cornmeal cornmeals normalize patrolmen womanlier angleworm
+</code></pre>
 
 </body>
 

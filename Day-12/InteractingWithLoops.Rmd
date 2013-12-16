@@ -23,7 +23,8 @@ table<-data.frame("Time Interval"=time, "Latency"=result )
 
 ```{r}
 load("DorisData.RData")
-plot(DorisData$Time.Interval, DorisData$Latency, xlim=c(0,2), ylim=c(0,5))
+plot(DorisData$Time.Interval, DorisDa
+     \ta$Latency, xlim=c(0,2), ylim=c(0,5))
 
 ```
 
@@ -36,7 +37,7 @@ testLatencyLETTERS<-function(N=20){
 
   for (k in 1:N){
     
-  x<-sample(letters,WordLength[k],replace=FALSE)
+  x<-sample(letters,WordLength[k])
   
   word<- paste(x,collapse="")
   
@@ -44,7 +45,7 @@ testLatencyLETTERS<-function(N=20){
   
 before<- Sys.time()
   
-  statement<- readline(prompt=phrase)
+  statement<- readline(phrase)
   
   while(statement != word){ 
     statement<- readline("Look again ")}
@@ -58,4 +59,18 @@ Sys.sleep(3)
   
 table<-data.frame("Word Length"=WordLength, "Latency"=result )
   return(table)}
+```
+
+```{r}
+blastoff<-function(time){
+  k<- time
+  while (k!= 0){
+    Sys.sleep(1)
+cat(k, "\n") #Cat removes the index 
+  k<-k-1
+}
+  Sys.sleep(1)
+if (k == 0) cat("BLASTOFF!!!!") 
+
+}
 ```
